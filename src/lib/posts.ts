@@ -31,11 +31,11 @@ export const getAllPosts = (): PostMeta[] => {
 
     return {
       slug,
-      title: data.title as string,
-      date: data.date as string,
+      title: (data.title as string) ?? "Untitled",
+      date: (data.date as string) ?? "1970-01-01",
       tags: (data.tags as string[]) ?? [],
-      category: data.category as string,
-      summary: data.summary as string,
+      category: (data.category as string) ?? "uncategorized",
+      summary: (data.summary as string) ?? "",
       ...(data.source ? { source: data.source as string } : {}),
       ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     };
@@ -48,7 +48,15 @@ export const getPostSlugs = (): string[] => {
   return readMarkdownFiles().map(slugFromFilePath);
 };
 
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+const isValidSlug = (slug: string): boolean => SLUG_PATTERN.test(slug);
+
 export const getPostBySlug = async (slug: string): Promise<Post | null> => {
+  if (!isValidSlug(slug)) {
+    return null;
+  }
+
   const filePath = path.join(POSTS_DIR, `${slug}.md`);
 
   if (!fs.existsSync(filePath)) {
@@ -69,11 +77,11 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
 
   return {
     slug,
-    title: data.title as string,
-    date: data.date as string,
+    title: (data.title as string) ?? "Untitled",
+    date: (data.date as string) ?? "1970-01-01",
     tags: (data.tags as string[]) ?? [],
-    category: data.category as string,
-    summary: data.summary as string,
+    category: (data.category as string) ?? "uncategorized",
+    summary: (data.summary as string) ?? "",
     ...(data.source ? { source: data.source as string } : {}),
     ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     contentHtml,
