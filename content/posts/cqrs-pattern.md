@@ -3,7 +3,7 @@ title: "CQRS 패턴: 명령과 조회의 책임 분리"
 shortTitle: "CQRS 패턴"
 date: "2026-03-06"
 tags: ["CQRS", "아키텍처", "백엔드"]
-category: "무엇인가요?백엔드"
+category: "Architecture"
 summary: "명령과 조회를 분리하여 시스템의 복잡성을 해결하는 CQRS 패턴의 개념과 구현 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

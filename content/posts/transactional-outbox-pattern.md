@@ -3,7 +3,7 @@ title: "트랜잭셔널 아웃박스 패턴 완벽 가이드"
 shortTitle: "아웃박스 패턴"
 date: "2026-03-06"
 tags: ["transactional-outbox", "distributed-system", "event-driven"]
-category: "설명해주세요.백엔드"
+category: "Architecture"
 summary: "분산 시스템에서 데이터 정합성을 보장하는 트랜잭셔널 아웃박스 패턴을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

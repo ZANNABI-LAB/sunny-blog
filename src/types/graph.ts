@@ -6,6 +6,7 @@ export type GraphNode = {
   category: string;
   tags: string[];
   summary: string;
+  type: "post" | "category";
 };
 
 export type GraphEdge = {

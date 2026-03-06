@@ -3,7 +3,7 @@ title: "단일 장애 지점(SPOF)이란 무엇인가요?"
 shortTitle: "SPOF"
 date: "2026-03-06"
 tags: ["SPOF", "고가용성", "시스템아키텍처"]
-category: "무엇인가요?백엔드"
+category: "Infrastructure"
 summary: "시스템의 단일 장애 지점을 식별하고 해결하여 고가용성을 구현하는 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

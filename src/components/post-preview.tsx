@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { getCategoryColor } from "@/lib/categories";
 
 type PostPreviewProps = {
   node: { title: string; category: string; tags: string[]; summary: string };
@@ -45,7 +46,13 @@ const PostPreview = ({ node, position, containerRef }: PostPreviewProps) => {
       <h3 className="text-sm font-semibold text-white truncate">
         {node.title}
       </h3>
-      <span className="mt-1 inline-block rounded-md bg-indigo-400/10 px-1.5 py-0.5 text-[10px] font-medium text-indigo-400">
+      <span
+        className="mt-1 inline-block rounded-md px-1.5 py-0.5 text-[10px] font-medium"
+        style={{
+          backgroundColor: `${getCategoryColor(node.category)}15`,
+          color: getCategoryColor(node.category),
+        }}
+      >
         {node.category}
       </span>
       {node.summary && (

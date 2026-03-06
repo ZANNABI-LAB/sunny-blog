@@ -3,7 +3,7 @@ title: "pnpm과 Yarn Berry: 차세대 패키지 매니저 비교"
 shortTitle: "pnpm vs Yarn Berry"
 date: "2026-03-06"
 tags: ["pnpm", "yarn-berry", "package-manager", "nodejs"]
-category: "설명해주세요.프론트엔드"
+category: "Frontend"
 summary: "pnpm과 Yarn Berry의 핵심 특징과 기존 패키지 매니저 대비 개선점을 비교 분석합니다."
 author: "신중선"
 source: "maeil-mail"
