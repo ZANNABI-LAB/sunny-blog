@@ -3,6 +3,7 @@ import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
 import Footer from "@/components/footer";
+import ChatbotWidget from "@/components/chatbot-widget";
 
 export const metadata: Metadata = {
   title: "Sunny Blog",
@@ -30,6 +31,7 @@ const RootLayout = ({
           {children}
         </main>
         <Footer />
+        <ChatbotWidget />
       </body>
     </html>
   );

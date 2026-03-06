@@ -1,5 +1,6 @@
 export type ChatRequest = {
   message: string;
+  history?: { role: "user" | "assistant"; content: string }[];
 };
 
 export type ChatDeltaEvent = {
