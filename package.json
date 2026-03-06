@@ -24,8 +24,7 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "unified": "^11.0.5",
-    "voyageai": "^0.2.1"
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
