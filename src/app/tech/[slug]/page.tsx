@@ -58,19 +58,8 @@ const PostDetailPage = async ({
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
           <time dateTime={post.date}>{post.date}</time>
-          {post.sourceUrl && (
-            <>
-              <span aria-hidden="true">&middot;</span>
-              <a
-                href={post.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-indigo-400 transition-colors duration-150 hover:text-indigo-300"
-              >
-                {post.source ?? "출처"}
-              </a>
-            </>
-          )}
+          <span aria-hidden="true">&middot;</span>
+          <span>{post.author}</span>
         </div>
         {post.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
@@ -94,6 +83,39 @@ const PostDetailPage = async ({
         className="prose prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
+
+      {/* References */}
+      {(post.sourceUrl || post.references.length > 0) && (
+        <section className="mt-12 border-t border-white/10 pt-6">
+          <h2 className="text-sm font-semibold text-zinc-300">References</h2>
+          <ul className="mt-3 space-y-2">
+            {post.sourceUrl && (
+              <li>
+                <a
+                  href={post.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-indigo-400 transition-colors duration-150 hover:text-indigo-300"
+                >
+                  {post.source ?? "출처"}
+                </a>
+              </li>
+            )}
+            {post.references.map((url) => (
+              <li key={url}>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-indigo-400 transition-colors duration-150 hover:text-indigo-300"
+                >
+                  {url}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 };

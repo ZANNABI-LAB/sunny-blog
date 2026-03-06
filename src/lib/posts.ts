@@ -37,6 +37,8 @@ export const getAllPosts = (): PostMeta[] => {
       tags: (data.tags as string[]) ?? [],
       category: (data.category as string) ?? "uncategorized",
       summary: (data.summary as string) ?? "",
+      author: (data.author as string) ?? "신중선",
+      references: (data.references as string[]) ?? [],
       ...(data.source ? { source: data.source as string } : {}),
       ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     };
@@ -84,6 +86,8 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
     tags: (data.tags as string[]) ?? [],
     category: (data.category as string) ?? "uncategorized",
     summary: (data.summary as string) ?? "",
+    author: (data.author as string) ?? "신중선",
+    references: (data.references as string[]) ?? [],
     ...(data.source ? { source: data.source as string } : {}),
     ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     contentHtml,
