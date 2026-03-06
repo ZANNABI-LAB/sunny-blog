@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
-import SearchPlaceholder from "@/components/search-placeholder";
+import SearchBar from "@/components/search-bar";
 import type { GraphData } from "@/types/graph";
 
 type MainHeroProps = {
@@ -37,7 +37,7 @@ const MainHero = ({ graphData }: MainHeroProps) => {
       {/* Overlay layer */}
       <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center">
         <TitleOverlay />
-        <SearchPlaceholder />
+        <SearchBar />
       </div>
     </div>
   );
