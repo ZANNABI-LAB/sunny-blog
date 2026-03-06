@@ -4,6 +4,7 @@ date: "2026-03-04"
 tags: ["tailwind", "css", "frontend", "nextjs"]
 category: "Frontend"
 summary: "Tailwind CSS v4의 주요 변경점과 v3에서 마이그레이션하는 방법을 실전 예시와 함께 정리합니다."
+author: "신중선"
 ---
 
 ## Tailwind CSS v4란?

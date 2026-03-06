@@ -4,6 +4,7 @@ date: "2026-03-06"
 tags: ["nextjs", "react", "app-router", "frontend"]
 category: "Frontend"
 summary: "Next.js 15 App Router의 Server Component, Streaming, Route Handler 등 핵심 개념을 실전 예시와 함께 정리합니다."
+author: "신중선"
 ---
 
 ## App Router란?

@@ -4,6 +4,7 @@ date: "2026-03-05"
 tags: ["database", "replication", "mysql", "backend"]
 category: "Backend"
 summary: "데이터베이스 복제의 개념과 주요 방식(마스터-슬레이브, 멀티 마스터)을 코드 예시와 함께 정리합니다."
+author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/42"
 ---

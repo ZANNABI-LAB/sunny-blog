@@ -5,6 +5,8 @@ export type PostMeta = {
   tags: string[];
   category: string;
   summary: string;
+  author: string;
+  references: string[];
   source?: string;
   sourceUrl?: string;
 };
