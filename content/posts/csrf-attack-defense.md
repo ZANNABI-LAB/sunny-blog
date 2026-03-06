@@ -3,7 +3,7 @@ title: "CSRF 공격과 방어 전략"
 shortTitle: "CSRF 공격"
 date: "2026-03-06"
 tags: ["CSRF", "보안", "웹보안"]
-category: "설명해주세요.백엔드"
+category: "Security"
 summary: "사이트 간 요청 위조(CSRF) 공격의 원리와 효과적인 방어 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

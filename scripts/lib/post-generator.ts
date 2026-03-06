@@ -24,11 +24,21 @@ const CLAUDE_MODEL = "claude-sonnet-4-20250514";
 const MAX_TOKENS = 4096;
 const MAX_RETRIES = 2;
 
+const VALID_CATEGORIES = [
+  "Architecture",
+  "Design Pattern",
+  "Security",
+  "Testing",
+  "Infrastructure",
+  "Backend",
+  "Frontend",
+] as const;
+
 const CATEGORY_MAP: Record<string, string> = {
   "백엔드": "Backend",
   "프론트엔드": "Frontend",
-  "인프라": "Infra",
-  CS: "CS",
+  "인프라": "Infrastructure",
+  CS: "Architecture",
 };
 
 const mapCategory = (korean: string): string => {
@@ -37,6 +47,17 @@ const mapCategory = (korean: string): string => {
 
 const SYSTEM_PROMPT = `당신은 기술 블로그 포스트 작성 전문가입니다.
 매일메일(maeil-mail.kr)의 기술 질문과 답변을 참고하여, 블로그 포스트를 작성합니다.
+
+## 카테고리 (반드시 아래 중 하나를 사용)
+- Architecture: 시스템 아키텍처, 아키텍처 패턴 (CQRS, 이벤트 소싱 등)
+- Design Pattern: 디자인 패턴 (전략, 팩토리, DI 등)
+- Security: 보안, 인증, 암호화
+- Testing: 테스트, 품질, 코드 커버리지
+- Infrastructure: 인프라, CI/CD, 네트워크, DevOps
+- Backend: 백엔드 프레임워크, Spring, DB
+- Frontend: 프론트엔드, 브라우저 API, 패키지 매니저
+
+도트 표기법도 지원합니다 (예: "Backend.Spring"). root 카테고리는 반드시 위 7개 중 하나여야 합니다.
 
 ## 포스트 스타일 가이드
 

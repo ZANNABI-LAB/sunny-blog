@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import type { SimulationNodeDatum, SimulationLinkDatum } from "d3";
 import type { GraphData, GraphNode } from "@/types/graph";
+import { getCategoryColor, getCategoryRoot } from "@/lib/categories";
 import PostPreview from "@/components/post-preview";
 
 type GraphViewProps = {
   data: GraphData;
+  highlightedCategory?: string | null;
 };
 
 type SimNode = GraphNode & SimulationNodeDatum;
@@ -17,16 +19,7 @@ type SimEdge = SimulationLinkDatum<SimNode> & {
   sharedTags: string[];
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  backend: "#f59e0b",
-  frontend: "#06b6d4",
-};
-const DEFAULT_NODE_COLOR = "#818cf8";
-
-const getNodeColor = (category: string): string =>
-  CATEGORY_COLORS[category.toLowerCase()] ?? DEFAULT_NODE_COLOR;
-
-const GraphView = ({ data }: GraphViewProps) => {
+const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
@@ -37,6 +30,60 @@ const GraphView = ({ data }: GraphViewProps) => {
     null
   );
 
+  // Store refs for category highlight updates without re-running simulation
+  const nodeElementsRef = useRef<d3.Selection<
+    SVGGElement,
+    SimNode,
+    SVGGElement,
+    unknown
+  > | null>(null);
+  const linkElementsRef = useRef<d3.Selection<
+    SVGLineElement,
+    SimEdge,
+    SVGGElement,
+    unknown
+  > | null>(null);
+  const simNodesRef = useRef<SimNode[]>([]);
+
+  // Apply category highlight via ref (avoids re-creating simulation)
+  useEffect(() => {
+    const nodeElements = nodeElementsRef.current;
+    const linkElements = linkElementsRef.current;
+    if (!nodeElements || !linkElements) return;
+
+    if (highlightedCategory) {
+      nodeElements
+        .transition()
+        .duration(200)
+        .attr("opacity", (d) => {
+          if (d.type === "category") {
+            return d.title === highlightedCategory ? 1 : 0.1;
+          }
+          return getCategoryRoot(d.category) === highlightedCategory ? 1 : 0.1;
+        });
+
+      linkElements
+        .transition()
+        .duration(200)
+        .attr("opacity", (d) => {
+          const src = d.source as SimNode;
+          const tgt = d.target as SimNode;
+          const srcMatch =
+            src.type === "category"
+              ? src.title === highlightedCategory
+              : getCategoryRoot(src.category) === highlightedCategory;
+          const tgtMatch =
+            tgt.type === "category"
+              ? tgt.title === highlightedCategory
+              : getCategoryRoot(tgt.category) === highlightedCategory;
+          return srcMatch && tgtMatch ? 1 : 0.1;
+        });
+    } else {
+      nodeElements.transition().duration(200).attr("opacity", 1);
+      linkElements.transition().duration(200).attr("opacity", 1);
+    }
+  }, [highlightedCategory]);
+
   useEffect(() => {
     const container = containerRef.current;
     const svgEl = svgRef.current;
@@ -45,6 +92,7 @@ const GraphView = ({ data }: GraphViewProps) => {
     const { width, height } = container.getBoundingClientRect();
 
     const simNodes: SimNode[] = data.nodes.map((n) => ({ ...n }));
+    simNodesRef.current = simNodes;
     const simEdges: SimEdge[] = data.edges.map((e) => ({
       source: e.source,
       target: e.target,
@@ -60,6 +108,8 @@ const GraphView = ({ data }: GraphViewProps) => {
     svg.selectAll("*").remove();
 
     const defs = svg.append("defs");
+
+    // Glow filter for post nodes
     const filter = defs
       .append("filter")
       .attr("id", "glow")
@@ -74,6 +124,22 @@ const GraphView = ({ data }: GraphViewProps) => {
     const merge = filter.append("feMerge");
     merge.append("feMergeNode").attr("in", "blur");
     merge.append("feMergeNode").attr("in", "SourceGraphic");
+
+    // Hub glow filter
+    const hubFilter = defs
+      .append("filter")
+      .attr("id", "hub-glow")
+      .attr("x", "-50%")
+      .attr("y", "-50%")
+      .attr("width", "200%")
+      .attr("height", "200%");
+    hubFilter
+      .append("feGaussianBlur")
+      .attr("stdDeviation", "8")
+      .attr("result", "blur");
+    const hubMerge = hubFilter.append("feMerge");
+    hubMerge.append("feMergeNode").attr("in", "blur");
+    hubMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
     const zoomContainer = svg.append("g").attr("class", "zoom-container");
 
@@ -96,34 +162,84 @@ const GraphView = ({ data }: GraphViewProps) => {
       .attr("stroke", "rgba(255,255,255,0.15)")
       .attr("stroke-width", (d) => Math.max(1, Math.min(d.weight, 3)));
 
+    linkElementsRef.current = linkElements;
+
     const nodeElements = nodeGroup
       .selectAll<SVGGElement, SimNode>("g")
       .data(simNodes)
       .join("g")
       .attr("cursor", "pointer");
 
-    nodeElements
-      .append("circle")
-      .attr("r", 14)
-      .attr("fill", (d) => getNodeColor(d.category))
-      .attr("filter", "url(#glow)");
+    nodeElementsRef.current = nodeElements;
 
-    nodeElements
-      .append("text")
-      .attr("dy", 28)
-      .attr("text-anchor", "middle")
-      .attr("fill", "#a1a1aa")
-      .attr("font-size", "11")
-      .text((d) => d.shortTitle ?? d.title);
+    // Render nodes differently based on type
+    nodeElements.each(function (d) {
+      const g = d3.select(this);
+      const color = getCategoryColor(d.category);
+
+      if (d.type === "category") {
+        // Hub node: outer ring
+        g.append("circle")
+          .attr("r", 28)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 2)
+          .attr("opacity", 0.3);
+
+        // Hub node: inner filled circle
+        g.append("circle")
+          .attr("r", 26)
+          .attr("fill", color)
+          .attr("opacity", 0.85)
+          .attr("filter", "url(#hub-glow)");
+
+        // Hub label
+        g.append("text")
+          .attr("dy", 40)
+          .attr("text-anchor", "middle")
+          .attr("fill", "rgba(255,255,255,0.8)")
+          .attr("font-size", "13")
+          .attr("font-weight", "600")
+          .text(d.title);
+      } else {
+        // Post node
+        g.append("circle")
+          .attr("r", 14)
+          .attr("fill", color)
+          .attr("filter", "url(#glow)");
+
+        // Post label
+        g.append("text")
+          .attr("dy", 28)
+          .attr("text-anchor", "middle")
+          .attr("fill", "#a1a1aa")
+          .attr("font-size", "11")
+          .text(d.shortTitle ?? d.title);
+      }
+    });
 
     const highlightConnected = (node: SimNode) => {
       const connectedIds = new Set<string>([node.id]);
-      simEdges.forEach((e) => {
-        const src = (e.source as SimNode).id;
-        const tgt = (e.target as SimNode).id;
-        if (src === node.id) connectedIds.add(tgt);
-        if (tgt === node.id) connectedIds.add(src);
-      });
+
+      if (node.type === "category") {
+        // Hub hover: highlight all posts in this category
+        simNodes.forEach((n) => {
+          if (
+            n.type === "post" &&
+            getCategoryRoot(n.category) === node.title
+          ) {
+            connectedIds.add(n.id);
+          }
+        });
+      } else {
+        // Post hover: highlight connected nodes
+        simEdges.forEach((e) => {
+          const src = (e.source as SimNode).id;
+          const tgt = (e.target as SimNode).id;
+          if (src === node.id) connectedIds.add(tgt);
+          if (tgt === node.id) connectedIds.add(src);
+        });
+      }
 
       nodeElements
         .transition()
@@ -136,14 +252,14 @@ const GraphView = ({ data }: GraphViewProps) => {
         .attr("stroke", (d) => {
           const src = (d.source as SimNode).id;
           const tgt = (d.target as SimNode).id;
-          return src === node.id || tgt === node.id
+          return connectedIds.has(src) && connectedIds.has(tgt)
             ? "rgba(255,255,255,0.5)"
             : "rgba(255,255,255,0.05)";
         })
         .attr("opacity", (d) => {
           const src = (d.source as SimNode).id;
           const tgt = (d.target as SimNode).id;
-          return src === node.id || tgt === node.id ? 1 : 0.15;
+          return connectedIds.has(src) && connectedIds.has(tgt) ? 1 : 0.15;
         });
     };
 
@@ -159,12 +275,15 @@ const GraphView = ({ data }: GraphViewProps) => {
     nodeElements
       .on("mouseenter", (event, d) => {
         if (isDragging.current) return;
-        const transform = d3.zoomTransform(svgEl);
-        setHoveredNode(d);
-        setPreviewPos({
-          x: transform.applyX(d.x!),
-          y: transform.applyY(d.y!),
-        });
+        // Only show preview for post nodes
+        if (d.type === "post") {
+          const transform = d3.zoomTransform(svgEl);
+          setHoveredNode(d);
+          setPreviewPos({
+            x: transform.applyX(d.x!),
+            y: transform.applyY(d.y!),
+          });
+        }
         highlightConnected(d);
       })
       .on("mouseleave", () => {
@@ -173,18 +292,33 @@ const GraphView = ({ data }: GraphViewProps) => {
         resetHighlight();
       });
 
+    // Custom force: hub-post distance vs post-post distance
+    const linkForce = d3
+      .forceLink<SimNode, SimEdge>(simEdges)
+      .id((d) => d.id)
+      .distance((d) => {
+        const src = d.source as SimNode;
+        const tgt = d.target as SimNode;
+        const hasHub = src.type === "category" || tgt.type === "category";
+        return hasHub ? 120 : 200;
+      });
+
     const simulation = d3
       .forceSimulation<SimNode>(simNodes)
+      .force("link", linkForce)
       .force(
-        "link",
-        d3
-          .forceLink<SimNode, SimEdge>(simEdges)
-          .id((d) => d.id)
-          .distance(180)
+        "charge",
+        d3.forceManyBody<SimNode>().strength((d) =>
+          d.type === "category" ? -800 : -400
+        )
       )
-      .force("charge", d3.forceManyBody().strength(-400))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius(55))
+      .force(
+        "collide",
+        d3.forceCollide<SimNode>().radius((d) =>
+          d.type === "category" ? 70 : 55
+        )
+      )
       .on("tick", () => {
         linkElements
           .attr("x1", (d) => (d.source as SimNode).x ?? 0)
@@ -228,15 +362,33 @@ const GraphView = ({ data }: GraphViewProps) => {
       })
       .on("end", (event, d) => {
         if (!isDragging.current) {
-          d3.select(event.sourceEvent.currentTarget as Element)
-            .select("circle")
-            .transition()
-            .duration(150)
-            .attr("r", 20)
-            .transition()
-            .duration(200)
-            .attr("r", 14);
-          setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+          if (d.type === "category") {
+            // Hub node click -> navigate to tech page with category filter
+            const baseR = 26;
+            d3.select(event.sourceEvent.currentTarget as Element)
+              .select("circle:nth-child(2)")
+              .transition()
+              .duration(150)
+              .attr("r", baseR + 6)
+              .transition()
+              .duration(200)
+              .attr("r", baseR);
+            setTimeout(
+              () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
+              300
+            );
+          } else {
+            // Post node click -> navigate to post detail
+            d3.select(event.sourceEvent.currentTarget as Element)
+              .select("circle")
+              .transition()
+              .duration(150)
+              .attr("r", 20)
+              .transition()
+              .duration(200)
+              .attr("r", 14);
+            setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+          }
         }
         isDragging.current = false;
         dragStartPos.current = null;
@@ -264,7 +416,7 @@ const GraphView = ({ data }: GraphViewProps) => {
   return (
     <div ref={containerRef} className="absolute inset-0">
       <svg ref={svgRef} />
-      {hoveredNode && previewPos && (
+      {hoveredNode && hoveredNode.type === "post" && previewPos && (
         <PostPreview
           node={hoveredNode}
           position={previewPos}

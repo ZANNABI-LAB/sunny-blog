@@ -1,8 +1,31 @@
+import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/post-card";
+import CategoryFilter from "@/components/category-filter";
+import { getCategoryRoot, CATEGORIES } from "@/lib/categories";
 
-const TechPage = () => {
-  const posts = getAllPosts();
+type TechPageProps = {
+  searchParams: Promise<{ category?: string }>;
+};
+
+const TechPage = async ({ searchParams }: TechPageProps) => {
+  const { category } = await searchParams;
+  const allPosts = getAllPosts();
+
+  // Calculate counts per category
+  const counts: Record<string, number> = {};
+  for (const post of allPosts) {
+    const root = getCategoryRoot(post.category);
+    counts[root] = (counts[root] ?? 0) + 1;
+  }
+
+  // Only show categories that have posts, sorted by CATEGORIES order
+  const activeCategories = CATEGORIES.filter((c) => (counts[c] ?? 0) > 0);
+
+  // Filter posts by category if specified
+  const posts = category
+    ? allPosts.filter((p) => getCategoryRoot(p.category) === category)
+    : allPosts;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -10,6 +33,12 @@ const TechPage = () => {
       <p className="mt-2 text-zinc-400">
         기술 학습 기록과 개발 경험을 공유합니다.
       </p>
+
+      <div className="mt-6">
+        <Suspense fallback={null}>
+          <CategoryFilter categories={activeCategories} counts={counts} />
+        </Suspense>
+      </div>
 
       {posts.length > 0 ? (
         <section className="mt-8 flex flex-col gap-6">

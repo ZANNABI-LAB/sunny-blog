@@ -3,7 +3,7 @@ title: "의존성 주입(Dependency Injection)이란 무엇인가요?"
 shortTitle: "의존성 주입"
 date: "2026-03-06"
 tags: ["dependency-injection", "design-pattern", "oop"]
-category: "무엇인가요?백엔드"
+category: "Design Pattern"
 summary: "객체 간 결합도를 낮추고 유연한 설계를 만드는 의존성 주입 패턴을 살펴봅니다"
 author: "신중선"
 source: "maeil-mail"

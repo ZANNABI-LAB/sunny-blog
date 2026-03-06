@@ -3,7 +3,7 @@ title: "코드 커버리지: 테스트 품질을 측정하는 핵심 지표"
 shortTitle: "코드 커버리지"
 date: "2026-03-06"
 tags: ["testing", "code-coverage", "quality"]
-category: "설명해주세요.백엔드"
+category: "Testing"
 summary: "테스트가 프로덕션 코드를 얼마나 실행했는지 측정하는 코드 커버리지의 개념과 종류를 설명합니다."
 author: "신중선"
 source: "maeil-mail"

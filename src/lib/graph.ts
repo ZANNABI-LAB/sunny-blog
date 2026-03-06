@@ -1,5 +1,6 @@
 import type { PostMeta } from "@/types/post";
 import type { GraphData, GraphNode, GraphEdge } from "@/types/graph";
+import { getCategoryRoot } from "@/lib/categories";
 
 const toGraphNode = (post: PostMeta): GraphNode => ({
   id: post.slug,
@@ -9,6 +10,7 @@ const toGraphNode = (post: PostMeta): GraphNode => ({
   category: post.category,
   tags: post.tags,
   summary: post.summary,
+  type: "post",
 });
 
 const findSharedTags = (a: string[], b: string[]): string[] => {
@@ -17,17 +19,45 @@ const findSharedTags = (a: string[], b: string[]): string[] => {
 };
 
 export const buildGraphData = (posts: PostMeta[]): GraphData => {
-  const nodes = posts.map(toGraphNode);
+  const postNodes = posts.map(toGraphNode);
   const edges: GraphEdge[] = [];
 
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const a = nodes[i];
-      const b = nodes[j];
-      const sharedTags = findSharedTags(a.tags, b.tags);
-      const sameCategory = a.category === b.category;
+  // Collect unique categories that have posts
+  const categorySet = new Set<string>();
+  for (const node of postNodes) {
+    categorySet.add(getCategoryRoot(node.category));
+  }
 
-      if (sharedTags.length > 0 || sameCategory) {
+  // Create hub nodes for each category
+  const hubNodes: GraphNode[] = Array.from(categorySet).map((cat) => ({
+    id: `category::${cat}`,
+    slug: "",
+    title: cat,
+    category: cat,
+    tags: [],
+    summary: "",
+    type: "category",
+  }));
+
+  // Post -> Hub edges
+  for (const node of postNodes) {
+    const root = getCategoryRoot(node.category);
+    edges.push({
+      source: node.id,
+      target: `category::${root}`,
+      weight: 2,
+      sharedTags: [],
+    });
+  }
+
+  // Post <-> Post edges (shared tags only, no sameCategory condition)
+  for (let i = 0; i < postNodes.length; i++) {
+    for (let j = i + 1; j < postNodes.length; j++) {
+      const a = postNodes[i];
+      const b = postNodes[j];
+      const sharedTags = findSharedTags(a.tags, b.tags);
+
+      if (sharedTags.length > 0) {
         edges.push({
           source: a.id,
           target: b.id,
@@ -38,5 +68,5 @@ export const buildGraphData = (posts: PostMeta[]): GraphData => {
     }
   }
 
-  return { nodes, edges };
+  return { nodes: [...hubNodes, ...postNodes], edges };
 };
