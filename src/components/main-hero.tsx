@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
 import SearchPlaceholder from "@/components/search-placeholder";
@@ -10,6 +11,13 @@ type MainHeroProps = {
 };
 
 const MainHero = ({ graphData }: MainHeroProps) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
     <div className="relative h-[calc(100dvh-48px)] overflow-hidden">
       {/* Background layer */}
