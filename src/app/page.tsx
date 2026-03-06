@@ -1,14 +1,14 @@
 import { getAllPosts } from "@/lib/posts";
 import { buildGraphData } from "@/lib/graph";
-import GraphView from "@/components/graph-view";
+import MainHero from "@/components/main-hero";
 
 const MainPage = () => {
   const posts = getAllPosts();
   const graphData = buildGraphData(posts);
 
   return (
-    <div>
-      <GraphView data={graphData} />
+    <div className="-mx-4 -my-8">
+      <MainHero graphData={graphData} />
     </div>
   );
 };
