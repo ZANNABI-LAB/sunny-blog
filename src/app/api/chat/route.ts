@@ -11,8 +11,9 @@ const MATCH_COUNT = 3;
 const CONTENT_TRUNCATE_LENGTH = 3000;
 const CLAUDE_MODEL = "claude-sonnet-4-20250514";
 const MAX_TOKENS = 1024;
+const MAX_HISTORY_TURNS = 6;
 
-const SYSTEM_PROMPT = `당신은 "Sunny Blog"의 AI 어시스턴트입니다.
+const SYSTEM_PROMPT = `당신은 "Sunny Blog"의 AI 어시스턴트 R2-D2입니다.
 블로그에 있는 기술 포스트를 기반으로 질문에 답변합니다.
 
 규칙:
@@ -35,6 +36,28 @@ const sendSSE = (
   data: string
 ) => {
   controller.enqueue(encoder.encode(`data: ${data}\n\n`));
+};
+
+type HistoryMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+const validateHistory = (
+  history: unknown
+): HistoryMessage[] => {
+  if (!Array.isArray(history)) return [];
+  const valid = history
+    .filter(
+      (item): item is HistoryMessage =>
+        typeof item === "object" &&
+        item !== null &&
+        (item.role === "user" || item.role === "assistant") &&
+        typeof item.content === "string" &&
+        item.content.trim().length > 0
+    )
+    .slice(-(MAX_HISTORY_TURNS * 2));
+  return valid;
 };
 
 export const POST = async (request: NextRequest) => {
@@ -69,7 +92,10 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    // Generate embedding for the message
+    // Validate history
+    const history = validateHistory(body.history);
+
+    // Generate embedding for the message (RAG on latest message only)
     let queryEmbedding: number[];
     try {
       queryEmbedding = await generateEmbedding(message);
@@ -135,6 +161,12 @@ export const POST = async (request: NextRequest) => {
 
     const userMessage = `다음은 블로그 포스트 내용입니다:\n\n${context}\n\n---\n\n사용자 질문: ${message}`;
 
+    // Build messages array with history
+    const claudeMessages: { role: "user" | "assistant"; content: string }[] = [
+      ...history,
+      { role: "user", content: userMessage },
+    ];
+
     // Stream response
     const stream = new ReadableStream({
       async start(controller) {
@@ -145,7 +177,7 @@ export const POST = async (request: NextRequest) => {
             model: CLAUDE_MODEL,
             max_tokens: MAX_TOKENS,
             system: SYSTEM_PROMPT,
-            messages: [{ role: "user", content: userMessage }],
+            messages: claudeMessages,
           });
 
           for await (const event of messageStream) {
