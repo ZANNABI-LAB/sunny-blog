@@ -2,12 +2,13 @@
 title: "CSRF 공격과 방어 전략"
 shortTitle: "CSRF 공격"
 date: "2026-03-06"
-tags: ["CSRF", "보안", "웹보안"]
-category: "설명해주세요.백엔드"
+tags: ["csrf", "web-security", "security", "backend"]
+category: "Backend"
 summary: "사이트 간 요청 위조(CSRF) 공격의 원리와 효과적인 방어 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/168"
+references: ["https://owasp.org/www-community/attacks/csrf", "https://developer.mozilla.org/en-US/docs/Web/Security/Types_of_attacks#cross-site_request_forgery_csrf"]
 ---
 
 ## CSRF 공격이란?

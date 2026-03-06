@@ -2,12 +2,13 @@
 title: "스프링 트랜잭션 AOP 동작 흐름"
 shortTitle: "트랜잭션 AOP"
 date: "2026-03-06"
-tags: ["Spring", "AOP", "Transaction"]
-category: "설명해주세요.백엔드"
+tags: ["spring", "aop", "transaction", "backend"]
+category: "Backend"
 summary: "스프링 트랜잭션 AOP의 핵심 구성 요소와 동작 흐름을 설명합니다."
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/181"
+references: ["https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative.html", "https://docs.spring.io/spring-framework/reference/core/aop.html"]
 ---
 
 ## 스프링 트랜잭션 AOP란?

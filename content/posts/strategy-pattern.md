@@ -2,12 +2,13 @@
 title: "전략 패턴 (Strategy Pattern) - 행위를 동적으로 변경하는 디자인 패턴"
 shortTitle: "전략 패턴"
 date: "2026-03-06"
-tags: ["디자인패턴", "객체지향", "전략패턴"]
-category: "설명해주세요.백엔드"
+tags: ["strategy-pattern", "design-pattern", "oop", "backend"]
+category: "Backend"
 summary: "객체의 행위를 런타임에 동적으로 변경할 수 있는 전략 패턴을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/177"
+references: ["https://refactoring.guru/design-patterns/strategy", "https://en.wikipedia.org/wiki/Strategy_pattern"]
 ---
 
 ## 전략 패턴이란?

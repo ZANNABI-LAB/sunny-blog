@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
+export const maxDuration = 30;
+
 import { generateEmbedding } from "@/lib/embedding";
 import { createSupabaseClient } from "@/lib/supabase";
 import { cosineSimilarity } from "@/lib/similarity";
@@ -204,12 +206,34 @@ export const POST = async (request: NextRequest) => {
           sendSSE(controller, encoder, "[DONE]");
         } catch (err) {
           console.error("Streaming error:", err);
+
+          let errorMessage = "응답 생성 중 오류가 발생했습니다.";
+
+          if (err instanceof Anthropic.AuthenticationError) {
+            errorMessage =
+              "AI 서비스 인증에 실패했습니다. 관리자에게 문의해주세요.";
+          } else if (err instanceof Anthropic.RateLimitError) {
+            errorMessage =
+              "요청이 너무 많습니다. 잠시 후 다시 시도해주세요.";
+          } else if (err instanceof Anthropic.APIConnectionError) {
+            errorMessage =
+              "AI 서비스에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.";
+          } else if (
+            err instanceof Error &&
+            err.message.includes("credit")
+          ) {
+            errorMessage =
+              "AI 서비스 크레딧이 부족합니다. 관리자에게 문의해주세요.";
+          } else if (err instanceof Anthropic.APIError) {
+            errorMessage = `AI 서비스 오류가 발생했습니다. (${err.status})`;
+          }
+
           sendSSE(
             controller,
             encoder,
             JSON.stringify({
               type: "error",
-              message: "응답 생성 중 오류가 발생했습니다.",
+              message: errorMessage,
             })
           );
           sendSSE(controller, encoder, "[DONE]");

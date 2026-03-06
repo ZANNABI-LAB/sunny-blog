@@ -226,17 +226,35 @@ const GraphView = ({ data }: GraphViewProps) => {
         d.fx = event.x;
         d.fy = event.y;
       })
-      .on("end", (event, d) => {
+      .on("end", function (event, d) {
         if (!isDragging.current) {
-          d3.select(event.sourceEvent.currentTarget as Element)
-            .select("circle")
-            .transition()
-            .duration(150)
-            .attr("r", 20)
-            .transition()
-            .duration(200)
-            .attr("r", 14);
-          setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+          // Pulse animation - use `this` (the dragged <g> element) instead of event.sourceEvent.currentTarget
+          try {
+            d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(150)
+              .attr("r", 20)
+              .transition()
+              .duration(200)
+              .attr("r", 14);
+          } catch {
+            // Animation failure should never block navigation
+          }
+
+          // Navigate based on node type
+          if (d.slug) {
+            setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+          } else {
+            // Hub node (category) - navigate to filtered tech list
+            setTimeout(
+              () =>
+                router.push(
+                  `/tech?category=${encodeURIComponent(d.category)}`
+                ),
+              300
+            );
+          }
         }
         isDragging.current = false;
         dragStartPos.current = null;

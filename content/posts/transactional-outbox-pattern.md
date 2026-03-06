@@ -2,12 +2,13 @@
 title: "트랜잭셔널 아웃박스 패턴 완벽 가이드"
 shortTitle: "아웃박스 패턴"
 date: "2026-03-06"
-tags: ["transactional-outbox", "distributed-system", "event-driven"]
-category: "설명해주세요.백엔드"
+tags: ["transactional-outbox", "distributed-system", "event-driven", "backend"]
+category: "Backend"
 summary: "분산 시스템에서 데이터 정합성을 보장하는 트랜잭셔널 아웃박스 패턴을 설명합니다"
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/171"
+references: ["https://microservices.io/patterns/data/transactional-outbox.html", "https://learn.microsoft.com/en-us/azure/architecture/best-practices/transactional-outbox-cosmos"]
 ---
 
 ## 트랜잭셔널 아웃박스 패턴이란?
