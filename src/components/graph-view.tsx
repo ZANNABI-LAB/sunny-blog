@@ -60,7 +60,7 @@ const GraphView = ({ data }: GraphViewProps) => {
       .attr("height", "200%");
     filter
       .append("feGaussianBlur")
-      .attr("stdDeviation", "3")
+      .attr("stdDeviation", "4")
       .attr("result", "blur");
     const merge = filter.append("feMerge");
     merge.append("feMergeNode").attr("in", "blur");
@@ -95,13 +95,13 @@ const GraphView = ({ data }: GraphViewProps) => {
 
     nodeElements
       .append("circle")
-      .attr("r", 10)
+      .attr("r", 14)
       .attr("fill", (d) => getNodeColor(d.category))
       .attr("filter", "url(#glow)");
 
     nodeElements
       .append("text")
-      .attr("dy", 24)
+      .attr("dy", 28)
       .attr("text-anchor", "middle")
       .attr("fill", "#a1a1aa")
       .attr("font-size", "11")
@@ -114,11 +114,11 @@ const GraphView = ({ data }: GraphViewProps) => {
         d3
           .forceLink<SimNode, SimEdge>(simEdges)
           .id((d) => d.id)
-          .distance(120)
+          .distance(180)
       )
-      .force("charge", d3.forceManyBody().strength(-200))
+      .force("charge", d3.forceManyBody().strength(-400))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius(40))
+      .force("collide", d3.forceCollide().radius(55))
       .on("tick", () => {
         linkElements
           .attr("x1", (d) => (d.source as SimNode).x ?? 0)
@@ -166,7 +166,7 @@ const GraphView = ({ data }: GraphViewProps) => {
   }, [data]);
 
   return (
-    <div ref={containerRef} className="w-full min-h-[400px] md:min-h-[600px]">
+    <div ref={containerRef} className="absolute inset-0">
       <svg ref={svgRef} />
     </div>
   );
