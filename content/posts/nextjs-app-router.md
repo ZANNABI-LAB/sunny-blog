@@ -1,5 +1,6 @@
 ---
 title: "Next.js 15 App Router 핵심 개념 정리"
+shortTitle: "App Router"
 date: "2026-03-06"
 tags: ["nextjs", "react", "app-router", "frontend"]
 category: "Frontend"

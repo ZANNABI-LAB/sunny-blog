@@ -2,6 +2,7 @@ export type GraphNode = {
   id: string;
   slug: string;
   title: string;
+  shortTitle?: string;
   category: string;
   tags: string[];
 };

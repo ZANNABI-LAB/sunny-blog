@@ -7,7 +7,7 @@ const MainPage = () => {
   const graphData = buildGraphData(posts);
 
   return (
-    <div className="-mx-4 -my-8">
+    <div className="-mx-4 -mt-8 -mb-[104px]">
       <MainHero graphData={graphData} />
     </div>
   );
