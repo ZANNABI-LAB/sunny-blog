@@ -72,15 +72,29 @@ sourceUrl: "https://www.maeil-mail.kr/question/{id}"
 - 주제를 명확히 나타내는 2~4단어
 
 ## 출력 형식
-반드시 다음 JSON 형식으로 출력하세요. JSON 외 다른 텍스트를 포함하지 마세요.
-\`\`\`json
-{
-  "slug": "example-slug",
-  "content": "---\\ntitle: \\"제목\\"\\n...\\n---\\n\\n## 주제란?\\n\\n본문..."
-}
+아래 형식을 정확히 따르세요. 첫 줄에 slug, 구분선 후 마크다운 전문을 출력합니다.
+
+\`\`\`
+SLUG: example-slug
+---CONTENT---
+---
+title: "제목"
+shortTitle: "짧은 제목"
+date: "2025-02-16"
+tags: ["tag1", "tag2"]
+category: "Backend"
+summary: "요약"
+author: "신중선"
+source: "maeil-mail"
+sourceUrl: "https://www.maeil-mail.kr/question/168"
+---
+
+## 주제란?
+
+본문...
 \`\`\`
 
-content 필드에는 frontmatter를 포함한 전체 마크다운 파일 내용을 넣으세요.`;
+slug 줄과 구분선(\`---CONTENT---\`) 이후에 frontmatter를 포함한 전체 마크다운을 출력하세요.`;
 
 const buildUserPrompt = (
   question: MaeilMailQuestion,
@@ -112,38 +126,26 @@ ${question.answer}
 };
 
 /**
- * Claude API 응답에서 JSON을 파싱한다.
+ * Claude API 응답에서 SLUG + CONTENT 구분자 형식을 파싱한다.
  */
 const parseClaudeResponse = (
   text: string
 ): { slug: string; content: string } | null => {
-  // JSON 코드 블록에서 추출 시도
-  const jsonBlockMatch = text.match(/```json\s*\n?([\s\S]*?)\n?```/);
-  const jsonStr = jsonBlockMatch ? jsonBlockMatch[1] : text;
+  // SLUG: xxx 추출
+  const slugMatch = text.match(/SLUG:\s*(.+)/);
+  if (!slugMatch) return null;
 
-  try {
-    const parsed = JSON.parse(jsonStr.trim());
-    if (
-      typeof parsed.slug === "string" &&
-      typeof parsed.content === "string"
-    ) {
-      return { slug: parsed.slug, content: parsed.content };
-    }
-  } catch {
-    // JSON 파싱 실패 — raw text에서 직접 추출 시도
-    const slugMatch = text.match(/"slug"\s*:\s*"([^"]+)"/);
-    const contentMatch = text.match(/"content"\s*:\s*"([\s\S]+)"\s*\}$/);
-    if (slugMatch && contentMatch) {
-      try {
-        const content = JSON.parse(`"${contentMatch[1]}"`);
-        return { slug: slugMatch[1], content };
-      } catch {
-        // 최종 실패
-      }
-    }
-  }
+  const slug = slugMatch[1].trim();
 
-  return null;
+  // ---CONTENT--- 이후의 모든 텍스트
+  const contentSeparator = "---CONTENT---";
+  const sepIndex = text.indexOf(contentSeparator);
+  if (sepIndex === -1) return null;
+
+  const content = text.slice(sepIndex + contentSeparator.length).trim();
+  if (!content) return null;
+
+  return { slug, content };
 };
 
 /**
