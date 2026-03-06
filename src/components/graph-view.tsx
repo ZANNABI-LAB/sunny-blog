@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import type { SimulationNodeDatum, SimulationLinkDatum } from "d3";
 import type { GraphData, GraphNode } from "@/types/graph";
+import PostPreview from "@/components/post-preview";
 
 type GraphViewProps = {
   data: GraphData;
@@ -27,6 +29,13 @@ const getNodeColor = (category: string): string =>
 const GraphView = ({ data }: GraphViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const router = useRouter();
+  const isDragging = useRef<boolean>(false);
+  const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<SimNode | null>(null);
+  const [previewPos, setPreviewPos] = useState<{ x: number; y: number } | null>(
+    null
+  );
 
   useEffect(() => {
     const container = containerRef.current;
@@ -91,7 +100,7 @@ const GraphView = ({ data }: GraphViewProps) => {
       .selectAll<SVGGElement, SimNode>("g")
       .data(simNodes)
       .join("g")
-      .attr("cursor", "grab");
+      .attr("cursor", "pointer");
 
     nodeElements
       .append("circle")
@@ -106,6 +115,63 @@ const GraphView = ({ data }: GraphViewProps) => {
       .attr("fill", "#a1a1aa")
       .attr("font-size", "11")
       .text((d) => d.shortTitle ?? d.title);
+
+    const highlightConnected = (node: SimNode) => {
+      const connectedIds = new Set<string>([node.id]);
+      simEdges.forEach((e) => {
+        const src = (e.source as SimNode).id;
+        const tgt = (e.target as SimNode).id;
+        if (src === node.id) connectedIds.add(tgt);
+        if (tgt === node.id) connectedIds.add(src);
+      });
+
+      nodeElements
+        .transition()
+        .duration(200)
+        .attr("opacity", (d) => (connectedIds.has(d.id) ? 1 : 0.15));
+
+      linkElements
+        .transition()
+        .duration(200)
+        .attr("stroke", (d) => {
+          const src = (d.source as SimNode).id;
+          const tgt = (d.target as SimNode).id;
+          return src === node.id || tgt === node.id
+            ? "rgba(255,255,255,0.5)"
+            : "rgba(255,255,255,0.05)";
+        })
+        .attr("opacity", (d) => {
+          const src = (d.source as SimNode).id;
+          const tgt = (d.target as SimNode).id;
+          return src === node.id || tgt === node.id ? 1 : 0.15;
+        });
+    };
+
+    const resetHighlight = () => {
+      nodeElements.transition().duration(200).attr("opacity", 1);
+      linkElements
+        .transition()
+        .duration(200)
+        .attr("stroke", "rgba(255,255,255,0.15)")
+        .attr("opacity", 1);
+    };
+
+    nodeElements
+      .on("mouseenter", (event, d) => {
+        if (isDragging.current) return;
+        const transform = d3.zoomTransform(svgEl);
+        setHoveredNode(d);
+        setPreviewPos({
+          x: transform.applyX(d.x!),
+          y: transform.applyY(d.y!),
+        });
+        highlightConnected(d);
+      })
+      .on("mouseleave", () => {
+        setHoveredNode(null);
+        setPreviewPos(null);
+        resetHighlight();
+      });
 
     const simulation = d3
       .forceSimulation<SimNode>(simNodes)
@@ -135,15 +201,45 @@ const GraphView = ({ data }: GraphViewProps) => {
     const drag = d3
       .drag<SVGGElement, SimNode>()
       .on("start", (event, d) => {
+        dragStartPos.current = {
+          x: event.sourceEvent.clientX,
+          y: event.sourceEvent.clientY,
+        };
+        isDragging.current = false;
         if (!event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
       })
       .on("drag", (event, d) => {
+        if (dragStartPos.current) {
+          const dx = event.sourceEvent.clientX - dragStartPos.current.x;
+          const dy = event.sourceEvent.clientY - dragStartPos.current.y;
+          if (Math.sqrt(dx * dx + dy * dy) > 5) {
+            isDragging.current = true;
+          }
+        }
+        if (isDragging.current) {
+          setHoveredNode(null);
+          setPreviewPos(null);
+          resetHighlight();
+        }
         d.fx = event.x;
         d.fy = event.y;
       })
       .on("end", (event, d) => {
+        if (!isDragging.current) {
+          d3.select(event.sourceEvent.currentTarget as Element)
+            .select("circle")
+            .transition()
+            .duration(150)
+            .attr("r", 20)
+            .transition()
+            .duration(200)
+            .attr("r", 14);
+          setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+        }
+        isDragging.current = false;
+        dragStartPos.current = null;
         if (!event.active) simulation.alphaTarget(0);
         d.fx = null;
         d.fy = null;
@@ -163,11 +259,18 @@ const GraphView = ({ data }: GraphViewProps) => {
       resizeObserver.disconnect();
       simulation.stop();
     };
-  }, [data]);
+  }, [data, router]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
       <svg ref={svgRef} />
+      {hoveredNode && previewPos && (
+        <PostPreview
+          node={hoveredNode}
+          position={previewPos}
+          containerRef={containerRef}
+        />
+      )}
     </div>
   );
 };
