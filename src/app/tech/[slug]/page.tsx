@@ -39,7 +39,7 @@ const PostDetailPage = async ({
   }
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       {/* BackLink */}
       <Link
         href="/tech"

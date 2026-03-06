@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Sunny Blog",
@@ -15,11 +16,20 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="ko">
-      <body className="flex flex-col min-h-screen bg-[#0a0a0f] text-white">
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+        />
+      </head>
+      <body className="flex flex-col min-h-screen bg-[#0a0a0f] text-white font-sans">
         <TabNav />
-        <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
+        <main className="flex-1 w-full px-4 py-8">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
