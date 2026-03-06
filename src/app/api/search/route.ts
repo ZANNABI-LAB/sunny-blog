@@ -19,6 +19,18 @@ const truncateContent = (content: string): string => {
   return content.slice(0, SUMMARY_TRUNCATE_LENGTH) + "...";
 };
 
+const cosineSimilarity = (a: number[], b: number[]): number => {
+  let dot = 0;
+  let normA = 0;
+  let normB = 0;
+  for (let i = 0; i < a.length; i++) {
+    dot += a[i] * b[i];
+    normA += a[i] * a[i];
+    normB += b[i] * b[i];
+  }
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+};
+
 export const POST = async (
   request: NextRequest
 ): Promise<NextResponse<SearchResponse | SearchErrorResponse>> => {
@@ -40,32 +52,35 @@ export const POST = async (
       );
     }
 
-    const embedding = await generateEmbedding(query);
+    const queryEmbedding = await generateEmbedding(query);
 
     const supabase = createSupabaseClient();
-    const { data, error } = await supabase.rpc("match_posts", {
-      query_embedding: embedding,
-      match_count: MATCH_COUNT,
-    });
+    const { data: posts, error } = await supabase
+      .from("post_embeddings")
+      .select("slug, title, content, embedding");
 
     if (error) {
-      console.error("Supabase RPC error:", error);
+      console.error("Supabase query error:", error);
       return NextResponse.json(
         { error: "검색 중 오류가 발생했습니다." },
         { status: 500 }
       );
     }
 
-    const results: SearchResult[] = (data ?? []).map(
-      (row: { slug: string; title: string; content: string; similarity: number }) => ({
-        slug: row.slug,
-        title: row.title,
-        summary: truncateContent(row.content),
-        score: row.similarity,
+    const scored = (posts ?? [])
+      .map((post: { slug: string; title: string; content: string; embedding: string }) => {
+        const postEmbedding: number[] = JSON.parse(post.embedding);
+        return {
+          slug: post.slug,
+          title: post.title,
+          summary: truncateContent(post.content),
+          score: cosineSimilarity(queryEmbedding, postEmbedding),
+        };
       })
-    );
+      .sort((a: SearchResult, b: SearchResult) => b.score - a.score)
+      .slice(0, MATCH_COUNT);
 
-    return NextResponse.json({ results });
+    return NextResponse.json({ results: scored });
   } catch (err) {
     console.error("Search API error:", err);
     return NextResponse.json(
