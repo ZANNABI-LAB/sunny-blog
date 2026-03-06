@@ -1,8 +1,14 @@
+import { getAllPosts } from "@/lib/posts";
+import { buildGraphData } from "@/lib/graph";
+import GraphView from "@/components/graph-view";
+
 const MainPage = () => {
+  const posts = getAllPosts();
+  const graphData = buildGraphData(posts);
+
   return (
     <div>
-      <h1 className="text-2xl font-bold">Main</h1>
-      <p className="mt-2 text-zinc-400">Graph view and search coming soon.</p>
+      <GraphView data={graphData} />
     </div>
   );
 };
