@@ -5,6 +5,7 @@ export type GraphNode = {
   shortTitle?: string;
   category: string;
   tags: string[];
+  summary: string;
 };
 
 export type GraphEdge = {

@@ -8,6 +8,7 @@ const toGraphNode = (post: PostMeta): GraphNode => ({
   ...(post.shortTitle ? { shortTitle: post.shortTitle } : {}),
   category: post.category,
   tags: post.tags,
+  summary: post.summary,
 });
 
 const findSharedTags = (a: string[], b: string[]): string[] => {
