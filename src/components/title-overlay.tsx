@@ -5,10 +5,10 @@ const TitleOverlay = () => {
         className="text-3xl md:text-5xl font-bold text-white/90"
         style={{ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.4))" }}
       >
-        Sunny Blog
+        Sunny&apos;s Blog
       </h1>
       <p className="text-sm md:text-base text-zinc-400 mt-2">
-        Exploring the universe of code
+        One small step for a monkey, one giant leap for code
       </p>
     </div>
   );

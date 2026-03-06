@@ -18,7 +18,7 @@ const INITIAL_GREETING: Message = {
   id: "greeting",
   role: "bot",
   content:
-    "안녕하세요! Sunny Blog의 AI 어시스턴트 R2-D2입니다. 블로그 포스트에 대해 궁금한 점이 있으면 질문해주세요.",
+    "안녕하세요! Sunny's Blog의 AI 어시스턴트 R2-D2입니다. 블로그 포스트에 대해 궁금한 점이 있으면 질문해주세요.",
 };
 
 const MAX_HISTORY_TURNS = 6;
