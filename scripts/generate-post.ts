@@ -29,7 +29,8 @@ interface ProcessResult {
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const DATA_DIR = path.join(process.cwd(), "scripts", "data");
 const PROCESSED_IDS_PATH = path.join(DATA_DIR, "processed-ids.json");
-const LATEST_MAX_CONSECUTIVE_NULLS = 5;
+const LATEST_MAX_CONSECUTIVE_NULLS = 20;
+const LATEST_SCAN_UPPER_BOUND = 100; // maxId + 100까지만 스캔
 
 // ─── 처리 이력 관리 ─────────────────────────────────────
 
@@ -174,6 +175,7 @@ interface CliArgs {
   id?: number;
   from?: number;
   to?: number;
+  count?: number;
 }
 
 const parseArgs = (): CliArgs => {
@@ -186,7 +188,13 @@ const parseArgs = (): CliArgs => {
   };
 
   if (args.includes("--latest")) {
-    return { mode: "latest" };
+    const countStr = getArgValue("--count");
+    const count = countStr ? parseInt(countStr, 10) : undefined;
+    if (countStr && (isNaN(count!) || count! <= 0)) {
+      console.error("오류: --count 값이 유효한 양의 정수가 아닙니다.");
+      process.exit(1);
+    }
+    return { mode: "latest", count };
   }
 
   const idStr = getArgValue("--id");
@@ -218,7 +226,8 @@ const parseArgs = (): CliArgs => {
   console.error(`사용법:
   npm run generate-post -- --id <number>           # 단일 질문
   npm run generate-post -- --from <n> --to <n>     # 범위 처리
-  npm run generate-post -- --latest                # 미처리 최신 질문`);
+  npm run generate-post -- --latest                # 미처리 최신 질문
+  npm run generate-post -- --latest --count <n>    # 미처리 최신 질문 (최대 N개)`);
   process.exit(1);
 };
 
@@ -282,14 +291,19 @@ const main = async (): Promise<void> => {
       }
 
       const maxId = Math.max(...processedIds);
+      const scanLimit = maxId + LATEST_SCAN_UPPER_BOUND;
       let consecutiveNulls = 0;
       let currentId = maxId + 1;
 
       console.log(
-        `[최신] 마지막 처리 ID: ${maxId}, ID ${currentId}부터 탐색 시작...`
+        `[최신] 마지막 처리 ID: ${maxId}, ID ${currentId}부터 탐색 시작... (상한: ${scanLimit})`
       );
 
-      while (consecutiveNulls < LATEST_MAX_CONSECUTIVE_NULLS) {
+      while (
+        consecutiveNulls < LATEST_MAX_CONSECUTIVE_NULLS &&
+        currentId <= scanLimit &&
+        (!cliArgs.count || ids.length < cliArgs.count)
+      ) {
         const question = await parseMaeilMailQuestion(currentId);
         if (question) {
           ids.push(currentId);
