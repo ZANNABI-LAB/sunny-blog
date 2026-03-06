@@ -6,8 +6,8 @@ import Footer from "@/components/footer";
 import ChatbotWidget from "@/components/chatbot-widget";
 
 export const metadata: Metadata = {
-  title: "Sunny Blog",
-  description: "Sunny's personal tech blog",
+  title: "Sunny's Blog",
+  description: "One small step for a monkey, one giant leap for code",
 };
 
 const RootLayout = ({
