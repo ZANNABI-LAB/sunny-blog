@@ -360,34 +360,43 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
         d.fx = event.x;
         d.fy = event.y;
       })
-      .on("end", (event, d) => {
+      .on("end", function (event, d) {
         if (!isDragging.current) {
-          if (d.type === "category") {
-            // Hub node click -> navigate to tech page with category filter
-            const baseR = 26;
-            d3.select(event.sourceEvent.currentTarget as Element)
-              .select("circle:nth-child(2)")
-              .transition()
-              .duration(150)
-              .attr("r", baseR + 6)
-              .transition()
-              .duration(200)
-              .attr("r", baseR);
-            setTimeout(
-              () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
-              300
-            );
-          } else {
-            // Post node click -> navigate to post detail
-            d3.select(event.sourceEvent.currentTarget as Element)
-              .select("circle")
-              .transition()
-              .duration(150)
-              .attr("r", 20)
-              .transition()
-              .duration(200)
-              .attr("r", 14);
-            setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+          try {
+            const el = d3.select(this);
+            if (d.type === "category") {
+              // Hub node click -> navigate to tech page with category filter
+              const baseR = 26;
+              el.select("circle:nth-child(2)")
+                .transition()
+                .duration(150)
+                .attr("r", baseR + 6)
+                .transition()
+                .duration(200)
+                .attr("r", baseR);
+              setTimeout(
+                () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
+                300
+              );
+            } else {
+              // Post node click -> navigate to post detail
+              el.select("circle")
+                .transition()
+                .duration(150)
+                .attr("r", 20)
+                .transition()
+                .duration(200)
+                .attr("r", 14);
+              setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+            }
+          } catch (err) {
+            // Pulse animation failed — still navigate
+            console.warn("Node click animation error:", err);
+            if (d.type === "category") {
+              router.push(`/tech?category=${encodeURIComponent(d.title)}`);
+            } else {
+              router.push(`/tech/${d.slug}`);
+            }
           }
         }
         isDragging.current = false;

@@ -8,6 +8,9 @@ summary: "객체 간 결합도를 낮추고 유연한 설계를 만드는 의존
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/183"
+references:
+  - "https://martinfowler.com/articles/injection.html"
+  - "https://en.wikipedia.org/wiki/Dependency_injection"
 ---
 
 ## 의존성 주입이란?

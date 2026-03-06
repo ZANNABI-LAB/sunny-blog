@@ -2,12 +2,16 @@
 title: "JWT 토큰의 특징과 보안 주의사항"
 shortTitle: "JWT 보안"
 date: "2026-03-06"
-tags: ["JWT", "인증", "보안", "토큰"]
+tags: ["jwt", "authentication", "security", "token"]
 category: "Security"
 summary: "JWT의 핵심 특징과 실무에서 반드시 고려해야 할 보안 주의사항을 설명합니다"
 author: "신중선"
 source: "maeil-mail"
 sourceUrl: "https://www.maeil-mail.kr/question/174"
+references:
+  - "https://datatracker.ietf.org/doc/html/rfc7519"
+  - "https://jwt.io/introduction"
+  - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/10-Testing_JSON_Web_Tokens"
 ---
 
 ## JWT란?
