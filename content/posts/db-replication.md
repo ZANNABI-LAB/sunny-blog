@@ -1,5 +1,6 @@
 ---
 title: "데이터베이스 복제(Replication) 완전 정복"
+shortTitle: "DB Replication"
 date: "2026-03-05"
 tags: ["database", "replication", "mysql", "backend"]
 category: "Backend"

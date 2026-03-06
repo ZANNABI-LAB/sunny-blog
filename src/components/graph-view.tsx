@@ -105,7 +105,7 @@ const GraphView = ({ data }: GraphViewProps) => {
       .attr("text-anchor", "middle")
       .attr("fill", "#a1a1aa")
       .attr("font-size", "11")
-      .text((d) => d.title);
+      .text((d) => d.shortTitle ?? d.title);
 
     const simulation = d3
       .forceSimulation<SimNode>(simNodes)

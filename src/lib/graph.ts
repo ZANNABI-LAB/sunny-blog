@@ -5,6 +5,7 @@ const toGraphNode = (post: PostMeta): GraphNode => ({
   id: post.slug,
   slug: post.slug,
   title: post.title,
+  ...(post.shortTitle ? { shortTitle: post.shortTitle } : {}),
   category: post.category,
   tags: post.tags,
 });

@@ -39,6 +39,7 @@ export const getAllPosts = (): PostMeta[] => {
       summary: (data.summary as string) ?? "",
       author: (data.author as string) ?? "신중선",
       references: (data.references as string[]) ?? [],
+      ...(data.shortTitle ? { shortTitle: data.shortTitle as string } : {}),
       ...(data.source ? { source: data.source as string } : {}),
       ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     };
@@ -88,6 +89,7 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
     summary: (data.summary as string) ?? "",
     author: (data.author as string) ?? "신중선",
     references: (data.references as string[]) ?? [],
+    ...(data.shortTitle ? { shortTitle: data.shortTitle as string } : {}),
     ...(data.source ? { source: data.source as string } : {}),
     ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
     contentHtml,

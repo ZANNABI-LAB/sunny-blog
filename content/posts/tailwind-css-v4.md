@@ -1,5 +1,6 @@
 ---
 title: "Tailwind CSS v4: 달라진 점과 마이그레이션 가이드"
+shortTitle: "Tailwind v4"
 date: "2026-03-04"
 tags: ["tailwind", "css", "frontend", "nextjs"]
 category: "Frontend"

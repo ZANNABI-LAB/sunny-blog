@@ -7,6 +7,7 @@ export type PostMeta = {
   summary: string;
   author: string;
   references: string[];
+  shortTitle?: string;
   source?: string;
   sourceUrl?: string;
 };
