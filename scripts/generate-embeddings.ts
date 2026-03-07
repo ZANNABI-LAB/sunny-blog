@@ -4,20 +4,14 @@ import path from "path";
 
 dotenv.config({ path: path.join(process.cwd(), ".env.local") });
 import matter from "gray-matter";
-import { createSupabaseClient } from "../src/lib/supabase";
-import { generateEmbedding } from "../src/lib/embedding";
-import { preprocessContent } from "../src/lib/korean-utils";
-
-interface PostData {
-  slug: string;
-  title: string;
-  summary: string;
-  content: string;
-}
+import {
+  upsertEmbedding,
+  type EmbeddingInput,
+} from "./lib/embedding-utils";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
-const readAllPosts = (): PostData[] => {
+const readAllPosts = (): EmbeddingInput[] => {
   const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
 
   return files.map((file) => {
@@ -34,10 +28,6 @@ const readAllPosts = (): PostData[] => {
   });
 };
 
-const buildEmbeddingText = (post: PostData): string => {
-  return [post.title, post.summary, post.content].join("\n\n");
-};
-
 const main = async () => {
   console.log("=== 임베딩 생성 스크립트 시작 ===\n");
 
@@ -49,7 +39,6 @@ const main = async () => {
     return;
   }
 
-  const supabase = createSupabaseClient();
   let successCount = 0;
   let failCount = 0;
 
@@ -57,28 +46,7 @@ const main = async () => {
     try {
       console.log(`[처리 중] ${post.slug} - ${post.title}`);
 
-      const text = buildEmbeddingText(post);
-      const embedding = await generateEmbedding(text);
-
-      // FTS용 전처리 텍스트 생성 (한국어 조사 제거)
-      const processedText = preprocessContent(text);
-
-      const { error } = await supabase.from("post_embeddings").upsert(
-        {
-          slug: post.slug,
-          title: post.title,
-          content: text,
-          // vector(1024) 컬럼에 문자열 형태로 전달 (PostgREST가 변환)
-          embedding: JSON.stringify(embedding),
-          // FTS: 전처리된 텍스트 저장 → DB 트리거가 content_tsv tsvector 자동 생성
-          content_preprocessed: processedText,
-        },
-        { onConflict: "slug" }
-      );
-
-      if (error) {
-        throw new Error(`Supabase upsert 실패: ${error.message}`);
-      }
+      await upsertEmbedding(post);
 
       console.log(`  [성공] ${post.slug}`);
       successCount++;
@@ -93,19 +61,11 @@ const main = async () => {
         console.log(`  [대기] rate limit — 10초 대기 후 재시도...`);
         await new Promise((r) => setTimeout(r, 10000));
         try {
-          const text = buildEmbeddingText(post);
-          const embedding = await generateEmbedding(text);
-          const processedText = preprocessContent(text);
-          const { error: retryError } = await supabase.from("post_embeddings").upsert(
-            { slug: post.slug, title: post.title, content: text, embedding: JSON.stringify(embedding), content_preprocessed: processedText },
-            { onConflict: "slug" }
-          );
-          if (!retryError) {
-            console.log(`  [재시도 성공] ${post.slug}`);
-            successCount++;
-            failCount--;
-            await new Promise((r) => setTimeout(r, 2000));
-          }
+          await upsertEmbedding(post);
+          console.log(`  [재시도 성공] ${post.slug}`);
+          successCount++;
+          failCount--;
+          await new Promise((r) => setTimeout(r, 2000));
         } catch { /* 재시도도 실패하면 무시 */ }
       }
     }

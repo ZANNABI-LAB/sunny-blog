@@ -7,8 +7,7 @@ dotenv.config({ path: path.join(process.cwd(), ".env.local") });
 import matter from "gray-matter";
 import { parseMaeilMailQuestion } from "./lib/maeil-mail-parser";
 import { generatePost } from "./lib/post-generator";
-import { generateEmbedding } from "../src/lib/embedding";
-import { createSupabaseClient } from "../src/lib/supabase";
+import { upsertEmbedding } from "./lib/embedding-utils";
 
 // ─── 타입 ───────────────────────────────────────────────
 
@@ -77,41 +76,6 @@ const getExistingSlugs = (): string[] => {
     .map((f) => path.basename(f, ".md"));
 };
 
-// ─── 임베딩 생성 ────────────────────────────────────────
-
-const buildEmbeddingText = (
-  title: string,
-  summary: string,
-  content: string
-): string => {
-  return [title, summary, content].join("\n\n");
-};
-
-const upsertEmbedding = async (
-  slug: string,
-  title: string,
-  summary: string,
-  content: string
-): Promise<void> => {
-  const supabase = createSupabaseClient();
-  const text = buildEmbeddingText(title, summary, content);
-  const embedding = await generateEmbedding(text);
-
-  const { error } = await supabase.from("post_embeddings").upsert(
-    {
-      slug,
-      title,
-      content: text,
-      embedding: JSON.stringify(embedding),
-    },
-    { onConflict: "slug" }
-  );
-
-  if (error) {
-    throw new Error(`Supabase upsert 실패: ${error.message}`);
-  }
-};
-
 // ─── 단일 질문 처리 ─────────────────────────────────────
 
 const processQuestion = async (
@@ -150,12 +114,12 @@ const processQuestion = async (
   try {
     console.log(`[임베딩] 임베딩 생성 중...`);
     const { content: mdContent } = matter(post.content);
-    await upsertEmbedding(
-      post.slug,
-      post.frontmatter.title,
-      post.frontmatter.summary,
-      mdContent
-    );
+    await upsertEmbedding({
+      slug: post.slug,
+      title: post.frontmatter.title,
+      summary: post.frontmatter.summary,
+      content: mdContent,
+    });
     console.log(`  [성공] 임베딩 저장 완료`);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
