@@ -6,6 +6,7 @@ dotenv.config({ path: path.join(process.cwd(), ".env.local") });
 import matter from "gray-matter";
 import { createSupabaseClient } from "../src/lib/supabase";
 import { generateEmbedding } from "../src/lib/embedding";
+import { preprocessContent } from "../src/lib/korean-utils";
 
 interface PostData {
   slug: string;
@@ -59,12 +60,18 @@ const main = async () => {
       const text = buildEmbeddingText(post);
       const embedding = await generateEmbedding(text);
 
+      // FTS용 전처리 텍스트 생성 (한국어 조사 제거)
+      const processedText = preprocessContent(text);
+
       const { error } = await supabase.from("post_embeddings").upsert(
         {
           slug: post.slug,
           title: post.title,
           content: text,
+          // vector(1024) 컬럼에 문자열 형태로 전달 (PostgREST가 변환)
           embedding: JSON.stringify(embedding),
+          // FTS: 전처리된 텍스트 저장 → DB 트리거가 content_tsv tsvector 자동 생성
+          content_preprocessed: processedText,
         },
         { onConflict: "slug" }
       );

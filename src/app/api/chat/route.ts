@@ -3,9 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 
 export const maxDuration = 30;
 
-import { generateEmbedding } from "@/lib/embedding";
-import { createSupabaseClient } from "@/lib/supabase";
-import { cosineSimilarity } from "@/lib/similarity";
+import { hybridSearch } from "@/lib/hybrid-search";
 import type { ChatReferencePost } from "@/types/chat";
 
 const MAX_MESSAGE_LENGTH = 500;
@@ -97,56 +95,17 @@ export const POST = async (request: NextRequest) => {
     // Validate history
     const history = validateHistory(body.history);
 
-    // Generate embedding for the message (RAG on latest message only)
-    let queryEmbedding: number[];
+    // Hybrid search (semantic + FTS with RRF)
+    let scored: { slug: string; title: string; content: string; score: number }[];
     try {
-      queryEmbedding = await generateEmbedding(message);
+      scored = await hybridSearch(message, MATCH_COUNT);
     } catch (err) {
-      console.error("Embedding generation error:", err);
+      console.error("Hybrid search error:", err);
       return new Response(
-        JSON.stringify({ error: "임베딩 생성 중 오류가 발생했습니다." }),
+        JSON.stringify({ error: "검색 중 오류가 발생했습니다." }),
         { status: 502, headers: { "Content-Type": "application/json" } }
       );
     }
-
-    // Fetch posts from Supabase
-    let posts: {
-      slug: string;
-      title: string;
-      content: string;
-      embedding: string;
-    }[];
-    try {
-      const supabase = createSupabaseClient();
-      const { data, error } = await supabase
-        .from("post_embeddings")
-        .select("slug, title, content, embedding");
-
-      if (error) {
-        throw error;
-      }
-      posts = data ?? [];
-    } catch (err) {
-      console.error("Supabase query error:", err);
-      return new Response(
-        JSON.stringify({ error: "포스트 조회 중 오류가 발생했습니다." }),
-        { status: 502, headers: { "Content-Type": "application/json" } }
-      );
-    }
-
-    // Calculate similarity and get top matches
-    const scored = posts
-      .map((post) => {
-        const postEmbedding: number[] = JSON.parse(post.embedding);
-        return {
-          slug: post.slug,
-          title: post.title,
-          content: post.content,
-          score: cosineSimilarity(queryEmbedding, postEmbedding),
-        };
-      })
-      .sort((a, b) => b.score - a.score)
-      .slice(0, MATCH_COUNT);
 
     const references: ChatReferencePost[] = scored.map((post) => ({
       slug: post.slug,
