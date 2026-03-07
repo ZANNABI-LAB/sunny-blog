@@ -6,6 +6,18 @@ import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
 
+const KbdShortcut = () => {
+  const [isMac, setIsMac] = useState(false);
+  useEffect(() => {
+    setIsMac(navigator.platform.toUpperCase().includes("MAC"));
+  }, []);
+  return (
+    <kbd className="hidden md:inline text-[10px] text-zinc-600 border border-zinc-700 rounded px-1 py-0.5 select-none">
+      {isMac ? "⌘" : "Ctrl+"}K
+    </kbd>
+  );
+};
+
 type Message = {
   id: string;
   role: "user" | "bot";
@@ -271,7 +283,7 @@ const ChatbotWidget = () => {
               aria-label="Deep Thought에게 질문하기"
               className="font-display w-48 md:w-64 bg-transparent text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none"
             />
-            <kbd className="hidden md:inline text-[10px] text-zinc-600 border border-zinc-700 rounded px-1 py-0.5 select-none">⌘K</kbd>
+            <KbdShortcut />
           </div>
         </form>
       ) : (
