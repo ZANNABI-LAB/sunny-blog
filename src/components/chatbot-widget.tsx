@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
@@ -24,14 +25,18 @@ const INITIAL_GREETING: Message = {
 const MAX_HISTORY_TURNS = 6;
 
 const ChatbotWidget = () => {
+  const pathname = usePathname();
+  const isMainPage = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [isLoading, setIsLoading] = useState(false);
+  const [triggerInput, setTriggerInput] = useState("");
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const triggerInputRef = useRef<HTMLInputElement>(null);
+  const pendingSendRef = useRef<string | null>(null);
   const prefersReducedMotionRef = useRef(false);
 
-  // Track reduced motion preference
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     prefersReducedMotionRef.current = mq.matches;
@@ -46,16 +51,24 @@ const ChatbotWidget = () => {
     if (prefersReducedMotionRef.current) {
       setIsOpen(false);
       setIsClosing(false);
-      buttonRef.current?.focus();
+      if (isMainPage) {
+        triggerInputRef.current?.focus();
+      } else {
+        buttonRef.current?.focus();
+      }
       return;
     }
     setIsClosing(true);
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-      buttonRef.current?.focus();
+      if (isMainPage) {
+        triggerInputRef.current?.focus();
+      } else {
+        buttonRef.current?.focus();
+      }
     }, 300);
-  }, []);
+  }, [isMainPage]);
 
   const toggle = useCallback(() => {
     if (isOpen) {
@@ -65,7 +78,6 @@ const ChatbotWidget = () => {
     }
   }, [isOpen, handleClose]);
 
-  // Cmd+K / Ctrl+K toggle
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -84,12 +96,9 @@ const ChatbotWidget = () => {
       (m) => m.id !== "greeting" && !m.isError
     );
     const turns = historyMessages.map((m) => ({
-      role: (m.role === "user" ? "user" : "assistant") as
-        | "user"
-        | "assistant",
+      role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant",
       content: m.content,
     }));
-    // Keep last N turns
     return turns.slice(-MAX_HISTORY_TURNS * 2);
   };
 
@@ -128,9 +137,7 @@ const ChatbotWidget = () => {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => null);
-          throw new Error(
-            errorData?.error || `HTTP ${response.status}`
-          );
+          throw new Error(errorData?.error || `HTTP ${response.status}`);
         }
 
         const reader = response.body?.getReader();
@@ -174,9 +181,7 @@ const ChatbotWidget = () => {
               } else if (event.type === "references") {
                 setMessages((prev) =>
                   prev.map((m) =>
-                    m.id === botId
-                      ? { ...m, references: event.posts }
-                      : m
+                    m.id === botId ? { ...m, references: event.posts } : m
                   )
                 );
               } else if (event.type === "error") {
@@ -220,6 +225,25 @@ const ChatbotWidget = () => {
     [messages]
   );
 
+  // Send pending message after panel opens
+  useEffect(() => {
+    if (isOpen && pendingSendRef.current) {
+      const text = pendingSendRef.current;
+      pendingSendRef.current = null;
+      handleSend(text);
+    }
+  }, [isOpen, handleSend]);
+
+  const handleTriggerSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = triggerInput.trim();
+    if (trimmed) {
+      pendingSendRef.current = trimmed;
+      setTriggerInput("");
+    }
+    setIsOpen(true);
+  };
+
   return (
     <>
       {(isOpen || isClosing) && (
@@ -231,7 +255,28 @@ const ChatbotWidget = () => {
           isClosing={isClosing}
         />
       )}
-      <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
+      {isMainPage ? (
+        <form
+          onSubmit={handleTriggerSubmit}
+          className="fixed bottom-6 right-6 md:right-12 z-[60]"
+        >
+          <div className="flex items-center gap-2 bg-[#070709]/80 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 transition-colors hover:border-white/20">
+            <span className="font-display text-amber-400 text-xs select-none">&gt;</span>
+            <input
+              ref={triggerInputRef}
+              type="text"
+              value={triggerInput}
+              onChange={(e) => setTriggerInput(e.target.value)}
+              placeholder="Ask Deep Thought..."
+              aria-label="Deep Thought에게 질문하기"
+              className="font-display w-48 md:w-64 bg-transparent text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none"
+            />
+            <kbd className="hidden md:inline text-[10px] text-zinc-600 border border-zinc-700 rounded px-1 py-0.5 select-none">⌘K</kbd>
+          </div>
+        </form>
+      ) : (
+        <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
+      )}
     </>
   );
 };
