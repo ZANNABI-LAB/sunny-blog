@@ -165,11 +165,12 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
       aria-label="Deep Thought AI 채팅"
       onKeyDown={handleKeyDown}
       className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px]"
-      style={
-        isClosing
-          ? { animation: "slide-down 0.3s ease-in forwards" }
-          : { animation: "slide-up 0.2s ease-out" }
-      }
+      style={{
+        paddingBottom: "var(--safe-bottom)",
+        animation: isClosing
+          ? "slide-down 0.3s ease-in forwards"
+          : "slide-up 0.2s ease-out",
+      }}
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">

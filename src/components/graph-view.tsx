@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import type { SimulationNodeDatum, SimulationLinkDatum } from "d3";
@@ -33,6 +33,14 @@ const HUB_COLLIDE_R = 55;
 const POST_R = 14;
 const POST_COLLIDE_R = 55;
 
+// D: Touch hit area radii (44px+ touch targets)
+const POST_HIT_R = 22;
+const HUB_HIT_R = 28;
+
+// B: Long press duration
+const LONG_PRESS_MS = 800;
+const DRAG_THRESHOLD = 5;
+
 const GraphView = ({
   data,
   highlightedCategory = null,
@@ -44,10 +52,21 @@ const GraphView = ({
   const isDragging = useRef<boolean>(false);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
   const [hoveredNode, setHoveredNode] = useState<SimNode | null>(null);
+  const hoveredNodeRef = useRef<SimNode | null>(null);
   const [previewPos, setPreviewPos] = useState<{
     x: number;
     y: number;
   } | null>(null);
+
+  // Sync hoveredNodeRef with state
+  useEffect(() => {
+    hoveredNodeRef.current = hoveredNode;
+  }, [hoveredNode]);
+
+  // Long press state
+  const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const longPressActiveRef = useRef<boolean>(false);
+  const longPressNodeRef = useRef<SimNode | null>(null);
 
   // Store refs for category highlight updates without re-running simulation
   const nodeElementsRef = useRef<d3.Selection<
@@ -79,6 +98,39 @@ const GraphView = ({
 
   // Reduced motion preference
   const prefersReducedMotionRef = useRef(false);
+
+  // Dismiss preview on close
+  const handlePreviewClose = useCallback(() => {
+    setHoveredNode(null);
+    setPreviewPos(null);
+    // Reset highlight
+    const nodeElements = nodeElementsRef.current;
+    const linkElements = linkElementsRef.current;
+    if (nodeElements && linkElements) {
+      const dur = prefersReducedMotionRef.current ? 0 : 200;
+      nodeElements.transition().duration(dur).attr("opacity", 1);
+      linkElements
+        .transition()
+        .duration(dur)
+        .attr("stroke", (_: SimEdge, i: number) => `url(#edge-gradient-${i})`)
+        .attr("opacity", 0.25);
+    }
+  }, []);
+
+  // Cancel long press helper
+  const cancelLongPress = useCallback(() => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    // Remove progress ring if present
+    if (longPressNodeRef.current && svgRef.current) {
+      const svg = d3.select(svgRef.current);
+      svg.selectAll(".lp-track, .lp-ring").remove();
+    }
+    longPressActiveRef.current = false;
+    longPressNodeRef.current = null;
+  }, []);
 
   // Apply category highlight via ref (avoids re-creating simulation)
   useEffect(() => {
@@ -262,6 +314,16 @@ const GraphView = ({
     zoomRef.current = zoom;
     svg.call(zoom);
 
+    // B: SVG background click to dismiss preview
+    svg.on("click", (event) => {
+      // Only if clicking on the SVG background (not on a node)
+      if (event.target === svgEl || (event.target as Element).classList.contains("zoom-container")) {
+        setHoveredNode(null);
+        setPreviewPos(null);
+        resetHighlight();
+      }
+    });
+
     const edgeGroup = zoomContainer.append("g").attr("class", "edges");
     const nodeGroup = zoomContainer.append("g").attr("class", "nodes");
 
@@ -286,7 +348,7 @@ const GraphView = ({
       .attr("aria-label", (d) =>
         d.type === "category"
           ? `${d.title} 카테고리 — 클릭하여 필터링`
-          : `${d.title} — 클릭하여 상세 보기`
+          : `${d.title} — 탭하여 미리보기, 길게 눌러 상세 보기`
       )
       .attr("opacity", 0); // A2: Start hidden
 
@@ -296,6 +358,13 @@ const GraphView = ({
     nodeElements.each(function (d) {
       const g = d3.select(this);
       const color = getCategoryColor(d.category);
+
+      // D: Transparent hit area for touch targets
+      g.append("circle")
+        .attr("class", "hit-area")
+        .attr("r", d.type === "category" ? HUB_HIT_R : POST_HIT_R)
+        .attr("fill", "transparent")
+        .attr("pointer-events", "all");
 
       if (d.type === "category") {
         // B4: Hub node: outer ring (28 -> 22)
@@ -395,24 +464,102 @@ const GraphView = ({
         .attr("opacity", 0.25);
     };
 
-    nodeElements
-      .on("mouseenter", (event, d) => {
-        if (isDragging.current) return;
-        if (d.type === "post") {
-          const transform = d3.zoomTransform(svgEl);
-          setHoveredNode(d);
-          setPreviewPos({
-            x: transform.applyX(d.x!),
-            y: transform.applyY(d.y!),
-          });
+    // B: Long press flash and navigate
+    const flashAndNavigate = (nodeEl: SVGGElement, d: SimNode) => {
+      const g = d3.select(nodeEl);
+      const reduced = prefersReducedMotionRef.current;
+
+      // Remove progress ring
+      g.selectAll(".lp-track, .lp-ring").remove();
+
+      if (d.type === "category") {
+        if (!reduced) {
+          g.select(".hub-inner")
+            .transition()
+            .duration(150)
+            .attr("r", HUB_INNER_R + 4)
+            .transition()
+            .duration(200)
+            .attr("r", HUB_INNER_R);
         }
-        highlightConnected(d);
-      })
-      .on("mouseleave", () => {
-        setHoveredNode(null);
-        setPreviewPos(null);
-        resetHighlight();
-      })
+        setTimeout(
+          () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
+          reduced ? 0 : 300
+        );
+      } else {
+        if (!reduced) {
+          g.select(".post-circle")
+            .transition()
+            .duration(150)
+            .attr("r", POST_R + 6)
+            .transition()
+            .duration(200)
+            .attr("r", POST_R);
+        }
+        setTimeout(
+          () => router.push(`/tech/${d.slug}`),
+          reduced ? 0 : 300
+        );
+      }
+    };
+
+    // B: Start long press with progress animation
+    const startLongPress = (nodeEl: SVGGElement, d: SimNode) => {
+      cancelLongPress();
+      longPressActiveRef.current = true;
+      longPressNodeRef.current = d;
+
+      const g = d3.select(nodeEl);
+      const color = getCategoryColor(d.category);
+      const progressR = d.type === "category" ? HUB_INNER_R + 4 : POST_R + 4;
+      const circumference = 2 * Math.PI * progressR;
+      const reduced = prefersReducedMotionRef.current;
+
+      if (!reduced) {
+        // Add background track
+        g.append("circle")
+          .attr("class", "lp-track")
+          .attr("r", progressR)
+          .attr("fill", "none")
+          .attr("stroke", "rgba(255,255,255,0.1)")
+          .attr("stroke-width", 1)
+          .attr("transform", "rotate(-90)");
+
+        // Add progress ring
+        g.append("circle")
+          .attr("class", "lp-ring")
+          .attr("r", progressR)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 3)
+          .attr("stroke-linecap", "round")
+          .attr("stroke-dasharray", circumference)
+          .attr("stroke-dashoffset", circumference)
+          .attr("transform", "rotate(-90)")
+          .transition()
+          .duration(LONG_PRESS_MS)
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0);
+      } else {
+        // Reduced motion: dim the node to indicate long press
+        g.transition().duration(0).attr("opacity", 0.5);
+      }
+
+      longPressTimerRef.current = setTimeout(() => {
+        longPressActiveRef.current = false;
+        longPressNodeRef.current = null;
+        longPressTimerRef.current = null;
+
+        if (reduced) {
+          g.transition().duration(0).attr("opacity", 1);
+        }
+
+        flashAndNavigate(nodeEl, d);
+      }, LONG_PRESS_MS);
+    };
+
+    // B: Event handlers — remove mouseenter/mouseleave, use tap-based interaction
+    nodeElements
       .on("keydown", (event: KeyboardEvent, d) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -636,25 +783,36 @@ const GraphView = ({
       });
     };
 
+    // B4: Drag handler with long press integration
     const drag = d3
       .drag<SVGGElement, SimNode>()
-      .on("start", (event, d) => {
+      .on("start", function (event, d) {
+        const sourceEvent = event.sourceEvent;
         dragStartPos.current = {
-          x: event.sourceEvent.clientX,
-          y: event.sourceEvent.clientY,
+          x: sourceEvent.clientX ?? sourceEvent.touches?.[0]?.clientX ?? 0,
+          y: sourceEvent.clientY ?? sourceEvent.touches?.[0]?.clientY ?? 0,
         };
         isDragging.current = false;
+
         // B2: Restart simulation for dragging
         if (!event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
+
+        // B: Start long press timer
+        startLongPress(this, d);
       })
       .on("drag", (event, d) => {
         if (dragStartPos.current) {
-          const dx = event.sourceEvent.clientX - dragStartPos.current.x;
-          const dy = event.sourceEvent.clientY - dragStartPos.current.y;
-          if (Math.sqrt(dx * dx + dy * dy) > 5) {
+          const sourceEvent = event.sourceEvent;
+          const clientX = sourceEvent.clientX ?? sourceEvent.touches?.[0]?.clientX ?? 0;
+          const clientY = sourceEvent.clientY ?? sourceEvent.touches?.[0]?.clientY ?? 0;
+          const dx = clientX - dragStartPos.current.x;
+          const dy = clientY - dragStartPos.current.y;
+          if (Math.sqrt(dx * dx + dy * dy) > DRAG_THRESHOLD) {
             isDragging.current = true;
+            // B: Cancel long press on drag
+            cancelLongPress();
           }
         }
         if (isDragging.current) {
@@ -666,45 +824,52 @@ const GraphView = ({
         d.fy = event.y;
       })
       .on("end", function (event, d) {
-        if (!isDragging.current) {
+        // B: Cancel long press if still pending
+        const wasLongPressActive = longPressActiveRef.current;
+        cancelLongPress();
+
+        if (!isDragging.current && !wasLongPressActive) {
+          // B: Tap/click — toggle PostPreview (not navigate)
           try {
-            const el = d3.select(this);
             if (d.type === "category") {
-              // B4: Hub node click pulse (26->20, +6->+4)
-              el.select(".hub-inner")
-                .transition()
-                .duration(150)
-                .attr("r", HUB_INNER_R + 4)
-                .transition()
-                .duration(200)
-                .attr("r", HUB_INNER_R);
+              // Category tap — keep existing behavior: navigate to tech page
+              const el = d3.select(this);
+              const reduced = prefersReducedMotionRef.current;
+              if (!reduced) {
+                el.select(".hub-inner")
+                  .transition()
+                  .duration(150)
+                  .attr("r", HUB_INNER_R + 4)
+                  .transition()
+                  .duration(200)
+                  .attr("r", HUB_INNER_R);
+              }
               setTimeout(
-                () =>
-                  router.push(
-                    `/tech?category=${encodeURIComponent(d.title)}`
-                  ),
-                300
+                () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
+                reduced ? 0 : 300
               );
             } else {
-              // Post node click
-              el.select(".post-circle")
-                .transition()
-                .duration(150)
-                .attr("r", POST_R + 6)
-                .transition()
-                .duration(200)
-                .attr("r", POST_R);
-              setTimeout(() => router.push(`/tech/${d.slug}`), 300);
+              // Post node tap — show/toggle PostPreview
+              if (hoveredNodeRef.current?.id === d.id) {
+                // Already showing this node's preview — dismiss
+                setHoveredNode(null);
+                setPreviewPos(null);
+                resetHighlight();
+              } else {
+                const transform = d3.zoomTransform(svgEl);
+                setHoveredNode(d);
+                setPreviewPos({
+                  x: transform.applyX(d.x!),
+                  y: transform.applyY(d.y!),
+                });
+                highlightConnected(d);
+              }
             }
           } catch (err) {
-            console.warn("Node click animation error:", err);
-            if (d.type === "category") {
-              router.push(`/tech?category=${encodeURIComponent(d.title)}`);
-            } else {
-              router.push(`/tech/${d.slug}`);
-            }
+            console.warn("Node tap handler error:", err);
           }
         }
+
         isDragging.current = false;
         dragStartPos.current = null;
         // B2: Stop simulation gracefully after drag
@@ -727,21 +892,23 @@ const GraphView = ({
       resizeObserver.disconnect();
       simulation.stop();
       motionQuery.removeEventListener("change", handleMotionChange);
+      cancelLongPress();
       if (breathTimerRef.current) {
         breathTimerRef.current.stop();
         breathTimerRef.current = null;
       }
     };
-  }, [data, router]);
+  }, [data, router, cancelLongPress]);
 
   return (
-    <div ref={containerRef} className="absolute inset-0">
+    <div ref={containerRef} className="absolute inset-0 touch-none">
       <svg ref={svgRef} />
       {hoveredNode && hoveredNode.type === "post" && previewPos && (
         <PostPreview
           node={hoveredNode}
           position={previewPos}
           containerRef={containerRef}
+          onClose={handlePreviewClose}
         />
       )}
     </div>

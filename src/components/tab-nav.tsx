@@ -13,7 +13,7 @@ const TabNav = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-sm border-b border-white/10">
+    <header className="sticky top-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-sm border-b border-white/10" style={{ paddingTop: "var(--safe-top)" }}>
       <nav aria-label="메인 네비게이션" className="flex items-center gap-1 max-w-5xl mx-auto px-4 h-12">
         <Link
           href="/"

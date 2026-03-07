@@ -30,7 +30,7 @@ const ChatbotButton = ({ isOpen, onClick, ref }: ChatbotButtonProps) => {
       onClick={onClick}
       aria-label={isOpen ? "채팅 닫기" : "Deep Thought에게 질문하기"}
       className="fixed bottom-20 right-6 z-[60] flex items-center gap-2 rounded-full border border-amber-400/20 bg-zinc-900/90 px-4 py-3 text-white shadow-lg shadow-amber-500/10 backdrop-blur-sm transition-all duration-200 hover:border-amber-400/40 hover:shadow-amber-500/20"
-      style={{ filter: "drop-shadow(0 0 12px rgba(245,158,11,0.2))" }}
+      style={{ marginBottom: "var(--safe-bottom)", filter: "drop-shadow(0 0 12px rgba(245,158,11,0.2))" }}
     >
       <ChatIcon />
       <span className="font-display text-sm font-semibold tracking-wider text-amber-400">

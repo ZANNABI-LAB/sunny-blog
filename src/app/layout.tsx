@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
@@ -8,6 +8,10 @@ import ChatbotWidget from "@/components/chatbot-widget";
 export const metadata: Metadata = {
   title: "Deep Thought",
   description: "The answer to the ultimate question of life, the universe, and code.",
+};
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
 };
 
 const RootLayout = ({

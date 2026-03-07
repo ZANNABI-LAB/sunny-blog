@@ -272,6 +272,7 @@ const ChatbotWidget = () => {
           <form
             onSubmit={handleTriggerSubmit}
             className="fixed bottom-20 right-6 md:right-12 z-[60]"
+            style={{ marginBottom: "var(--safe-bottom)" }}
           >
             <div className="flex items-center gap-2 bg-[#070709]/80 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 transition-colors hover:border-white/20">
               <span className="font-display text-amber-400 text-xs select-none">&gt;</span>
@@ -282,7 +283,7 @@ const ChatbotWidget = () => {
                 onChange={(e) => setTriggerInput(e.target.value)}
                 placeholder="Ask Deep Thought..."
                 aria-label="Deep Thought에게 질문하기"
-                className="font-display w-48 md:w-64 bg-transparent text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none"
+                className="font-display w-[calc(100vw-8rem)] max-w-[16rem] md:w-64 bg-transparent text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none"
               />
               <KbdShortcut />
             </div>

@@ -84,6 +84,40 @@
   animation: brutal-slide-in 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* ── Long Press Progress ── */
+@keyframes lp-flash {
+  0% { stroke-width: 3; opacity: 0.9; }
+  50% { stroke-width: 6; opacity: 1; }
+  100% { stroke-width: 0; opacity: 0; }
+}
+
+/* ── Bottom Sheet ── */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-sheet-up {
+  animation: sheet-up 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Legend Scroll Fade ── */
+.legend-scroll-fade {
+  mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 16px), transparent);
+}
+
+/* ── Scrollbar Hide ── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Safe Area ── */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
