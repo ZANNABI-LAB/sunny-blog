@@ -79,7 +79,7 @@ const PostDetailPage = async ({
   const hasReferences = showSourceUrl || filteredReferences.length > 0;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto animate-page-fade-in">
       {/* BackLink */}
       <Link
         href="/tech"
@@ -95,11 +95,12 @@ const PostDetailPage = async ({
           style={{
             backgroundColor: `${categoryColor}15`,
             color: categoryColor,
+            boxShadow: `0 0 8px ${categoryColor}30`,
           }}
         >
           {post.category}
         </span>
-        <h1 className="mt-4 text-2xl font-bold text-white sm:text-3xl">
+        <h1 className="mt-4 text-2xl font-bold text-white sm:text-3xl text-glow-indigo-sm">
           {post.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
@@ -127,12 +128,20 @@ const PostDetailPage = async ({
       {/* PostBody */}
       <article
         className="prose prose-invert max-w-none prose-headings:text-white prose-headings:font-bold prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:text-indigo-300 prose-code:text-indigo-300 prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#161b22] prose-pre:border prose-pre:border-white/10 prose-blockquote:border-indigo-400/50 prose-hr:border-white/10 prose-strong:text-white"
+        style={{ '--category-color': categoryColor } as React.CSSProperties}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
 
       {/* References */}
       {hasReferences && (
-        <section className="mt-12 border-t border-white/10 pt-6">
+        <section className="mt-12 pt-6">
+          <div
+            className="mb-6"
+            style={{
+              background: `linear-gradient(to right, transparent, ${categoryColor}40, transparent)`,
+              height: '1px',
+            }}
+          />
           <h2 className="text-sm font-semibold text-zinc-300">References</h2>
           <ul className="mt-3 space-y-2">
             {showSourceUrl && (

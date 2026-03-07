@@ -10,7 +10,8 @@ const PostCard = ({ post }: PostCardProps) => {
   return (
     <Link
       href={`/tech/${post.slug}`}
-      className="block group rounded-lg border border-white/10 bg-white/5 p-5 transition-colors duration-150 hover:border-white/20 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
+      className="block group rounded-lg border border-white/10 bg-white/5 p-5 post-card-glow hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
+      style={{ '--card-category-color': getCategoryColor(post.category) } as React.CSSProperties}
     >
       <div className="flex items-center justify-between">
         <span

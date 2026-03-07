@@ -38,3 +38,58 @@
 .chat-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* 텍스트 글로우 유틸리티 */
+.text-glow-indigo {
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+.text-glow-indigo-sm {
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+/* 페이지 전환 fade-in */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-page-fade-in {
+  animation: page-fade-in 300ms ease-out;
+}
+
+/* PostCard hover: 카테고리 색상 border glow */
+.post-card-glow {
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 150ms ease;
+}
+.post-card-glow:hover {
+  border-color: var(--card-category-color, rgba(255, 255, 255, 0.2));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--card-category-color, transparent) 25%, transparent);
+}
+
+/* prose 코드블록 카테고리 accent bar */
+article[style*="--category-color"] .prose pre {
+  border-left: 3px solid var(--category-color, rgba(99, 102, 241, 0.5));
+}
+
+/* prose hr: 그라데이션 구분선 */
+article[style*="--category-color"] .prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--category-color, rgba(99, 102, 241, 0.3)), transparent);
+}
+
+/* prose blockquote: 카테고리 색상 글로우 */
+article[style*="--category-color"] .prose blockquote {
+  border-left-color: var(--category-color, rgba(99, 102, 241, 0.5));
+  background: color-mix(in srgb, var(--category-color, #818cf8) 5%, transparent);
+}
+
+/* 풋터 gradient border */
+.footer-gradient-border {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), transparent) 1;
+}
+
+/* ZANNABI LAB hover glow */
+.zannabi-glow:hover {
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}

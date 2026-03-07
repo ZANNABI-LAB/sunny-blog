@@ -28,8 +28,8 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
     : allPosts;
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold">Tech</h1>
+    <div className="max-w-4xl mx-auto animate-page-fade-in" style={{ background: 'radial-gradient(ellipse at top, rgba(15,23,41,0.5) 0%, transparent 60%)' }}>
+      <h1 className="text-2xl font-bold text-glow-indigo">Tech</h1>
       <p className="mt-2 text-zinc-400">
         기술 학습 기록과 개발 경험을 공유합니다.
       </p>
