@@ -48,7 +48,7 @@ const ChatReferences = ({
   if (references.length === 0) return null;
   return (
     <div className="mt-2 border-t border-white/5 pt-2">
-      <span className="text-[10px] uppercase tracking-wide text-zinc-500">
+      <span className="text-[10px] uppercase tracking-wide text-zinc-400">
         참고 포스트
       </span>
       <div className="mt-1 flex flex-col gap-1">
@@ -135,11 +135,11 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
             <rect x="24" y="31" width="16" height="16" rx="2" fill="#6366f1" opacity="0.15" />
           </svg>
           <span className="text-sm font-semibold text-white">R2-D2</span>
-          <span className="text-xs text-zinc-500">AI Assistant</span>
+          <span className="text-xs text-zinc-400">AI Assistant</span>
         </div>
         <button
           onClick={onClose}
-          className="rounded-lg p-1 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+          className="rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
           aria-label="채팅 닫기"
         >
           <svg
@@ -190,7 +190,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white transition-colors hover:bg-indigo-400 disabled:opacity-30 disabled:hover:bg-indigo-500"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white transition-colors hover:bg-indigo-400 disabled:opacity-30 disabled:hover:bg-indigo-500"
           aria-label="전송"
         >
           <svg

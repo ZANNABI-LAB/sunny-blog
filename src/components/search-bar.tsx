@@ -157,7 +157,7 @@ const SearchBar = () => {
               </button>
             ))
           ) : (
-            <div className="px-4 py-6 text-center text-sm text-zinc-500">
+            <div className="px-4 py-6 text-center text-sm text-zinc-400">
               검색 결과가 없습니다
             </div>
           )}
