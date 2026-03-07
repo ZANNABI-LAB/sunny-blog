@@ -17,14 +17,6 @@ const TitleOverlay = () => {
         <br />
         of life, the universe, and code.
       </p>
-
-      {/* 42 accent */}
-      <div
-        className="mt-6 font-display text-6xl md:text-8xl font-bold text-white/[0.03] select-none"
-        aria-hidden="true"
-      >
-        42
-      </div>
     </div>
   );
 };
