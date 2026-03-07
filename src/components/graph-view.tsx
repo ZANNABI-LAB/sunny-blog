@@ -506,7 +506,7 @@ const GraphView = ({
     // B: Start long press with progress animation
     const startLongPress = (nodeEl: SVGGElement, d: SimNode) => {
       cancelLongPress();
-      longPressActiveRef.current = true;
+      longPressActiveRef.current = false;
       longPressNodeRef.current = d;
 
       const g = d3.select(nodeEl);
@@ -546,7 +546,7 @@ const GraphView = ({
       }
 
       longPressTimerRef.current = setTimeout(() => {
-        longPressActiveRef.current = false;
+        longPressActiveRef.current = true;
         longPressNodeRef.current = null;
         longPressTimerRef.current = null;
 
