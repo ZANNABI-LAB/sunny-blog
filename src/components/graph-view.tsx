@@ -200,8 +200,11 @@ const GraphView = ({
 
     svg.selectAll("*").remove();
 
-    // ARIA: accessible label for graph SVG (title/desc causes browser tooltip)
-    svg.attr("aria-label", "기술 블로그 포스트 관계 그래프 — 카테고리별 허브 노드와 포스트 노드의 연결을 보여주는 별자리 형태의 인터랙티브 그래프");
+    // ARIA: accessible interactive graph
+    svg
+      .attr("role", "group")
+      .attr("aria-roledescription", "인터랙티브 그래프")
+      .attr("aria-label", "기술 블로그 포스트 관계 그래프 — 카테고리별 허브 노드와 포스트 노드의 연결을 보여주는 별자리 형태의 인터랙티브 그래프");
 
     const defs = svg.append("defs");
 
@@ -278,6 +281,13 @@ const GraphView = ({
       .data(simNodes)
       .join("g")
       .attr("cursor", "pointer")
+      .attr("tabindex", "0")
+      .attr("role", "button")
+      .attr("aria-label", (d) =>
+        d.type === "category"
+          ? `${d.title} 카테고리 — 클릭하여 필터링`
+          : `${d.title} — 클릭하여 상세 보기`
+      )
       .attr("opacity", 0); // A2: Start hidden
 
     nodeElementsRef.current = nodeElements;
@@ -401,6 +411,34 @@ const GraphView = ({
       .on("mouseleave", () => {
         setHoveredNode(null);
         setPreviewPos(null);
+        resetHighlight();
+      })
+      .on("keydown", (event: KeyboardEvent, d) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          if (d.type === "category") {
+            router.push(`/tech?category=${encodeURIComponent(d.title)}`);
+          } else {
+            router.push(`/tech/${d.slug}`);
+          }
+        }
+      })
+      .on("focus", function (_event, d) {
+        const g = d3.select(this);
+        const color = getCategoryColor(d.category);
+        const r = d.type === "category" ? HUB_INNER_R + 4 : POST_R + 4;
+        g.append("circle")
+          .attr("class", "focus-ring")
+          .attr("r", r)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 2)
+          .attr("stroke-dasharray", "4 2")
+          .attr("opacity", 0.8);
+        highlightConnected(d);
+      })
+      .on("blur", function () {
+        d3.select(this).select(".focus-ring").remove();
         resetHighlight();
       });
 
@@ -698,7 +736,7 @@ const GraphView = ({
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      <svg ref={svgRef} role="img" />
+      <svg ref={svgRef} />
       {hoveredNode && hoveredNode.type === "post" && previewPos && (
         <PostPreview
           node={hoveredNode}

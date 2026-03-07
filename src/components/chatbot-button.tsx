@@ -3,6 +3,7 @@
 type ChatbotButtonProps = {
   isOpen: boolean;
   onClick: () => void;
+  ref?: React.Ref<HTMLButtonElement>;
 };
 
 const R2D2Icon = () => (
@@ -65,9 +66,10 @@ const CloseIcon = () => (
   </svg>
 );
 
-const ChatbotButton = ({ isOpen, onClick }: ChatbotButtonProps) => {
+const ChatbotButton = ({ isOpen, onClick, ref }: ChatbotButtonProps) => {
   return (
     <button
+      ref={ref}
       onClick={onClick}
       aria-label={isOpen ? "채팅 닫기" : "채팅 열기"}
       className="fixed bottom-20 right-6 z-[60] flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-zinc-900/90 text-white shadow-lg shadow-indigo-500/20 backdrop-blur-sm transition-all duration-200 hover:border-indigo-400/30 hover:shadow-indigo-500/40"

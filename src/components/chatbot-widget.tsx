@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
@@ -25,12 +25,45 @@ const MAX_HISTORY_TURNS = 6;
 
 const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [isLoading, setIsLoading] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const prefersReducedMotionRef = useRef(false);
+
+  // Track reduced motion preference
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotionRef.current = mq.matches;
+    const handler = (e: MediaQueryListEvent) => {
+      prefersReducedMotionRef.current = e.matches;
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    if (prefersReducedMotionRef.current) {
+      setIsOpen(false);
+      setIsClosing(false);
+      buttonRef.current?.focus();
+      return;
+    }
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+      buttonRef.current?.focus();
+    }, 300);
+  }, []);
 
   const toggle = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
+    if (isOpen) {
+      handleClose();
+    } else {
+      setIsOpen(true);
+    }
+  }, [isOpen, handleClose]);
 
   // Cmd+K / Ctrl+K toggle
   useEffect(() => {
@@ -189,15 +222,16 @@ const ChatbotWidget = () => {
 
   return (
     <>
-      {isOpen && (
+      {(isOpen || isClosing) && (
         <ChatPanel
           messages={messages}
           isLoading={isLoading}
           onSend={handleSend}
-          onClose={() => setIsOpen(false)}
+          onClose={handleClose}
+          isClosing={isClosing}
         />
       )}
-      <ChatbotButton isOpen={isOpen} onClick={toggle} />
+      <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
     </>
   );
 };

@@ -12,8 +12,15 @@ const SearchBar = () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Reset activeIndex when results change
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [results]);
 
   // Debounced search
   useEffect(() => {
@@ -87,19 +94,44 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleMouseDown);
   }, []);
 
-  // ESC key
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsOpen(false);
+        setActiveIndex(-1);
+        return;
+      }
+
+      if (!isOpen || results.length === 0) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) => {
+          const next = prev < results.length - 1 ? prev + 1 : 0;
+          resultRefs.current[next]?.scrollIntoView({ block: "nearest" });
+          return next;
+        });
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => {
+          const next = prev > 0 ? prev - 1 : results.length - 1;
+          resultRefs.current[next]?.scrollIntoView({ block: "nearest" });
+          return next;
+        });
+      } else if (e.key === "Enter") {
+        if (activeIndex >= 0 && activeIndex < results.length) {
+          e.preventDefault();
+          handleResultClick(results[activeIndex].slug);
+        }
       }
     },
-    []
+    [isOpen, results, activeIndex]
   );
 
   const handleResultClick = useCallback(
     (slug: string) => {
       setIsOpen(false);
+      setActiveIndex(-1);
       router.push(`/tech/${slug}`);
     },
     [router]
@@ -123,6 +155,14 @@ const SearchBar = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-controls="search-results"
+          aria-autocomplete="list"
+          aria-label="포스트 검색"
+          aria-activedescendant={
+            activeIndex >= 0 ? `search-result-${activeIndex}` : undefined
+          }
           className="w-72 md:w-96 h-10 rounded-full bg-white/5 border border-white/10 px-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-indigo-400/50 focus:bg-white/10 focus:ring-1 focus:ring-indigo-400/30 transition-all duration-200"
         />
         {isLoading && (
@@ -134,14 +174,30 @@ const SearchBar = () => {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="z-[40] absolute top-full mt-2 left-1/2 -translate-x-1/2 w-72 md:w-96 bg-zinc-900/95 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg shadow-black/50 max-h-80 overflow-y-auto p-2">
+        <div
+          id="search-results"
+          role="listbox"
+          aria-label="검색 결과"
+          className="z-[40] absolute top-full mt-2 left-1/2 -translate-x-1/2 w-72 md:w-96 bg-zinc-900/95 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg shadow-black/50 max-h-80 overflow-y-auto p-2"
+        >
           {results.length > 0 ? (
-            results.map((result) => (
+            results.map((result, index) => (
               <button
                 key={result.slug}
+                ref={(el) => {
+                  resultRefs.current[index] = el;
+                }}
                 type="button"
+                role="option"
+                id={`search-result-${index}`}
+                aria-selected={index === activeIndex}
                 onClick={() => handleResultClick(result.slug)}
-                className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/5 transition-colors"
+                onMouseEnter={() => setActiveIndex(index)}
+                className={`w-full text-left px-3 py-2.5 rounded-lg transition-colors ${
+                  index === activeIndex
+                    ? "bg-white/10"
+                    : "hover:bg-white/5"
+                }`}
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-sm text-white truncate">

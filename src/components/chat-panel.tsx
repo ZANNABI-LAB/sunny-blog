@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { ChatReferencePost } from "@/types/chat";
 
 type Message = {
@@ -17,6 +17,7 @@ type ChatPanelProps = {
   isLoading: boolean;
   onSend: (message: string) => void;
   onClose: () => void;
+  isClosing?: boolean;
 };
 
 const TypingIndicator = () => (
@@ -98,10 +99,11 @@ const UserMessage = ({ message }: { message: Message }) => (
   </div>
 );
 
-const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => {
+const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPanelProps) => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -110,6 +112,40 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  // Focus trap
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Tab") {
+        const panel = panelRef.current;
+        if (!panel) return;
+
+        const focusableSelector =
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusable = Array.from(
+          panel.querySelectorAll<HTMLElement>(focusableSelector)
+        ).filter((el) => !el.hasAttribute("disabled"));
+
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    },
+    []
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,8 +157,17 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
 
   return (
     <div
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="R2-D2 AI 채팅"
+      onKeyDown={handleKeyDown}
       className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-40 sm:right-6 sm:h-[520px] sm:w-[380px]"
-      style={{ animation: "slide-up 0.2s ease-out" }}
+      style={
+        isClosing
+          ? { animation: "slide-down 0.3s ease-in forwards" }
+          : { animation: "slide-up 0.2s ease-out" }
+      }
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
@@ -160,7 +205,12 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
       </div>
 
       {/* Messages */}
-      <div className="chat-scrollbar flex-1 space-y-3 overflow-y-auto px-4 py-4">
+      <div
+        className="chat-scrollbar flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        role="log"
+        aria-live="polite"
+        aria-label="대화 내용"
+      >
         {messages.map((msg) =>
           msg.role === "bot" ? (
             <BotMessage key={msg.id} message={msg} />
@@ -185,6 +235,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose }: ChatPanelProps) => 
           onChange={(e) => setInput(e.target.value)}
           placeholder="질문을 입력하세요..."
           disabled={isLoading}
+          aria-label="메시지 입력"
           className="flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 transition-colors focus:border-indigo-400/50 focus:outline-none focus:ring-1 focus:ring-indigo-400/30 disabled:opacity-50"
         />
         <button
