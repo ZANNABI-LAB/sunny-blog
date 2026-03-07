@@ -12,7 +12,7 @@ const KbdShortcut = () => {
     setIsMac(navigator.platform.toUpperCase().includes("MAC"));
   }, []);
   return (
-    <kbd className="hidden md:inline text-[10px] text-zinc-600 border border-zinc-700 rounded px-1 py-0.5 select-none">
+    <kbd className="hidden md:inline text-[10px] text-text-muted border border-border rounded px-1 py-0.5 select-none">
       {isMac ? "⌘" : "Ctrl+"}K
     </kbd>
   );
@@ -275,8 +275,8 @@ const ChatbotWidget = () => {
             className="fixed bottom-24 right-6 md:right-12 z-[60]"
             style={{ marginBottom: "var(--safe-bottom)" }}
           >
-            <div className="flex items-center gap-2 bg-[#070709]/80 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 transition-colors hover:border-white/20">
-              <span className="font-display text-amber-400 text-xs select-none">&gt;</span>
+            <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">
+              <span className="font-display text-accent text-xs select-none">&gt;</span>
               <input
                 ref={triggerInputRef}
                 type="text"
@@ -284,7 +284,7 @@ const ChatbotWidget = () => {
                 onChange={(e) => setTriggerInput(e.target.value)}
                 placeholder="Ask..."
                 aria-label="Deep Thought에게 질문하기"
-                className="font-display w-[calc(100vw-10rem)] max-w-[12rem] md:w-64 md:max-w-[16rem] bg-transparent text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none"
+                className="font-display w-[calc(100vw-10rem)] max-w-[12rem] md:w-64 md:max-w-[16rem] bg-transparent text-sm text-text-primary placeholder:text-text-muted tracking-wider outline-none"
               />
               <KbdShortcut />
             </div>

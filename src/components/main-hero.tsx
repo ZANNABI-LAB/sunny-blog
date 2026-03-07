@@ -35,7 +35,7 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         className="absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(ellipse at 70% 50%, #0a0f1a 0%, #070709 70%)",
+            "radial-gradient(ellipse at 70% 50%, var(--bg-elevated) 0%, var(--bg-primary) 70%)",
         }}
       />
 

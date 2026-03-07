@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/theme-toggle";
 
 const tabs = [
   { href: "/", label: "Main", index: "01" },
@@ -35,7 +36,7 @@ const TabNav = () => {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-sm border-b border-white/10"
+      className="sticky top-0 z-50 bg-[var(--bg-nav)] backdrop-blur-sm border-b border-border"
       style={{ paddingTop: "var(--safe-top)" }}
     >
       {/* Desktop nav */}
@@ -45,8 +46,8 @@ const TabNav = () => {
       >
         <Link
           href="/"
-          className="font-display font-bold text-white mr-4 shrink-0 rounded-sm tracking-[0.15em] text-xs uppercase focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
-          style={{ textShadow: "0 0 10px rgba(245,158,11,0.3)" }}
+          className="font-display font-bold text-text-primary mr-4 shrink-0 rounded-sm tracking-[0.15em] text-xs uppercase focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
+          style={{ textShadow: "0 0 10px var(--glow-accent)" }}
         >
           Deep Thought
         </Link>
@@ -59,12 +60,12 @@ const TabNav = () => {
               href={href}
               className={`font-display min-h-[44px] inline-flex items-center px-4 py-2 text-xs font-medium tracking-[0.1em] uppercase rounded-sm transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
                 isActive
-                  ? "text-amber-400 border-b-2 border-amber-400"
-                  : "text-zinc-500 hover:text-white hover:bg-white/5"
+                  ? "text-accent border-b-2 border-accent"
+                  : "text-text-muted hover:text-text-primary hover:bg-card"
               }`}
               style={
                 isActive
-                  ? { textShadow: "0 0 8px rgba(245,158,11,0.3)" }
+                  ? { textShadow: "0 0 8px var(--glow-accent)" }
                   : undefined
               }
             >
@@ -72,13 +73,16 @@ const TabNav = () => {
             </Link>
           );
         })}
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </nav>
 
       {/* Mobile header */}
       <div className="flex md:hidden items-center h-12 px-4">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="min-h-[44px] min-w-[44px] flex items-center justify-center text-white"
+          className="min-h-[44px] min-w-[44px] flex items-center justify-center text-text-primary"
           aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
           aria-expanded={isMenuOpen}
         >
@@ -108,18 +112,21 @@ const TabNav = () => {
           </svg>
         </button>
         <span
-          className="font-display font-bold text-white ml-2 tracking-[0.15em] text-xs uppercase"
-          style={{ textShadow: "0 0 10px rgba(245,158,11,0.3)" }}
+          className="font-display font-bold text-text-primary ml-2 tracking-[0.15em] text-xs uppercase"
+          style={{ textShadow: "0 0 10px var(--glow-accent)" }}
         >
           Deep Thought
         </span>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Mobile drawer */}
       {isMenuOpen && (
         <nav
           aria-label="모바일 네비게이션"
-          className="md:hidden border-t border-white/10 bg-[#0a0a0f]/95 backdrop-blur-sm animate-drawer-slide-down"
+          className="md:hidden border-t border-border bg-[var(--bg-nav)] backdrop-blur-sm animate-drawer-slide-down"
         >
           {tabs.map(({ href, label, index }) => {
             const isActive =
@@ -131,11 +138,11 @@ const TabNav = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className={`block px-6 py-3 font-display text-sm tracking-[0.1em] uppercase transition-colors focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
                   isActive
-                    ? "text-amber-400 bg-amber-400/5"
-                    : "text-zinc-500 hover:text-white hover:bg-white/5"
+                    ? "text-accent bg-accent/5"
+                    : "text-text-muted hover:text-text-primary hover:bg-card"
                 }`}
               >
-                <span className="text-zinc-700 mr-3 text-[10px]">{index}</span>
+                <span className="text-text-muted/50 mr-3 text-[10px]">{index}</span>
                 {label}
               </Link>
             );

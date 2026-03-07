@@ -49,15 +49,15 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
     return (
       <div
         ref={cardRef}
-        className="fixed bottom-0 inset-x-0 z-30 rounded-t-xl border-t border-white/10 bg-zinc-900/95 backdrop-blur-sm p-4 shadow-lg shadow-black/50 animate-sheet-up"
+        className="fixed bottom-0 inset-x-0 z-30 rounded-t-xl border-t border-border bg-bg-elevated/95 backdrop-blur-sm p-4 shadow-lg shadow-black/50 animate-sheet-up"
         style={{ paddingBottom: "calc(1rem + var(--safe-bottom))" }}
       >
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-sm font-semibold text-white">{node.title}</h3>
+          <h3 className="text-sm font-semibold text-text-primary">{node.title}</h3>
           {onClose && (
             <button
               onClick={onClose}
-              className="shrink-0 rounded-lg p-1 text-zinc-400 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="shrink-0 rounded-lg p-1 text-text-secondary hover:text-text-primary min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="미리보기 닫기"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -77,7 +77,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
           {node.category}
         </span>
         {node.summary && (
-          <p className="mt-1.5 text-xs text-zinc-400 line-clamp-3 leading-relaxed">
+          <p className="mt-1.5 text-xs text-text-secondary line-clamp-3 leading-relaxed">
             {node.summary}
           </p>
         )}
@@ -86,7 +86,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
             {node.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] text-zinc-400"
+                className="rounded bg-card-hover px-1.5 py-0.5 text-[10px] text-text-secondary"
               >
                 {tag}
               </span>
@@ -95,7 +95,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
         )}
         <Link
           href={`/tech/${node.slug}`}
-          className="mt-3 inline-block text-xs text-amber-400 hover:text-amber-300 font-medium min-h-[44px] flex items-center"
+          className="mt-3 inline-block text-xs text-accent hover:text-accent-hover font-medium min-h-[44px] flex items-center"
         >
           상세 보기 &rarr;
         </Link>
@@ -107,14 +107,14 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
   return (
     <div
       ref={cardRef}
-      className="absolute z-30 w-56 rounded-lg border border-white/10 bg-zinc-900/95 backdrop-blur-sm p-3 shadow-lg shadow-black/50"
+      className="absolute z-30 w-56 rounded-lg border border-border bg-bg-elevated/95 backdrop-blur-sm p-3 shadow-lg shadow-black/50"
       style={{
         left: `${adjustedPos.x}px`,
         top: `${adjustedPos.y}px`,
         transform: "translateY(-50%)",
       }}
     >
-      <h3 className="text-sm font-semibold text-white truncate">
+      <h3 className="text-sm font-semibold text-text-primary truncate">
         {node.title}
       </h3>
       <span
@@ -127,7 +127,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
         {node.category}
       </span>
       {node.summary && (
-        <p className="mt-1.5 text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+        <p className="mt-1.5 text-xs text-text-secondary line-clamp-2 leading-relaxed">
           {node.summary}
         </p>
       )}
@@ -136,7 +136,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
           {node.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] text-zinc-400"
+              className="rounded bg-card-hover px-1.5 py-0.5 text-[10px] text-text-secondary"
             >
               {tag}
             </span>
@@ -145,7 +145,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
       )}
       <Link
         href={`/tech/${node.slug}`}
-        className="mt-2 inline-block text-xs text-amber-400 hover:text-amber-300 font-medium"
+        className="mt-2 inline-block text-xs text-accent hover:text-accent-hover font-medium"
       >
         상세 보기 &rarr;
       </Link>

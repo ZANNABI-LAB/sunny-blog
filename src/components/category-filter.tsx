@@ -30,8 +30,8 @@ const CategoryFilter = ({ categories, counts }: CategoryFilterProps) => {
         aria-pressed={!activeCategory}
         className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
           !activeCategory
-            ? "bg-white/15 text-white border-white/30"
-            : "bg-white/5 text-zinc-400 border-transparent hover:bg-white/10"
+            ? "bg-card-hover text-text-primary border-border"
+            : "bg-card text-text-secondary border-transparent hover:bg-card-hover"
         }`}
       >
         전체 ({totalCount})
@@ -47,7 +47,7 @@ const CategoryFilter = ({ categories, counts }: CategoryFilterProps) => {
             aria-pressed={isActive}
             className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
               !isActive
-                ? "bg-white/5 text-zinc-400 border-transparent hover:bg-white/10"
+                ? "bg-card text-text-secondary border-transparent hover:bg-card-hover"
                 : ""
             }`}
             style={
