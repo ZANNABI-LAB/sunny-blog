@@ -1,6 +1,6 @@
 const TitleOverlay = () => {
   return (
-    <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 max-w-md pointer-events-none">
+    <div className="hidden md:block absolute left-6 md:left-12 top-1/2 -translate-y-1/2 max-w-md pointer-events-none">
       {/* Brand wordmark */}
       <h1
         className="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-none"

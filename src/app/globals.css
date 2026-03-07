@@ -71,6 +71,11 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes drawer-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Motion Classes ── */
 .animate-page-fade-in {
   animation: page-fade-in 300ms ease-out;
@@ -78,6 +83,10 @@
 
 .animate-stagger-in {
   animation: stagger-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-drawer-slide-down {
+  animation: drawer-slide-down 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-brutal-slide {
