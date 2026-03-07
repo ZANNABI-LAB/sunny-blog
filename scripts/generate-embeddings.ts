@@ -82,10 +82,32 @@ const main = async () => {
 
       console.log(`  [성공] ${post.slug}`);
       successCount++;
+      // Voyage AI rate limit 대응: 포스트 간 2초 대기
+      await new Promise((r) => setTimeout(r, 2000));
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       console.error(`  [실패] ${post.slug}: ${message}`);
       failCount++;
+      // rate limit 시 10초 대기 후 재시도
+      if (message.includes("429")) {
+        console.log(`  [대기] rate limit — 10초 대기 후 재시도...`);
+        await new Promise((r) => setTimeout(r, 10000));
+        try {
+          const text = buildEmbeddingText(post);
+          const embedding = await generateEmbedding(text);
+          const processedText = preprocessContent(text);
+          const { error: retryError } = await supabase.from("post_embeddings").upsert(
+            { slug: post.slug, title: post.title, content: text, embedding: JSON.stringify(embedding), content_preprocessed: processedText },
+            { onConflict: "slug" }
+          );
+          if (!retryError) {
+            console.log(`  [재시도 성공] ${post.slug}`);
+            successCount++;
+            failCount--;
+            await new Promise((r) => setTimeout(r, 2000));
+          }
+        } catch { /* 재시도도 실패하면 무시 */ }
+      }
     }
   }
 
