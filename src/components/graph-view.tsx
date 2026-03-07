@@ -200,13 +200,8 @@ const GraphView = ({
 
     svg.selectAll("*").remove();
 
-    // ARIA: accessible title and description for graph SVG
-    svg.append("title").text("기술 블로그 포스트 관계 그래프");
-    svg
-      .append("desc")
-      .text(
-        "카테고리별 허브 노드와 포스트 노드의 연결을 보여주는 별자리 형태의 인터랙티브 그래프입니다."
-      );
+    // ARIA: accessible label for graph SVG (title/desc causes browser tooltip)
+    svg.attr("aria-label", "기술 블로그 포스트 관계 그래프 — 카테고리별 허브 노드와 포스트 노드의 연결을 보여주는 별자리 형태의 인터랙티브 그래프");
 
     const defs = svg.append("defs");
 
