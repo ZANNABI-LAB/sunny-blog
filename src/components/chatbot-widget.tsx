@@ -258,7 +258,7 @@ const ChatbotWidget = () => {
       {isMainPage ? (
         <form
           onSubmit={handleTriggerSubmit}
-          className="fixed bottom-6 right-6 md:right-12 z-[60]"
+          className="fixed bottom-20 right-6 md:right-12 z-[60]"
         >
           <div className="flex items-center gap-2 bg-[#070709]/80 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 transition-colors hover:border-white/20">
             <span className="font-display text-amber-400 text-xs select-none">&gt;</span>
