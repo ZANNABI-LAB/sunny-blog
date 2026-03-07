@@ -265,6 +265,7 @@ const ChatbotWidget = () => {
           onSend={handleSend}
           onClose={handleClose}
           isClosing={isClosing}
+          onSuggestedQuestion={handleSend}
         />
       )}
       {!isOpen && !isClosing && (

@@ -18,6 +18,73 @@ type ChatPanelProps = {
   onSend: (message: string) => void;
   onClose: () => void;
   isClosing?: boolean;
+  onSuggestedQuestion?: (question: string) => void;
+};
+
+const QUESTION_CATEGORIES = [
+  { key: "concept", label: "개념", symbol: "//", questions: ["Spring DI가 뭐야?", "REST vs GraphQL 차이?", "SOLID 원칙 설명해줘"] },
+  { key: "code", label: "코드", symbol: "{}", questions: ["싱글턴 패턴 예제 보여줘", "JWT 인증 구현 방법?", "Docker Compose 설정 예시"] },
+  { key: "compare", label: "비교", symbol: "<>", questions: ["JPA vs MyBatis 장단점?", "SQL vs NoSQL 언제 써?", "모놀리식 vs MSA?"] },
+  { key: "troubleshoot", label: "해결", symbol: "!?", questions: ["CORS 에러 해결법?", "N+1 문제 어떻게 해결해?", "메모리 누수 디버깅?"] },
+  { key: "about", label: "About", symbol: "@", questions: ["어떤 개발자인가요?", "기술 스택이 뭐야?", "이 블로그는 어떻게 만들었어?"] },
+] as const;
+
+const QuestionCategories = ({
+  onSelectQuestion,
+}: {
+  onSelectQuestion: (question: string) => void;
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleChipClick = (key: string) => {
+    setSelectedCategory((prev) => (prev === key ? null : key));
+  };
+
+  const activeCategory = QUESTION_CATEGORIES.find(
+    (c) => c.key === selectedCategory
+  );
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-2 px-4 pb-2">
+        {QUESTION_CATEGORIES.map((cat) => (
+          <button
+            key={cat.key}
+            type="button"
+            onClick={() => handleChipClick(cat.key)}
+            aria-pressed={selectedCategory === cat.key}
+            className={`flex items-center gap-1.5 rounded-lg border px-3 min-h-[44px] font-display text-xs tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
+              selectedCategory === cat.key
+                ? "bg-amber-500/20 border-amber-500/60 text-amber-300"
+                : "border-amber-500/30 bg-white/5 text-zinc-300 hover:bg-white/10"
+            }`}
+          >
+            <span className="text-zinc-500">{cat.symbol}</span>
+            {cat.label}
+          </button>
+        ))}
+      </div>
+      {activeCategory && (
+        <div
+          className="flex flex-col gap-1 px-4 pb-3"
+          role="group"
+          aria-label="예시 질문"
+        >
+          {activeCategory.questions.map((q) => (
+            <button
+              key={q}
+              type="button"
+              onClick={() => onSelectQuestion(q)}
+              className="flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-200"
+            >
+              <span className="text-amber-400/60">&gt;</span>
+              &quot;{q}&quot;
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 const TypingIndicator = () => (
@@ -101,7 +168,7 @@ const UserMessage = ({ message }: { message: Message }) => (
   </div>
 );
 
-const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPanelProps) => {
+const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggestedQuestion }: ChatPanelProps) => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -218,6 +285,11 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
             <UserMessage key={msg.id} message={msg} />
           )
         )}
+        {messages.length === 1 &&
+          messages[0].id === "greeting" &&
+          !!onSuggestedQuestion && (
+            <QuestionCategories onSelectQuestion={onSuggestedQuestion} />
+          )}
         {isLoading &&
           !messages.some((m) => m.isStreaming) && <TypingIndicator />}
         <div ref={messagesEndRef} />
