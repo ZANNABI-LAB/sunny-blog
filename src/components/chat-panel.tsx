@@ -70,13 +70,14 @@ const ChatReferences = ({
 const BotMessage = ({ message }: { message: Message }) => (
   <div className="flex items-start gap-2">
     <div
-      className={`max-w-[85%] rounded-2xl rounded-bl-sm border px-4 py-3 ${
+      className={`max-w-[85%] rounded-lg border px-4 py-3 ${
         message.isError
           ? "border-red-400/20 bg-red-400/5 text-red-400/80"
           : "border-white/5 bg-white/5 text-zinc-200"
       }`}
     >
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
+        <span className="font-display text-amber-400 mr-1">42&gt;</span>
         {message.content}
         {message.isStreaming && (
           <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-amber-400" />
@@ -91,8 +92,9 @@ const BotMessage = ({ message }: { message: Message }) => (
 
 const UserMessage = ({ message }: { message: Message }) => (
   <div className="flex justify-end">
-    <div className="max-w-[85%] rounded-2xl rounded-br-sm border border-amber-400/20 bg-amber-500/15 px-4 py-3 text-zinc-200">
+    <div className="max-w-[85%] rounded-lg border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-zinc-200">
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
+        <span className="font-display text-zinc-500 mr-1">you&gt;</span>
         {message.content}
       </p>
     </div>

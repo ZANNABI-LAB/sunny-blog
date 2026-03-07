@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
-import SearchBar from "@/components/search-bar";
 import CategoryLegend from "@/components/category-legend";
 import StarBackground from "@/components/star-background";
 import type { GraphData } from "@/types/graph";
@@ -58,10 +57,6 @@ const MainHero = ({ graphData }: MainHeroProps) => {
       <div className="absolute inset-0 z-20 pointer-events-none">
         <TitleOverlay />
 
-        {/* Search — bottom left */}
-        <div className="absolute bottom-32 left-6 md:left-12 pointer-events-auto">
-          <SearchBar />
-        </div>
       </div>
 
       {/* Right: Category Legend */}
