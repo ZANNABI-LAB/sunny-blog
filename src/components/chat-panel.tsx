@@ -77,7 +77,7 @@ const BotMessage = ({ message }: { message: Message }) => (
       }`}
     >
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
-        <span className="font-display text-amber-400 mr-1">42&gt;</span>
+        <span className="font-display text-amber-400 mr-1">deepthought&gt;</span>
         {message.content}
         {message.isStreaming && (
           <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-amber-400" />
@@ -176,12 +176,11 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <div className="flex items-center gap-2">
           <span
-            className="font-display text-sm font-bold text-amber-400"
+            className="font-display text-sm font-semibold text-white tracking-wider"
             style={{ textShadow: "0 0 8px rgba(245,158,11,0.4)" }}
           >
-            42
+            Deep Thought
           </span>
-          <span className="font-display text-sm font-semibold text-white tracking-wider">Deep Thought</span>
         </div>
         <button
           onClick={onClose}
