@@ -144,14 +144,14 @@ const SearchBar = () => {
   return (
     <div
       ref={wrapperRef}
-      className="mt-4 relative pointer-events-auto"
+      className="relative pointer-events-auto"
       style={{ animation: "fade-in 0.5s ease-out 0.3s both" }}
     >
       {/* Input */}
       <div className="relative">
         <input
           type="text"
-          placeholder="Search posts..."
+          placeholder="Ask Deep Thought..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -163,11 +163,11 @@ const SearchBar = () => {
           aria-activedescendant={
             activeIndex >= 0 ? `search-result-${activeIndex}` : undefined
           }
-          className="w-72 md:w-96 h-10 rounded-full bg-white/5 border border-white/10 px-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-indigo-400/50 focus:bg-white/10 focus:ring-1 focus:ring-indigo-400/30 transition-all duration-200"
+          className="font-display w-72 md:w-96 h-10 rounded-full bg-white/5 border border-white/10 px-4 text-sm text-white placeholder:text-zinc-600 tracking-wider outline-none focus:border-amber-400/50 focus:bg-white/10 focus:ring-1 focus:ring-amber-400/30 transition-all duration-200"
         />
         {isLoading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
       </div>
@@ -178,7 +178,7 @@ const SearchBar = () => {
           id="search-results"
           role="listbox"
           aria-label="검색 결과"
-          className="z-[40] absolute top-full mt-2 left-1/2 -translate-x-1/2 w-72 md:w-96 bg-zinc-900/95 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg shadow-black/50 max-h-80 overflow-y-auto p-2"
+          className="z-[40] absolute top-full mt-2 left-0 w-72 md:w-96 bg-zinc-900/95 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg shadow-black/50 max-h-80 overflow-y-auto p-2"
         >
           {results.length > 0 ? (
             results.map((result, index) => (
@@ -203,7 +203,7 @@ const SearchBar = () => {
                   <span className="text-sm text-white truncate">
                     {result.title}
                   </span>
-                  <span className="text-[10px] text-indigo-400/70 shrink-0">
+                  <span className="text-[10px] text-amber-400/70 shrink-0">
                     {formatScore(result.score)}
                   </span>
                 </div>

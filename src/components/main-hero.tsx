@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
-import SearchBar from "@/components/search-bar";
 import CategoryLegend from "@/components/category-legend";
 import StarBackground from "@/components/star-background";
 import type { GraphData } from "@/types/graph";
@@ -18,7 +17,6 @@ const MainHero = ({ graphData }: MainHeroProps) => {
     null
   );
 
-  // Extract unique categories from graph data (from hub nodes)
   const categories = graphData.nodes
     .filter((n) => n.type === "category")
     .map((n) => getCategoryRoot(n.category));
@@ -37,7 +35,7 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         className="absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(ellipse at center, #0f1729 0%, #0a0a0f 70%)",
+            "radial-gradient(ellipse at 70% 50%, #0a0f1a 0%, #070709 70%)",
         }}
       />
 
@@ -46,8 +44,8 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         <StarBackground />
       </div>
 
-      {/* Graph layer */}
-      <div className="absolute inset-0 z-10">
+      {/* Graph layer — shifted right for asymmetric layout */}
+      <div className="absolute inset-0 z-10 md:left-[20%]">
         <GraphView
           data={graphData}
           highlightedCategory={highlightedCategory}
@@ -55,16 +53,18 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         />
       </div>
 
-      {/* Overlay layer */}
-      <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center">
+      {/* Left: Title + Search (asymmetric) */}
+      <div className="absolute inset-0 z-20 pointer-events-none">
         <TitleOverlay />
-        <SearchBar />
-        <CategoryLegend
-          categories={categories}
-          activeCategory={highlightedCategory}
-          onToggle={setHighlightedCategory}
-        />
+
       </div>
+
+      {/* Right: Category Legend */}
+      <CategoryLegend
+        categories={categories}
+        activeCategory={highlightedCategory}
+        onToggle={setHighlightedCategory}
+      />
     </div>
   );
 };

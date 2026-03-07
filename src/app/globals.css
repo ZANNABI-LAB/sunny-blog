@@ -3,8 +3,44 @@
 
 @theme {
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'Space Mono', monospace;
 }
 
+/* ── Display Font Utility ── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* ── Noise Grain Overlay ── */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Nebula Background Effects ── */
+.nebula-bg {
+  position: relative;
+}
+.nebula-bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.02) 0%, transparent 40%),
+    radial-gradient(ellipse at 60% 80%, rgba(245, 158, 11, 0.015) 0%, transparent 45%);
+}
+
+/* ── Keyframes ── */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -20,6 +56,35 @@
   to { opacity: 0; transform: translateY(16px) scale(0.95); }
 }
 
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes brutal-slide-in {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Motion Classes ── */
+.animate-page-fade-in {
+  animation: page-fade-in 300ms ease-out;
+}
+
+.animate-stagger-in {
+  animation: stagger-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-brutal-slide {
+  animation: brutal-slide-in 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -31,6 +96,7 @@
   }
 }
 
+/* ── Scrollbar ── */
 .chat-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -44,24 +110,21 @@
   background: transparent;
 }
 
-/* 텍스트 글로우 유틸리티 */
+/* ── Text Glow ── */
 .text-glow-indigo {
   text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
 }
 .text-glow-indigo-sm {
   text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
 }
-
-/* 페이지 전환 fade-in */
-@keyframes page-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.text-glow-amber {
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
 }
-.animate-page-fade-in {
-  animation: page-fade-in 300ms ease-out;
+.text-glow-amber-sm {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
-/* PostCard hover: 카테고리 색상 border glow */
+/* ── PostCard Hover Glow ── */
 .post-card-glow {
   transition: border-color 200ms ease, box-shadow 200ms ease, background-color 150ms ease;
 }
@@ -70,31 +133,71 @@
   box-shadow: 0 0 16px color-mix(in srgb, var(--card-category-color, transparent) 25%, transparent);
 }
 
-/* prose 코드블록 카테고리 accent bar */
+/* ── Prose Category Accent ── */
 article[style*="--category-color"] .prose pre {
   border-left: 3px solid var(--category-color, rgba(99, 102, 241, 0.5));
 }
 
-/* prose hr: 그라데이션 구분선 */
 article[style*="--category-color"] .prose hr {
   border: none;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--category-color, rgba(99, 102, 241, 0.3)), transparent);
 }
 
-/* prose blockquote: 카테고리 색상 글로우 */
 article[style*="--category-color"] .prose blockquote {
   border-left-color: var(--category-color, rgba(99, 102, 241, 0.5));
   background: color-mix(in srgb, var(--category-color, #818cf8) 5%, transparent);
 }
 
-/* 풋터 gradient border */
+/* ── Footer ── */
 .footer-gradient-border {
   border-top: 1px solid transparent;
-  border-image: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), transparent) 1;
+  border-image: linear-gradient(to right, transparent, rgba(245, 158, 11, 0.2), rgba(99, 102, 241, 0.15), transparent) 1;
 }
 
-/* ZANNABI LAB hover glow */
 .zannabi-glow:hover {
-  text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+/* ── Bento Grid ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.bento-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .bento-span-2 {
+    grid-column: span 1;
+  }
+}
+
+/* ── Brutal Accent Line ── */
+.brutal-accent {
+  position: relative;
+}
+.brutal-accent::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--card-category-color, #6366f1);
 }

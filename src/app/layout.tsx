@@ -6,8 +6,8 @@ import Footer from "@/components/footer";
 import ChatbotWidget from "@/components/chatbot-widget";
 
 export const metadata: Metadata = {
-  title: "Sunny's Blog",
-  description: "One small step for a monkey, one giant leap for code",
+  title: "Deep Thought",
+  description: "The answer to the ultimate question of life, the universe, and code.",
 };
 
 const RootLayout = ({
@@ -24,8 +24,21 @@ const RootLayout = ({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+        />
       </head>
-      <body className="flex flex-col min-h-screen bg-[#0a0a0f] text-white font-sans">
+      <body className="flex flex-col min-h-screen bg-[#070709] text-white font-sans noise-overlay nebula-bg">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"

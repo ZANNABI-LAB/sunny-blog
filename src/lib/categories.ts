@@ -8,20 +8,20 @@ export type Category =
   | "Frontend";
 
 export const CATEGORY_COLORS: Record<Category, string> = {
-  Architecture: "#f59e0b",
-  "Design Pattern": "#f472b6",
-  Security: "#ef4444",
-  Testing: "#fbbf24",
-  Infrastructure: "#10b981",
-  Backend: "#06b6d4",
-  Frontend: "#a78bfa",
+  Architecture: "#fbbf24",
+  "Design Pattern": "#f59e0b",
+  Security: "#fcd34d",
+  Testing: "#b45309",
+  Infrastructure: "#92400e",
+  Backend: "#d97706",
+  Frontend: "#eab308",
 };
 
 export const CATEGORIES: Category[] = Object.keys(
   CATEGORY_COLORS
 ) as Category[];
 
-const DEFAULT_COLOR = "#818cf8";
+const DEFAULT_COLOR = "#d4a017";
 
 /**
  * 도트 표기법에서 root 카테고리를 추출한다.
