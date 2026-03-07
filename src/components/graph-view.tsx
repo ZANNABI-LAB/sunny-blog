@@ -11,24 +11,43 @@ import PostPreview from "@/components/post-preview";
 type GraphViewProps = {
   data: GraphData;
   highlightedCategory?: string | null;
+  focusCategory?: string | null;
 };
 
-type SimNode = GraphNode & SimulationNodeDatum;
+type SimNode = GraphNode &
+  SimulationNodeDatum & {
+    breathPhase: number;
+    breathPeriod: number;
+  };
+
 type SimEdge = SimulationLinkDatum<SimNode> & {
   weight: number;
   sharedTags: string[];
 };
 
-const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
+// B4: Hub size constants (reduced from original)
+const HUB_INNER_R = 20;
+const HUB_OUTER_R = 22;
+const HUB_LABEL_DY = 32;
+const HUB_COLLIDE_R = 55;
+const POST_R = 14;
+const POST_COLLIDE_R = 55;
+
+const GraphView = ({
+  data,
+  highlightedCategory = null,
+  focusCategory = null,
+}: GraphViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
   const isDragging = useRef<boolean>(false);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
   const [hoveredNode, setHoveredNode] = useState<SimNode | null>(null);
-  const [previewPos, setPreviewPos] = useState<{ x: number; y: number } | null>(
-    null
-  );
+  const [previewPos, setPreviewPos] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   // Store refs for category highlight updates without re-running simulation
   const nodeElementsRef = useRef<d3.Selection<
@@ -44,6 +63,19 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
     unknown
   > | null>(null);
   const simNodesRef = useRef<SimNode[]>([]);
+
+  // B1: Zoom refs for legend focus
+  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const svgSelectionRef = useRef<d3.Selection<
+    SVGSVGElement,
+    unknown,
+    null,
+    undefined
+  > | null>(null);
+
+  // A2/A3: Animation state refs
+  const hasAnimatedRef = useRef(false);
+  const breathTimerRef = useRef<d3.Timer | null>(null);
 
   // Apply category highlight via ref (avoids re-creating simulation)
   useEffect(() => {
@@ -84,14 +116,54 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
     }
   }, [highlightedCategory]);
 
+  // B1: Legend focus - zoom to category hub on focusCategory change
+  useEffect(() => {
+    const zoom = zoomRef.current;
+    const svgSel = svgSelectionRef.current;
+    const svgEl = svgRef.current;
+    const container = containerRef.current;
+    if (!zoom || !svgSel || !svgEl || !container) return;
+
+    const { width, height } = container.getBoundingClientRect();
+    const simNodes = simNodesRef.current;
+
+    if (focusCategory) {
+      // Find the hub node for this category
+      const hubNode = simNodes.find(
+        (n) => n.type === "category" && n.title === focusCategory
+      );
+      if (hubNode && hubNode.x != null && hubNode.y != null) {
+        const scale = 1.8;
+        const tx = width / 2 - hubNode.x * scale;
+        const ty = height / 2 - hubNode.y * scale;
+        const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+        svgSel.transition().duration(600).call(zoom.transform, transform);
+      }
+    } else {
+      // Fit to view (same as B3 logic)
+      fitToView(svgSel, zoom, simNodes, width, height, 600);
+    }
+  }, [focusCategory]);
+
   useEffect(() => {
     const container = containerRef.current;
     const svgEl = svgRef.current;
     if (!container || !svgEl) return;
 
+    // Reset animation state on data change
+    hasAnimatedRef.current = false;
+    if (breathTimerRef.current) {
+      breathTimerRef.current.stop();
+      breathTimerRef.current = null;
+    }
+
     const { width, height } = container.getBoundingClientRect();
 
-    const simNodes: SimNode[] = data.nodes.map((n) => ({ ...n }));
+    const simNodes: SimNode[] = data.nodes.map((n) => ({
+      ...n,
+      breathPhase: Math.random() * Math.PI * 2,
+      breathPeriod: 2000 + Math.random() * 3000,
+    }));
     simNodesRef.current = simNodes;
     const simEdges: SimEdge[] = data.edges.map((e) => ({
       source: e.source,
@@ -104,6 +176,8 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       .select(svgEl)
       .attr("width", width)
       .attr("height", height);
+
+    svgSelectionRef.current = svg;
 
     svg.selectAll("*").remove();
 
@@ -125,7 +199,7 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
     merge.append("feMergeNode").attr("in", "blur");
     merge.append("feMergeNode").attr("in", "SourceGraphic");
 
-    // Hub glow filter
+    // B4: Hub glow filter (stdDeviation 8 -> 6)
     const hubFilter = defs
       .append("filter")
       .attr("id", "hub-glow")
@@ -135,11 +209,21 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       .attr("height", "200%");
     hubFilter
       .append("feGaussianBlur")
-      .attr("stdDeviation", "8")
+      .attr("stdDeviation", "6")
       .attr("result", "blur");
     const hubMerge = hubFilter.append("feMerge");
     hubMerge.append("feMergeNode").attr("in", "blur");
     hubMerge.append("feMergeNode").attr("in", "SourceGraphic");
+
+    // A4: Edge gradient definitions
+    simEdges.forEach((_, i) => {
+      const grad = defs
+        .append("linearGradient")
+        .attr("id", `edge-gradient-${i}`)
+        .attr("gradientUnits", "userSpaceOnUse");
+      grad.append("stop").attr("offset", "0%").attr("class", "edge-stop-start");
+      grad.append("stop").attr("offset", "100%").attr("class", "edge-stop-end");
+    });
 
     const zoomContainer = svg.append("g").attr("class", "zoom-container");
 
@@ -150,17 +234,20 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
         zoomContainer.attr("transform", event.transform);
       });
 
+    zoomRef.current = zoom;
     svg.call(zoom);
 
     const edgeGroup = zoomContainer.append("g").attr("class", "edges");
     const nodeGroup = zoomContainer.append("g").attr("class", "nodes");
 
+    // A4: Edge gradient stroke
     const linkElements = edgeGroup
       .selectAll<SVGLineElement, SimEdge>("line")
       .data(simEdges)
       .join("line")
-      .attr("stroke", "rgba(255,255,255,0.15)")
-      .attr("stroke-width", (d) => Math.max(1, Math.min(d.weight, 3)));
+      .attr("stroke", (_, i) => `url(#edge-gradient-${i})`)
+      .attr("stroke-width", (d) => Math.max(1, Math.min(d.weight, 3)))
+      .attr("opacity", 0); // A2: Start hidden
 
     linkElementsRef.current = linkElements;
 
@@ -168,7 +255,8 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       .selectAll<SVGGElement, SimNode>("g")
       .data(simNodes)
       .join("g")
-      .attr("cursor", "pointer");
+      .attr("cursor", "pointer")
+      .attr("opacity", 0); // A2: Start hidden
 
     nodeElementsRef.current = nodeElements;
 
@@ -178,24 +266,26 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       const color = getCategoryColor(d.category);
 
       if (d.type === "category") {
-        // Hub node: outer ring
+        // B4: Hub node: outer ring (28 -> 22)
         g.append("circle")
-          .attr("r", 28)
+          .attr("r", 0) // A2: Start at 0
           .attr("fill", "none")
           .attr("stroke", color)
           .attr("stroke-width", 2)
-          .attr("opacity", 0.3);
+          .attr("opacity", 0.3)
+          .attr("class", "hub-outer");
 
-        // Hub node: inner filled circle
+        // B4: Hub node: inner filled circle (26 -> 20)
         g.append("circle")
-          .attr("r", 26)
+          .attr("r", 0) // A2: Start at 0
           .attr("fill", color)
           .attr("opacity", 0.85)
-          .attr("filter", "url(#hub-glow)");
+          .attr("filter", "url(#hub-glow)")
+          .attr("class", "hub-inner");
 
-        // Hub label
+        // B4: Hub label (dy 40 -> 32)
         g.append("text")
-          .attr("dy", 40)
+          .attr("dy", HUB_LABEL_DY)
           .attr("text-anchor", "middle")
           .attr("fill", "rgba(255,255,255,0.8)")
           .attr("font-size", "13")
@@ -204,9 +294,10 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       } else {
         // Post node
         g.append("circle")
-          .attr("r", 14)
+          .attr("r", 0) // A2: Start at 0
           .attr("fill", color)
-          .attr("filter", "url(#glow)");
+          .attr("filter", "url(#glow)")
+          .attr("class", "post-circle");
 
         // Post label
         g.append("text")
@@ -222,7 +313,6 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       const connectedIds = new Set<string>([node.id]);
 
       if (node.type === "category") {
-        // Hub hover: highlight all posts in this category
         simNodes.forEach((n) => {
           if (
             n.type === "post" &&
@@ -232,7 +322,6 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
           }
         });
       } else {
-        // Post hover: highlight connected nodes
         simEdges.forEach((e) => {
           const src = (e.source as SimNode).id;
           const tgt = (e.target as SimNode).id;
@@ -249,12 +338,12 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       linkElements
         .transition()
         .duration(200)
-        .attr("stroke", (d) => {
+        .attr("stroke", (d, i) => {
           const src = (d.source as SimNode).id;
           const tgt = (d.target as SimNode).id;
           return connectedIds.has(src) && connectedIds.has(tgt)
             ? "rgba(255,255,255,0.5)"
-            : "rgba(255,255,255,0.05)";
+            : `url(#edge-gradient-${i})`;
         })
         .attr("opacity", (d) => {
           const src = (d.source as SimNode).id;
@@ -268,14 +357,13 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       linkElements
         .transition()
         .duration(200)
-        .attr("stroke", "rgba(255,255,255,0.15)")
-        .attr("opacity", 1);
+        .attr("stroke", (_, i) => `url(#edge-gradient-${i})`)
+        .attr("opacity", 0.25);
     };
 
     nodeElements
       .on("mouseenter", (event, d) => {
         if (isDragging.current) return;
-        // Only show preview for post nodes
         if (d.type === "post") {
           const transform = d3.zoomTransform(svgEl);
           setHoveredNode(d);
@@ -316,10 +404,32 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       .force(
         "collide",
         d3.forceCollide<SimNode>().radius((d) =>
-          d.type === "category" ? 70 : 55
+          d.type === "category" ? HUB_COLLIDE_R : POST_COLLIDE_R
         )
       )
       .on("tick", () => {
+        // A4: Update edge gradient positions
+        simEdges.forEach((d, i) => {
+          const src = d.source as SimNode;
+          const tgt = d.target as SimNode;
+          const srcColor = getCategoryColor(src.category);
+          const tgtColor = getCategoryColor(tgt.category);
+
+          defs
+            .select(`#edge-gradient-${i}`)
+            .attr("x1", src.x ?? 0)
+            .attr("y1", src.y ?? 0)
+            .attr("x2", tgt.x ?? 0)
+            .attr("y2", tgt.y ?? 0);
+
+          defs
+            .select(`#edge-gradient-${i} .edge-stop-start`)
+            .attr("stop-color", srcColor);
+          defs
+            .select(`#edge-gradient-${i} .edge-stop-end`)
+            .attr("stop-color", tgtColor);
+        });
+
         linkElements
           .attr("x1", (d) => (d.source as SimNode).x ?? 0)
           .attr("y1", (d) => (d.source as SimNode).y ?? 0)
@@ -330,7 +440,133 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
           "transform",
           (d) => `translate(${d.x ?? 0},${d.y ?? 0})`
         );
+
+        // B2: Drift prevention - stop when stabilized
+        if (simulation.alpha() < 0.01) {
+          simulation.stop();
+        }
+
+        // A2: Entry animation trigger when simulation settles
+        if (!hasAnimatedRef.current && simulation.alpha() < 0.05) {
+          hasAnimatedRef.current = true;
+          runEntryAnimation(
+            svg,
+            zoom,
+            simNodes,
+            nodeElements,
+            linkElements,
+            width,
+            height
+          );
+        }
       });
+
+    // A2: Entry animation function
+    const runEntryAnimation = (
+      svgSel: d3.Selection<SVGSVGElement, unknown, null, undefined>,
+      zoomBehavior: d3.ZoomBehavior<SVGSVGElement, unknown>,
+      nodes: SimNode[],
+      nodeEls: d3.Selection<SVGGElement, SimNode, SVGGElement, unknown>,
+      linkEls: d3.Selection<SVGLineElement, SimEdge, SVGGElement, unknown>,
+      w: number,
+      h: number
+    ) => {
+      // B3: fitToView first
+      fitToView(svgSel, zoomBehavior, nodes, w, h, 800);
+
+      // Hubs animate first
+      const hubNodes = nodeEls.filter((d) => d.type === "category");
+      const postNodes = nodeEls.filter((d) => d.type === "post");
+
+      hubNodes
+        .transition()
+        .duration(400)
+        .attr("opacity", 1);
+      hubNodes
+        .selectAll<SVGCircleElement, unknown>(".hub-inner")
+        .transition()
+        .duration(400)
+        .attr("r", HUB_INNER_R);
+      hubNodes
+        .selectAll<SVGCircleElement, unknown>(".hub-outer")
+        .transition()
+        .duration(400)
+        .attr("r", HUB_OUTER_R);
+
+      // Posts animate with stagger
+      postNodes
+        .transition()
+        .delay((_, i) => 200 + i * 50)
+        .duration(400)
+        .attr("opacity", 1);
+      postNodes
+        .selectAll<SVGCircleElement, unknown>(".post-circle")
+        .transition()
+        .delay((_, i) => 200 + i * 50)
+        .duration(400)
+        .attr("r", POST_R);
+
+      // Links fade in
+      linkEls
+        .transition()
+        .delay(200)
+        .duration(600)
+        .attr("opacity", 0.25);
+
+      // A3: Start breathing after entry animation completes
+      const totalDelay = 200 + postNodes.size() * 50 + 400;
+      setTimeout(() => {
+        startBreathing(nodes, nodeEls);
+      }, totalDelay);
+    };
+
+    // A3: Breathing effect
+    const startBreathing = (
+      nodes: SimNode[],
+      nodeEls: d3.Selection<SVGGElement, SimNode, SVGGElement, unknown>
+    ) => {
+      const hubCircles = nodeEls
+        .filter((d) => d.type === "category")
+        .selectAll<SVGCircleElement, unknown>(".hub-inner");
+      const postCircles = nodeEls
+        .filter((d) => d.type === "post")
+        .selectAll<SVGCircleElement, unknown>(".post-circle");
+      const hubOuters = nodeEls
+        .filter((d) => d.type === "category")
+        .selectAll<SVGCircleElement, unknown>(".hub-outer");
+
+      breathTimerRef.current = d3.timer((elapsed) => {
+        hubCircles.each(function (_, i) {
+          const nodeData = nodes.filter((n) => n.type === "category")[i];
+          if (!nodeData) return;
+          const r =
+            HUB_INNER_R +
+            Math.sin(elapsed / nodeData.breathPeriod + nodeData.breathPhase) *
+              0.8;
+          d3.select(this).attr("r", r);
+        });
+
+        hubOuters.each(function (_, i) {
+          const nodeData = nodes.filter((n) => n.type === "category")[i];
+          if (!nodeData) return;
+          const r =
+            HUB_OUTER_R +
+            Math.sin(elapsed / nodeData.breathPeriod + nodeData.breathPhase) *
+              0.8;
+          d3.select(this).attr("r", r);
+        });
+
+        postCircles.each(function (_, i) {
+          const nodeData = nodes.filter((n) => n.type === "post")[i];
+          if (!nodeData) return;
+          const r =
+            POST_R +
+            Math.sin(elapsed / nodeData.breathPeriod + nodeData.breathPhase) *
+              0.5;
+          d3.select(this).attr("r", r);
+        });
+      });
+    };
 
     const drag = d3
       .drag<SVGGElement, SimNode>()
@@ -340,6 +576,7 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
           y: event.sourceEvent.clientY,
         };
         isDragging.current = false;
+        // B2: Restart simulation for dragging
         if (!event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
@@ -365,32 +602,33 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
           try {
             const el = d3.select(this);
             if (d.type === "category") {
-              // Hub node click -> navigate to tech page with category filter
-              const baseR = 26;
-              el.select("circle:nth-child(2)")
+              // B4: Hub node click pulse (26->20, +6->+4)
+              el.select(".hub-inner")
                 .transition()
                 .duration(150)
-                .attr("r", baseR + 6)
+                .attr("r", HUB_INNER_R + 4)
                 .transition()
                 .duration(200)
-                .attr("r", baseR);
+                .attr("r", HUB_INNER_R);
               setTimeout(
-                () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
+                () =>
+                  router.push(
+                    `/tech?category=${encodeURIComponent(d.title)}`
+                  ),
                 300
               );
             } else {
-              // Post node click -> navigate to post detail
-              el.select("circle")
+              // Post node click
+              el.select(".post-circle")
                 .transition()
                 .duration(150)
-                .attr("r", 20)
+                .attr("r", POST_R + 6)
                 .transition()
                 .duration(200)
-                .attr("r", 14);
+                .attr("r", POST_R);
               setTimeout(() => router.push(`/tech/${d.slug}`), 300);
             }
           } catch (err) {
-            // Pulse animation failed — still navigate
             console.warn("Node click animation error:", err);
             if (d.type === "category") {
               router.push(`/tech?category=${encodeURIComponent(d.title)}`);
@@ -401,6 +639,7 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
         }
         isDragging.current = false;
         dragStartPos.current = null;
+        // B2: Stop simulation gracefully after drag
         if (!event.active) simulation.alphaTarget(0);
         d.fx = null;
         d.fy = null;
@@ -419,6 +658,10 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
     return () => {
       resizeObserver.disconnect();
       simulation.stop();
+      if (breathTimerRef.current) {
+        breathTimerRef.current.stop();
+        breathTimerRef.current = null;
+      }
     };
   }, [data, router]);
 
@@ -434,6 +677,43 @@ const GraphView = ({ data, highlightedCategory = null }: GraphViewProps) => {
       )}
     </div>
   );
+};
+
+// B3: Fit all nodes into view
+const fitToView = (
+  svgSel: d3.Selection<SVGSVGElement, unknown, null, undefined>,
+  zoomBehavior: d3.ZoomBehavior<SVGSVGElement, unknown>,
+  nodes: SimNode[],
+  width: number,
+  height: number,
+  duration: number
+) => {
+  if (nodes.length === 0) return;
+
+  const padding = 50;
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+
+  for (const n of nodes) {
+    if (n.x == null || n.y == null) continue;
+    minX = Math.min(minX, n.x);
+    minY = Math.min(minY, n.y);
+    maxX = Math.max(maxX, n.x);
+    maxY = Math.max(maxY, n.y);
+  }
+
+  const bw = maxX - minX + padding * 2;
+  const bh = maxY - minY + padding * 2;
+  const fitScale = Math.min(Math.min(width / bw, height / bh) * 0.85, 2.0);
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  const tx = width / 2 - cx * fitScale;
+  const ty = height / 2 - cy * fitScale;
+  const transform = d3.zoomIdentity.translate(tx, ty).scale(fitScale);
+
+  svgSel.transition().duration(duration).call(zoomBehavior.transform, transform);
 };
 
 export default GraphView;
