@@ -5,6 +5,7 @@ import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
 import SearchBar from "@/components/search-bar";
 import CategoryLegend from "@/components/category-legend";
+import StarBackground from "@/components/star-background";
 import type { GraphData } from "@/types/graph";
 import { getCategoryRoot } from "@/lib/categories";
 
@@ -40,9 +41,18 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         }}
       />
 
+      {/* Star particle layer */}
+      <div className="absolute inset-0 z-[5]">
+        <StarBackground />
+      </div>
+
       {/* Graph layer */}
       <div className="absolute inset-0 z-10">
-        <GraphView data={graphData} highlightedCategory={highlightedCategory} />
+        <GraphView
+          data={graphData}
+          highlightedCategory={highlightedCategory}
+          focusCategory={highlightedCategory}
+        />
       </div>
 
       {/* Overlay layer */}
