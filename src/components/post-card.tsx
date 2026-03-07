@@ -14,7 +14,7 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
   return (
     <Link
       href={`/tech/${post.slug}`}
-      className={`group relative block rounded-lg border border-white/10 bg-white/5 post-card-glow brutal-accent hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none animate-stagger-in overflow-hidden ${
+      className={`group relative block rounded-lg border border-border bg-card post-card-glow brutal-accent hover:bg-card-hover focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none animate-stagger-in overflow-hidden ${
         featured ? "bento-span-2 p-6 md:p-8" : "p-5"
       }`}
       style={
@@ -35,14 +35,14 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
         >
           {post.category}
         </span>
-        <time className="font-display text-xs text-zinc-500 tracking-wider">
+        <time className="font-display text-xs text-text-muted tracking-wider">
           {post.date}
         </time>
       </div>
 
       {/* Title */}
       <h2
-        className={`mt-3 font-bold text-white transition-colors duration-150 group-hover:text-amber-400 ${
+        className={`mt-3 font-bold text-text-primary transition-colors duration-150 group-hover:text-accent ${
           featured
             ? "font-display text-xl md:text-2xl tracking-tight"
             : "text-lg"
@@ -54,7 +54,7 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
       {/* Summary */}
       {post.summary && (
         <p
-          className={`mt-2 text-sm text-zinc-400 ${
+          className={`mt-2 text-sm text-text-secondary ${
             featured ? "line-clamp-3" : "line-clamp-2"
           }`}
         >
@@ -68,13 +68,13 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
           {post.tags.slice(0, featured ? 6 : 3).map((tag) => (
             <span
               key={tag}
-              className="rounded-md bg-white/10 px-2 py-0.5 text-xs text-zinc-400"
+              className="rounded-md bg-card-hover px-2 py-0.5 text-xs text-text-secondary"
             >
               {tag}
             </span>
           ))}
           {post.tags.length > (featured ? 6 : 3) && (
-            <span className="text-xs text-zinc-500">
+            <span className="text-xs text-text-muted">
               +{post.tags.length - (featured ? 6 : 3)}
             </span>
           )}

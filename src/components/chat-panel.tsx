@@ -56,11 +56,11 @@ const QuestionCategories = ({
             aria-controls={`question-list-${cat.key}`}
             className={`flex flex-shrink-0 items-center gap-1.5 rounded-lg border px-3 min-h-[44px] font-display text-xs tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
               selectedCategory === cat.key
-                ? "bg-amber-500/20 border-amber-500/60 text-amber-300"
-                : "border-amber-500/30 bg-white/5 text-zinc-300 hover:bg-white/10"
+                ? "bg-accent/20 border-accent/60 text-accent"
+                : "border-accent/30 bg-card text-text-secondary hover:bg-card-hover"
             }`}
           >
-            <span className="text-zinc-500">{cat.symbol}</span>
+            <span className="text-text-muted">{cat.symbol}</span>
             {cat.label}
           </button>
         ))}
@@ -77,11 +77,11 @@ const QuestionCategories = ({
               key={q}
               type="button"
               onClick={() => onSelectQuestion(q)}
-              className={`flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-zinc-400 transition-all hover:bg-white/5 hover:text-zinc-200 active:scale-[0.98] active:bg-white/10${
+              className={`flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-text-secondary transition-all hover:bg-card hover:text-text-primary active:scale-[0.98] active:bg-card-hover${
                 i === 2 ? " hidden sm:flex" : ""
               }`}
             >
-              <span className="text-amber-400/60">&gt;</span>
+              <span className="text-accent/60">&gt;</span>
               &quot;{q}&quot;
             </button>
           ))}
@@ -93,18 +93,18 @@ const QuestionCategories = ({
 
 const TypingIndicator = () => (
   <div className="flex items-start gap-2">
-    <div className="rounded-2xl rounded-bl-sm border border-white/5 bg-white/5 px-4 py-3">
+    <div className="rounded-2xl rounded-bl-sm border border-border-subtle bg-card px-4 py-3">
       <div className="flex items-center gap-1">
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-accent"
           style={{ animationDelay: "0ms" }}
         />
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-accent"
           style={{ animationDelay: "150ms" }}
         />
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-accent"
           style={{ animationDelay: "300ms" }}
         />
       </div>
@@ -119,8 +119,8 @@ const ChatReferences = ({
 }) => {
   if (references.length === 0) return null;
   return (
-    <div className="mt-2 border-t border-white/5 pt-2">
-      <span className="text-[10px] uppercase tracking-wide text-zinc-400">
+    <div className="mt-2 border-t border-border-subtle pt-2">
+      <span className="text-[10px] uppercase tracking-wide text-text-secondary">
         참고 포스트
       </span>
       <div className="mt-1 flex flex-col gap-1">
@@ -128,7 +128,7 @@ const ChatReferences = ({
           <a
             key={ref.slug}
             href={`/tech/${ref.slug}`}
-            className="text-xs text-amber-400 transition-colors hover:text-amber-300"
+            className="text-xs text-accent transition-colors hover:text-accent-hover"
           >
             {ref.title}
           </a>
@@ -144,14 +144,14 @@ const BotMessage = ({ message }: { message: Message }) => (
       className={`max-w-[85%] rounded-lg border px-4 py-3 ${
         message.isError
           ? "border-red-400/20 bg-red-400/5 text-red-400/80"
-          : "border-white/5 bg-white/5 text-zinc-200"
+          : "border-border-subtle bg-card text-text-secondary"
       }`}
     >
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
-        <span className="font-display text-amber-400 mr-1">deepthought&gt;</span>
+        <span className="font-display text-accent mr-1">deepthought&gt;</span>
         {message.content}
         {message.isStreaming && (
-          <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-amber-400" />
+          <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-accent" />
         )}
       </p>
       {message.references && message.references.length > 0 && (
@@ -163,9 +163,9 @@ const BotMessage = ({ message }: { message: Message }) => (
 
 const UserMessage = ({ message }: { message: Message }) => (
   <div className="flex justify-end">
-    <div className="max-w-[85%] rounded-lg border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-zinc-200">
+    <div className="max-w-[85%] rounded-lg border border-accent/20 bg-accent/10 px-4 py-3 text-text-secondary">
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
-        <span className="font-display text-zinc-500 mr-1">you&gt;</span>
+        <span className="font-display text-text-muted mr-1">you&gt;</span>
         {message.content}
       </p>
     </div>
@@ -235,7 +235,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       aria-modal="true"
       aria-label="Deep Thought AI 채팅"
       onKeyDown={handleKeyDown}
-      className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px]"
+      className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px]"
       style={{
         paddingBottom: "var(--safe-bottom)",
         animation: isClosing
@@ -244,18 +244,18 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+      <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
           <span
-            className="font-display text-sm font-semibold text-white tracking-wider"
-            style={{ textShadow: "0 0 8px rgba(245,158,11,0.4)" }}
+            className="font-display text-sm font-semibold text-text-primary tracking-wider"
+            style={{ textShadow: "0 0 8px var(--glow-accent)" }}
           >
             Deep Thought
           </span>
         </div>
         <button
           onClick={onClose}
-          className="rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+          className="rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-text-secondary transition-colors hover:bg-card hover:text-text-primary"
           aria-label="채팅 닫기"
         >
           <svg
@@ -302,7 +302,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-white/10 px-4 py-3"
+        className="flex items-center gap-2 border-t border-border px-4 py-3"
       >
         <input
           ref={inputRef}
@@ -312,7 +312,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
           placeholder="질문을 입력하세요..."
           disabled={isLoading}
           aria-label="메시지 입력"
-          className="flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 transition-colors focus:border-amber-400/50 focus:outline-none focus:ring-1 focus:ring-amber-400/30 disabled:opacity-50"
+          className="flex-1 rounded-full border border-border bg-card px-4 py-2 text-sm text-text-primary placeholder-text-muted transition-colors focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/30 disabled:opacity-50"
         />
         <button
           type="submit"

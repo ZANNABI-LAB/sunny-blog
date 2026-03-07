@@ -37,10 +37,10 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
     >
       {/* Brutal Header */}
       <div className="animate-brutal-slide">
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-white tracking-tight text-glow-amber">
+        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
           TECH
         </h1>
-        <p className="mt-2 font-display text-xs text-zinc-500 tracking-[0.2em] uppercase">
+        <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
           {allPosts.length} posts &mdash; knowledge archive
         </p>
       </div>
@@ -63,7 +63,7 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
           ))}
         </section>
       ) : (
-        <p className="py-16 text-center text-zinc-400 font-display text-sm tracking-wider">
+        <p className="py-16 text-center text-text-secondary font-display text-sm tracking-wider">
           NO POSTS FOUND
         </p>
       )}

@@ -28,10 +28,27 @@ const StarBackground = () => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotionRef.current = motionQuery.matches;
 
+    const getStarColor = (): string => {
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue("--star-color")
+        .trim() || "rgba(255, 255, 255, 1)";
+    };
+
+    const getStarCountFactor = (): number => {
+      const val = getComputedStyle(document.documentElement)
+        .getPropertyValue("--star-count-factor")
+        .trim();
+      return parseFloat(val) || 1;
+    };
+
+    let starColor = getStarColor();
+    let starCountFactor = getStarCountFactor();
+
     const initStars = () => {
       const w = canvas.width;
       const h = canvas.height;
-      const count = Math.min(200, Math.max(100, Math.floor((w * h) / 10000)));
+      const baseCount = Math.min(200, Math.max(100, Math.floor((w * h) / 10000)));
+      const count = Math.floor(baseCount * starCountFactor);
       const stars: Star[] = [];
       for (let i = 0; i < count; i++) {
         stars.push({
@@ -53,7 +70,9 @@ const StarBackground = () => {
       for (const star of starsRef.current) {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.baseOpacity})`;
+        ctx.fillStyle = starColor.includes("rgba")
+          ? starColor.replace(/[\d.]+\)$/, `${star.baseOpacity})`)
+          : `rgba(0, 0, 0, ${star.baseOpacity})`;
         ctx.fill();
       }
     };
@@ -89,7 +108,9 @@ const StarBackground = () => {
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fillStyle = starColor.includes("rgba")
+          ? starColor.replace(/[\d.]+\)$/, `${opacity})`)
+          : `rgba(0, 0, 0, ${opacity})`;
         ctx.fill();
       }
 
@@ -113,10 +134,28 @@ const StarBackground = () => {
     };
     motionQuery.addEventListener("change", handleMotionChange);
 
+    // Watch for theme changes via MutationObserver on <html> class
+    const observer = new MutationObserver(() => {
+      starColor = getStarColor();
+      const newFactor = getStarCountFactor();
+      if (newFactor !== starCountFactor) {
+        starCountFactor = newFactor;
+        resize(); // reinit stars with new count
+      }
+      if (reducedMotionRef.current) {
+        renderStatic();
+      }
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     return () => {
       cancelAnimationFrame(animationRef.current);
       resizeObserver.disconnect();
       motionQuery.removeEventListener("change", handleMotionChange);
+      observer.disconnect();
     };
   }, []);
 

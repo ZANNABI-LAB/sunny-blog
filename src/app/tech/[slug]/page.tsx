@@ -83,7 +83,7 @@ const PostDetailPage = async ({
       {/* BackLink */}
       <Link
         href="/tech"
-        className="text-zinc-400 transition-colors duration-150 hover:text-white"
+        className="text-text-secondary transition-colors duration-150 hover:text-text-primary"
       >
         &larr; 목록으로
       </Link>
@@ -100,10 +100,10 @@ const PostDetailPage = async ({
         >
           {post.category}
         </span>
-        <h1 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl tracking-tight text-glow-amber-sm">
+        <h1 className="mt-4 font-display text-2xl font-bold text-text-primary sm:text-3xl tracking-tight text-glow-amber-sm">
           {post.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400 font-display tracking-wider">
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-text-secondary font-display tracking-wider">
           <time dateTime={post.date}>{formatDateKo(post.date)}</time>
           <span aria-hidden="true">&middot;</span>
           <span>{post.author}</span>
@@ -113,7 +113,7 @@ const PostDetailPage = async ({
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-white/10 px-2 py-0.5 text-xs text-zinc-400"
+                className="rounded-md bg-card-hover px-2 py-0.5 text-xs text-text-secondary"
               >
                 {tag}
               </span>
@@ -123,11 +123,11 @@ const PostDetailPage = async ({
       </header>
 
       {/* Divider */}
-      <div className="mt-8 border-t border-white/10 pt-8" />
+      <div className="mt-8 border-t border-border pt-8" />
 
       {/* PostBody */}
       <article
-        className="prose prose-invert max-w-none prose-headings:text-white prose-headings:font-bold prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:text-indigo-300 prose-code:text-indigo-300 prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#161b22] prose-pre:border prose-pre:border-white/10 prose-blockquote:border-indigo-400/50 prose-hr:border-white/10 prose-strong:text-white"
+        className="prose dark:prose-invert max-w-none prose-headings:text-text-primary prose-headings:font-bold prose-a:text-accent-secondary prose-a:no-underline hover:prose-a:opacity-80 prose-code:text-accent-secondary prose-code:bg-card-hover prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-bg-elevated prose-pre:border prose-pre:border-border prose-blockquote:border-accent-secondary/50 prose-hr:border-border prose-strong:text-text-primary"
         style={{ '--category-color': categoryColor } as React.CSSProperties}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
@@ -142,7 +142,7 @@ const PostDetailPage = async ({
               height: '1px',
             }}
           />
-          <h2 className="font-display text-sm font-bold text-zinc-300 tracking-wider uppercase">References</h2>
+          <h2 className="font-display text-sm font-bold text-text-secondary tracking-wider uppercase">References</h2>
           <ul className="mt-3 space-y-2">
             {showSourceUrl && (
               <li>
@@ -150,7 +150,7 @@ const PostDetailPage = async ({
                   href={post.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-indigo-400 break-all transition-colors duration-150 hover:text-indigo-300"
+                  className="text-sm text-accent-secondary break-all transition-colors duration-150 hover:opacity-80"
                 >
                   {post.source ?? "출처"}
                 </a>
@@ -162,7 +162,7 @@ const PostDetailPage = async ({
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-indigo-400 break-all transition-colors duration-150 hover:text-indigo-300"
+                  className="text-sm text-accent-secondary break-all transition-colors duration-150 hover:opacity-80"
                 >
                   {formatUrl(url)}
                 </a>
@@ -173,10 +173,10 @@ const PostDetailPage = async ({
       )}
 
       {/* 하단 목록 링크 */}
-      <div className="mt-12 border-t border-white/10 pt-6 pb-8">
+      <div className="mt-12 border-t border-border pt-6 pb-8">
         <Link
           href="/tech"
-          className="text-sm text-zinc-400 transition-colors duration-150 hover:text-white"
+          className="text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary"
         >
           &larr; 목록으로 돌아가기
         </Link>

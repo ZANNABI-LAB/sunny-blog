@@ -388,7 +388,7 @@ const GraphView = ({
         g.append("text")
           .attr("dy", HUB_LABEL_DY)
           .attr("text-anchor", "middle")
-          .attr("fill", "rgba(255,255,255,0.8)")
+          .attr("fill", "var(--text-secondary)")
           .attr("font-size", "13")
           .attr("font-weight", "600")
           .text(d.title);
@@ -404,7 +404,7 @@ const GraphView = ({
         g.append("text")
           .attr("dy", 28)
           .attr("text-anchor", "middle")
-          .attr("fill", "#a1a1aa")
+          .attr("fill", "var(--text-muted)")
           .attr("font-size", "11")
           .text(d.shortTitle ?? d.title);
       }
@@ -444,7 +444,7 @@ const GraphView = ({
           const src = (d.source as SimNode).id;
           const tgt = (d.target as SimNode).id;
           return connectedIds.has(src) && connectedIds.has(tgt)
-            ? "rgba(255,255,255,0.5)"
+            ? "var(--text-muted)"
             : `url(#edge-gradient-${i})`;
         })
         .attr("opacity", (d) => {
@@ -521,7 +521,7 @@ const GraphView = ({
           .attr("class", "lp-track")
           .attr("r", progressR)
           .attr("fill", "none")
-          .attr("stroke", "rgba(255,255,255,0.1)")
+          .attr("stroke", "var(--border-primary)")
           .attr("stroke-width", 1)
           .attr("transform", "rotate(-90)");
 
