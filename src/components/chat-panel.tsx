@@ -25,15 +25,15 @@ const TypingIndicator = () => (
     <div className="rounded-2xl rounded-bl-sm border border-white/5 bg-white/5 px-4 py-3">
       <div className="flex items-center gap-1">
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-indigo-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
           style={{ animationDelay: "0ms" }}
         />
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-indigo-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
           style={{ animationDelay: "150ms" }}
         />
         <span
-          className="inline-block h-2 w-2 animate-bounce rounded-full bg-indigo-400"
+          className="inline-block h-2 w-2 animate-bounce rounded-full bg-amber-400"
           style={{ animationDelay: "300ms" }}
         />
       </div>
@@ -57,7 +57,7 @@ const ChatReferences = ({
           <a
             key={ref.slug}
             href={`/tech/${ref.slug}`}
-            className="text-xs text-indigo-400 transition-colors hover:text-indigo-300"
+            className="text-xs text-amber-400 transition-colors hover:text-amber-300"
           >
             {ref.title}
           </a>
@@ -79,7 +79,7 @@ const BotMessage = ({ message }: { message: Message }) => (
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
         {message.content}
         {message.isStreaming && (
-          <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-indigo-400" />
+          <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-amber-400" />
         )}
       </p>
       {message.references && message.references.length > 0 && (
@@ -91,7 +91,7 @@ const BotMessage = ({ message }: { message: Message }) => (
 
 const UserMessage = ({ message }: { message: Message }) => (
   <div className="flex justify-end">
-    <div className="max-w-[85%] rounded-2xl rounded-br-sm border border-indigo-400/20 bg-indigo-500/20 px-4 py-3 text-zinc-200">
+    <div className="max-w-[85%] rounded-2xl rounded-br-sm border border-amber-400/20 bg-amber-500/15 px-4 py-3 text-zinc-200">
       <p className="whitespace-pre-wrap text-sm leading-relaxed">
         {message.content}
       </p>
@@ -160,7 +160,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
       ref={panelRef}
       role="dialog"
       aria-modal="true"
-      aria-label="R2-D2 AI 채팅"
+      aria-label="Deep Thought AI 채팅"
       onKeyDown={handleKeyDown}
       className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-40 sm:right-6 sm:h-[520px] sm:w-[380px]"
       style={
@@ -172,15 +172,13 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <div className="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 64 64" fill="none">
-            <path d="M16 28C16 17.5 23.2 10 32 10C40.8 10 48 17.5 48 28H16Z" fill="#C0C8D8" />
-            <circle cx="32" cy="21" r="5" fill="#1a1a2e" stroke="#6366f1" strokeWidth="2" />
-            <circle cx="32" cy="21" r="2.5" fill="#6366f1" opacity="0.8" />
-            <rect x="16" y="28" width="32" height="22" rx="3" fill="#E8ECF2" />
-            <rect x="24" y="31" width="16" height="16" rx="2" fill="#6366f1" opacity="0.15" />
-          </svg>
-          <span className="text-sm font-semibold text-white">R2-D2</span>
-          <span className="text-xs text-zinc-400">AI Assistant</span>
+          <span
+            className="font-display text-sm font-bold text-amber-400"
+            style={{ textShadow: "0 0 8px rgba(245,158,11,0.4)" }}
+          >
+            42
+          </span>
+          <span className="font-display text-sm font-semibold text-white tracking-wider">Deep Thought</span>
         </div>
         <button
           onClick={onClose}
@@ -236,12 +234,12 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing }: ChatPane
           placeholder="질문을 입력하세요..."
           disabled={isLoading}
           aria-label="메시지 입력"
-          className="flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 transition-colors focus:border-indigo-400/50 focus:outline-none focus:ring-1 focus:ring-indigo-400/30 disabled:opacity-50"
+          className="flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 transition-colors focus:border-amber-400/50 focus:outline-none focus:ring-1 focus:ring-amber-400/30 disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white transition-colors hover:bg-indigo-400 disabled:opacity-30 disabled:hover:bg-indigo-500"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-500 text-white transition-colors hover:bg-amber-400 disabled:opacity-30 disabled:hover:bg-amber-500"
           aria-label="전송"
         >
           <svg

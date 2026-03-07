@@ -14,7 +14,7 @@ const CategoryLegend = ({
   onToggle,
 }: CategoryLegendProps) => {
   return (
-    <div className="absolute bottom-24 left-4 bg-[#0a0a0f]/70 backdrop-blur-sm border border-white/10 rounded-xl p-3 pointer-events-auto">
+    <div className="absolute bottom-24 right-4 md:right-8 z-20 bg-[#0a0a0f]/70 backdrop-blur-sm border border-white/10 rounded-xl p-3 pointer-events-auto">
       <div className="flex flex-col gap-1">
         {categories.map((cat) => {
           const color = getCategoryColor(cat);

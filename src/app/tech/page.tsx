@@ -28,27 +28,43 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
     : allPosts;
 
   return (
-    <div className="max-w-4xl mx-auto animate-page-fade-in" style={{ background: 'radial-gradient(ellipse at top, rgba(15,23,41,0.5) 0%, transparent 60%)' }}>
-      <h1 className="text-2xl font-bold text-glow-indigo">Tech</h1>
-      <p className="mt-2 text-zinc-400">
-        기술 학습 기록과 개발 경험을 공유합니다.
-      </p>
+    <div
+      className="max-w-5xl mx-auto"
+      style={{
+        background:
+          "radial-gradient(ellipse at top, rgba(15,23,41,0.5) 0%, transparent 60%)",
+      }}
+    >
+      {/* Brutal Header */}
+      <div className="animate-brutal-slide">
+        <h1 className="font-display text-5xl md:text-7xl font-bold text-white tracking-tight text-glow-amber">
+          TECH
+        </h1>
+        <p className="mt-2 font-display text-xs text-zinc-500 tracking-[0.2em] uppercase">
+          {allPosts.length} posts &mdash; knowledge archive
+        </p>
+      </div>
 
-      <div className="mt-6">
+      <div className="mt-8">
         <Suspense fallback={null}>
           <CategoryFilter categories={activeCategories} counts={counts} />
         </Suspense>
       </div>
 
       {posts.length > 0 ? (
-        <section className="mt-8 flex flex-col gap-6">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+        <section className="mt-10 bento-grid">
+          {posts.map((post, i) => (
+            <PostCard
+              key={post.slug}
+              post={post}
+              featured={i === 0}
+              index={i}
+            />
           ))}
         </section>
       ) : (
-        <p className="py-16 text-center text-zinc-400">
-          아직 작성된 포스트가 없습니다.
+        <p className="py-16 text-center text-zinc-400 font-display text-sm tracking-wider">
+          NO POSTS FOUND
         </p>
       )}
     </div>

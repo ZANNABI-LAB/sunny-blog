@@ -100,10 +100,10 @@ const PostDetailPage = async ({
         >
           {post.category}
         </span>
-        <h1 className="mt-4 text-2xl font-bold text-white sm:text-3xl text-glow-indigo-sm">
+        <h1 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl tracking-tight text-glow-amber-sm">
           {post.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400">
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-400 font-display tracking-wider">
           <time dateTime={post.date}>{formatDateKo(post.date)}</time>
           <span aria-hidden="true">&middot;</span>
           <span>{post.author}</span>
@@ -142,7 +142,7 @@ const PostDetailPage = async ({
               height: '1px',
             }}
           />
-          <h2 className="text-sm font-semibold text-zinc-300">References</h2>
+          <h2 className="font-display text-sm font-bold text-zinc-300 tracking-wider uppercase">References</h2>
           <ul className="mt-3 space-y-2">
             {showSourceUrl && (
               <li>
