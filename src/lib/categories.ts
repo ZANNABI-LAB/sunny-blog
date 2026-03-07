@@ -8,13 +8,13 @@ export type Category =
   | "Frontend";
 
 export const CATEGORY_COLORS: Record<Category, string> = {
-  Architecture: "#fbbf24",
-  "Design Pattern": "#f59e0b",
-  Security: "#fcd34d",
-  Testing: "#b45309",
-  Infrastructure: "#92400e",
-  Backend: "#d97706",
-  Frontend: "#eab308",
+  Architecture: "#4fc3f7",
+  "Design Pattern": "#1e88e5",
+  Security: "#ffd54f",
+  Testing: "#29b6f6",
+  Infrastructure: "#ffb74d",
+  Backend: "#1565c0",
+  Frontend: "#ffca28",
 };
 
 export const CATEGORIES: Category[] = Object.keys(
