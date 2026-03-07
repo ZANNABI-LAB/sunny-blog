@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { generateEmbedding } from "@/lib/embedding";
-import { createSupabaseClient } from "@/lib/supabase";
-import { cosineSimilarity } from "@/lib/similarity";
+import { hybridSearch } from "@/lib/hybrid-search";
 import type {
   SearchResult,
   SearchResponse,
@@ -41,33 +39,14 @@ export const POST = async (
       );
     }
 
-    const queryEmbedding = await generateEmbedding(query);
+    const results = await hybridSearch(query, MATCH_COUNT);
 
-    const supabase = createSupabaseClient();
-    const { data: posts, error } = await supabase
-      .from("post_embeddings")
-      .select("slug, title, content, embedding");
-
-    if (error) {
-      console.error("Supabase query error:", error);
-      return NextResponse.json(
-        { error: "검색 중 오류가 발생했습니다." },
-        { status: 500 }
-      );
-    }
-
-    const scored = (posts ?? [])
-      .map((post: { slug: string; title: string; content: string; embedding: string }) => {
-        const postEmbedding: number[] = JSON.parse(post.embedding);
-        return {
-          slug: post.slug,
-          title: post.title,
-          summary: truncateContent(post.content),
-          score: cosineSimilarity(queryEmbedding, postEmbedding),
-        };
-      })
-      .sort((a: SearchResult, b: SearchResult) => b.score - a.score)
-      .slice(0, MATCH_COUNT);
+    const scored: SearchResult[] = results.map((result) => ({
+      slug: result.slug,
+      title: result.title,
+      summary: truncateContent(result.content),
+      score: result.score,
+    }));
 
     return NextResponse.json({ results: scored });
   } catch (err) {
