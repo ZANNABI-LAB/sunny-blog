@@ -13,7 +13,7 @@ const CLAUDE_MODEL = "claude-sonnet-4-20250514";
 const MAX_TOKENS = 1024;
 const MAX_HISTORY_TURNS = 6;
 
-const SYSTEM_PROMPT = `당신은 "Sunny's Blog"의 AI 어시스턴트 R2-D2입니다.
+const SYSTEM_PROMPT = `당신은 Deep Thought 블로그의 AI 어시스턴트입니다.
 블로그에 있는 기술 포스트를 기반으로 질문에 답변합니다.
 
 규칙:
