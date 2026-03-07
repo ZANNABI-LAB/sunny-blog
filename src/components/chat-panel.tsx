@@ -46,14 +46,15 @@ const QuestionCategories = ({
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 px-4 pb-2">
+      <div className="flex flex-nowrap gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:flex-wrap sm:overflow-visible">
         {QUESTION_CATEGORIES.map((cat) => (
           <button
             key={cat.key}
             type="button"
             onClick={() => handleChipClick(cat.key)}
-            aria-pressed={selectedCategory === cat.key}
-            className={`flex items-center gap-1.5 rounded-lg border px-3 min-h-[44px] font-display text-xs tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
+            aria-expanded={selectedCategory === cat.key}
+            aria-controls={`question-list-${cat.key}`}
+            className={`flex flex-shrink-0 items-center gap-1.5 rounded-lg border px-3 min-h-[44px] font-display text-xs tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
               selectedCategory === cat.key
                 ? "bg-amber-500/20 border-amber-500/60 text-amber-300"
                 : "border-amber-500/30 bg-white/5 text-zinc-300 hover:bg-white/10"
@@ -66,16 +67,19 @@ const QuestionCategories = ({
       </div>
       {activeCategory && (
         <div
+          id={`question-list-${activeCategory.key}`}
           className="flex flex-col gap-1 px-4 pb-3"
           role="group"
           aria-label="예시 질문"
         >
-          {activeCategory.questions.map((q) => (
+          {activeCategory.questions.map((q, i) => (
             <button
               key={q}
               type="button"
               onClick={() => onSelectQuestion(q)}
-              className="flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-200"
+              className={`flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-zinc-400 transition-all hover:bg-white/5 hover:text-zinc-200 active:scale-[0.98] active:bg-white/10${
+                i === 2 ? " hidden sm:flex" : ""
+              }`}
             >
               <span className="text-amber-400/60">&gt;</span>
               &quot;{q}&quot;
