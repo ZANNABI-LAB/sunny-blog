@@ -7,7 +7,7 @@ const Footer = () => {
           href="https://github.com/ZANNABI-LAB"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-zinc-400 transition-colors duration-150 hover:text-white"
+          className="text-sm text-zinc-400 transition-colors duration-150 hover:text-white rounded-sm focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
         >
           ZANNABI LAB
         </a>

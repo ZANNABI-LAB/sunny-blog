@@ -24,7 +24,7 @@ const CategoryLegend = ({
             <button
               key={cat}
               onClick={() => onToggle(isActive ? null : cat)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200 ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200 focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none ${
                 isActive ? "bg-white/10" : "hover:bg-white/5"
               }`}
             >

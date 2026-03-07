@@ -24,10 +24,11 @@ const CategoryFilter = ({ categories, counts }: CategoryFilterProps) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div role="group" aria-label="카테고리 필터" className="flex flex-wrap gap-2">
       <button
         onClick={() => handleClick(null)}
-        className={`rounded-full px-3 py-1 text-sm font-medium border transition-colors duration-150 ${
+        aria-pressed={!activeCategory}
+        className={`rounded-full px-3 py-1 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none ${
           !activeCategory
             ? "bg-white/15 text-white border-white/30"
             : "bg-white/5 text-zinc-400 border-transparent hover:bg-white/10"
@@ -43,7 +44,8 @@ const CategoryFilter = ({ categories, counts }: CategoryFilterProps) => {
           <button
             key={cat}
             onClick={() => handleClick(cat)}
-            className={`rounded-full px-3 py-1 text-sm font-medium border transition-colors duration-150 ${
+            aria-pressed={isActive}
+            className={`rounded-full px-3 py-1 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none ${
               !isActive
                 ? "bg-white/5 text-zinc-400 border-transparent hover:bg-white/10"
                 : ""

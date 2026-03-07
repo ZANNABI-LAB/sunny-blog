@@ -77,16 +77,21 @@ const GraphView = ({
   const hasAnimatedRef = useRef(false);
   const breathTimerRef = useRef<d3.Timer | null>(null);
 
+  // Reduced motion preference
+  const prefersReducedMotionRef = useRef(false);
+
   // Apply category highlight via ref (avoids re-creating simulation)
   useEffect(() => {
     const nodeElements = nodeElementsRef.current;
     const linkElements = linkElementsRef.current;
     if (!nodeElements || !linkElements) return;
 
+    const dur = prefersReducedMotionRef.current ? 0 : 200;
+
     if (highlightedCategory) {
       nodeElements
         .transition()
-        .duration(200)
+        .duration(dur)
         .attr("opacity", (d) => {
           if (d.type === "category") {
             return d.title === highlightedCategory ? 1 : 0.1;
@@ -96,7 +101,7 @@ const GraphView = ({
 
       linkElements
         .transition()
-        .duration(200)
+        .duration(dur)
         .attr("opacity", (d) => {
           const src = d.source as SimNode;
           const tgt = d.target as SimNode;
@@ -111,8 +116,8 @@ const GraphView = ({
           return srcMatch && tgtMatch ? 1 : 0.1;
         });
     } else {
-      nodeElements.transition().duration(200).attr("opacity", 1);
-      linkElements.transition().duration(200).attr("opacity", 1);
+      nodeElements.transition().duration(dur).attr("opacity", 1);
+      linkElements.transition().duration(dur).attr("opacity", 1);
     }
   }, [highlightedCategory]);
 
@@ -127,6 +132,8 @@ const GraphView = ({
     const { width, height } = container.getBoundingClientRect();
     const simNodes = simNodesRef.current;
 
+    const dur = prefersReducedMotionRef.current ? 0 : 600;
+
     if (focusCategory) {
       // Find the hub node for this category
       const hubNode = simNodes.find(
@@ -137,11 +144,11 @@ const GraphView = ({
         const tx = width / 2 - hubNode.x * scale;
         const ty = height / 2 - hubNode.y * scale;
         const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
-        svgSel.transition().duration(600).call(zoom.transform, transform);
+        svgSel.transition().duration(dur).call(zoom.transform, transform);
       }
     } else {
       // Fit to view (same as B3 logic)
-      fitToView(svgSel, zoom, simNodes, width, height, 600);
+      fitToView(svgSel, zoom, simNodes, width, height, dur);
     }
   }, [focusCategory]);
 
@@ -156,6 +163,18 @@ const GraphView = ({
       breathTimerRef.current.stop();
       breathTimerRef.current = null;
     }
+
+    // Check prefers-reduced-motion
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotionRef.current = motionQuery.matches;
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotionRef.current = e.matches;
+      if (e.matches && breathTimerRef.current) {
+        breathTimerRef.current.stop();
+        breathTimerRef.current = null;
+      }
+    };
+    motionQuery.addEventListener("change", handleMotionChange);
 
     const { width, height } = container.getBoundingClientRect();
 
@@ -180,6 +199,14 @@ const GraphView = ({
     svgSelectionRef.current = svg;
 
     svg.selectAll("*").remove();
+
+    // ARIA: accessible title and description for graph SVG
+    svg.append("title").text("기술 블로그 포스트 관계 그래프");
+    svg
+      .append("desc")
+      .text(
+        "카테고리별 허브 노드와 포스트 노드의 연결을 보여주는 별자리 형태의 인터랙티브 그래프입니다."
+      );
 
     const defs = svg.append("defs");
 
@@ -310,6 +337,7 @@ const GraphView = ({
     });
 
     const highlightConnected = (node: SimNode) => {
+      const dur = prefersReducedMotionRef.current ? 0 : 200;
       const connectedIds = new Set<string>([node.id]);
 
       if (node.type === "category") {
@@ -332,12 +360,12 @@ const GraphView = ({
 
       nodeElements
         .transition()
-        .duration(200)
+        .duration(dur)
         .attr("opacity", (d) => (connectedIds.has(d.id) ? 1 : 0.15));
 
       linkElements
         .transition()
-        .duration(200)
+        .duration(dur)
         .attr("stroke", (d, i) => {
           const src = (d.source as SimNode).id;
           const tgt = (d.target as SimNode).id;
@@ -353,10 +381,11 @@ const GraphView = ({
     };
 
     const resetHighlight = () => {
-      nodeElements.transition().duration(200).attr("opacity", 1);
+      const dur = prefersReducedMotionRef.current ? 0 : 200;
+      nodeElements.transition().duration(dur).attr("opacity", 1);
       linkElements
         .transition()
-        .duration(200)
+        .duration(dur)
         .attr("stroke", (_, i) => `url(#edge-gradient-${i})`)
         .attr("opacity", 0.25);
     };
@@ -471,8 +500,12 @@ const GraphView = ({
       w: number,
       h: number
     ) => {
+      const reduced = prefersReducedMotionRef.current;
+      const dur = reduced ? 0 : 400;
+      const fitDur = reduced ? 0 : 800;
+
       // B3: fitToView first
-      fitToView(svgSel, zoomBehavior, nodes, w, h, 800);
+      fitToView(svgSel, zoomBehavior, nodes, w, h, fitDur);
 
       // Hubs animate first
       const hubNodes = nodeEls.filter((d) => d.type === "category");
@@ -480,44 +513,46 @@ const GraphView = ({
 
       hubNodes
         .transition()
-        .duration(400)
+        .duration(dur)
         .attr("opacity", 1);
       hubNodes
         .selectAll<SVGCircleElement, unknown>(".hub-inner")
         .transition()
-        .duration(400)
+        .duration(dur)
         .attr("r", HUB_INNER_R);
       hubNodes
         .selectAll<SVGCircleElement, unknown>(".hub-outer")
         .transition()
-        .duration(400)
+        .duration(dur)
         .attr("r", HUB_OUTER_R);
 
-      // Posts animate with stagger
+      // Posts animate with stagger (no stagger if reduced motion)
       postNodes
         .transition()
-        .delay((_, i) => 200 + i * 50)
-        .duration(400)
+        .delay((_, i) => (reduced ? 0 : 200 + i * 50))
+        .duration(dur)
         .attr("opacity", 1);
       postNodes
         .selectAll<SVGCircleElement, unknown>(".post-circle")
         .transition()
-        .delay((_, i) => 200 + i * 50)
-        .duration(400)
+        .delay((_, i) => (reduced ? 0 : 200 + i * 50))
+        .duration(dur)
         .attr("r", POST_R);
 
       // Links fade in
       linkEls
         .transition()
-        .delay(200)
-        .duration(600)
+        .delay(reduced ? 0 : 200)
+        .duration(reduced ? 0 : 600)
         .attr("opacity", 0.25);
 
-      // A3: Start breathing after entry animation completes
-      const totalDelay = 200 + postNodes.size() * 50 + 400;
-      setTimeout(() => {
-        startBreathing(nodes, nodeEls);
-      }, totalDelay);
+      // A3: Start breathing after entry animation completes (skip if reduced motion)
+      if (!reduced) {
+        const totalDelay = 200 + postNodes.size() * 50 + 400;
+        setTimeout(() => {
+          startBreathing(nodes, nodeEls);
+        }, totalDelay);
+      }
     };
 
     // A3: Breathing effect
@@ -658,6 +693,7 @@ const GraphView = ({
     return () => {
       resizeObserver.disconnect();
       simulation.stop();
+      motionQuery.removeEventListener("change", handleMotionChange);
       if (breathTimerRef.current) {
         breathTimerRef.current.stop();
         breathTimerRef.current = null;
@@ -667,7 +703,7 @@ const GraphView = ({
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      <svg ref={svgRef} />
+      <svg ref={svgRef} role="img" />
       {hoveredNode && hoveredNode.type === "post" && previewPos && (
         <PostPreview
           node={hoveredNode}

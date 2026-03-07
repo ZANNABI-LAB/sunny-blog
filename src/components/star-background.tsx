@@ -15,6 +15,7 @@ const StarBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const starsRef = useRef<Star[]>([]);
+  const reducedMotionRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,6 +23,10 @@ const StarBackground = () => {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Check prefers-reduced-motion
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = motionQuery.matches;
 
     const initStars = () => {
       const w = canvas.width;
@@ -41,6 +46,18 @@ const StarBackground = () => {
       starsRef.current = stars;
     };
 
+    const renderStatic = () => {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      for (const star of starsRef.current) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.baseOpacity})`;
+        ctx.fill();
+      }
+    };
+
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
@@ -48,6 +65,10 @@ const StarBackground = () => {
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
       initStars();
+
+      if (reducedMotionRef.current) {
+        renderStatic();
+      }
     };
 
     resize();
@@ -75,11 +96,27 @@ const StarBackground = () => {
       animationRef.current = requestAnimationFrame(render);
     };
 
-    animationRef.current = requestAnimationFrame(render);
+    // Only start animation loop if motion is not reduced
+    if (!reducedMotionRef.current) {
+      animationRef.current = requestAnimationFrame(render);
+    }
+
+    // Listen for runtime changes to reduced-motion preference
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      reducedMotionRef.current = e.matches;
+      if (e.matches) {
+        cancelAnimationFrame(animationRef.current);
+        renderStatic();
+      } else {
+        animationRef.current = requestAnimationFrame(render);
+      }
+    };
+    motionQuery.addEventListener("change", handleMotionChange);
 
     return () => {
       cancelAnimationFrame(animationRef.current);
       resizeObserver.disconnect();
+      motionQuery.removeEventListener("change", handleMotionChange);
     };
   }, []);
 

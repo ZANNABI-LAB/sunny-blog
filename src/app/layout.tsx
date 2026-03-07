@@ -26,8 +26,14 @@ const RootLayout = ({
         />
       </head>
       <body className="flex flex-col min-h-screen bg-[#0a0a0f] text-white font-sans">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
+        >
+          메인 콘텐츠로 건너뛰기
+        </a>
         <TabNav />
-        <main className="flex-1 w-full px-4 py-8">
+        <main id="main-content" className="flex-1 w-full px-4 py-8">
           {children}
         </main>
         <Footer />
