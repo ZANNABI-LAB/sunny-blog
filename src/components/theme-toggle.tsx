@@ -40,7 +40,7 @@ const ThemeToggle = () => {
       onClick={cycleTheme}
       aria-label={label}
       title={label}
-      className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-sm text-text-muted hover:text-text-primary transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
+      className="min-h-[44px] min-w-[44px] flex items-center justify-center text-text-muted hover:text-text-primary transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
     >
       {theme === "dark" ? (
         // Moon icon
