@@ -16,7 +16,7 @@
   /* Text */
   --text-primary: #1c1917;
   --text-secondary: #57534e;
-  --text-muted: #78716c;
+  --text-muted: #6b6560;
   --text-inverse: #ffffff;
 
   /* Accents */
@@ -204,6 +204,18 @@
 /* ── Scrollbar Hide ── */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── z-index Layers ──
+ * z-0:    배경 (nebula gradient)
+ * z-[1]:  noise overlay (::before)
+ * z-[5]:  StarBackground canvas
+ * z-10:   그래프 (D3.js SVG)
+ * z-20:   TitleOverlay / CategoryLegend
+ * z-30:   Footer / PostPreview
+ * z-40:   (reserved)
+ * z-50:   TabNav
+ * z-[60]: ChatbotWidget (버튼 + 패널)
+ */
 
 /* ── Safe Area ── */
 :root {

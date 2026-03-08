@@ -49,7 +49,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
     return (
       <div
         ref={cardRef}
-        className="fixed bottom-0 inset-x-0 z-30 rounded-t-xl border-t border-border bg-bg-elevated/95 backdrop-blur-sm p-4 shadow-lg shadow-black/50 animate-sheet-up"
+        className="fixed bottom-0 inset-x-0 z-30 max-h-[60vh] overflow-y-auto overscroll-contain rounded-t-xl border-t border-border bg-bg-elevated/95 backdrop-blur-sm p-4 shadow-lg shadow-black/50 animate-sheet-up"
         style={{ paddingBottom: "calc(1rem + var(--safe-bottom))" }}
       >
         <div className="flex items-start justify-between gap-2">
