@@ -35,18 +35,46 @@ const QuestionCategories = ({
   onSelectQuestion: (question: string) => void;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleChipClick = (key: string) => {
     setSelectedCategory((prev) => (prev === key ? null : key));
   };
+
+  // Close popup on outside click or Escape key
+  useEffect(() => {
+    if (!selectedCategory) return;
+
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setSelectedCategory(null);
+      }
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedCategory(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [selectedCategory]);
 
   const activeCategory = QUESTION_CATEGORIES.find(
     (c) => c.key === selectedCategory
   );
 
   return (
-    <div>
-      <div className="flex flex-nowrap gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:flex-wrap sm:overflow-visible">
+    <div ref={wrapperRef} className="relative flex-shrink-0 border-t border-border-subtle/50 px-3 py-1.5">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto scrollbar-hide">
         {QUESTION_CATEGORIES.map((cat) => (
           <button
             key={cat.key}
@@ -54,13 +82,13 @@ const QuestionCategories = ({
             onClick={() => handleChipClick(cat.key)}
             aria-expanded={selectedCategory === cat.key}
             aria-controls={`question-list-${cat.key}`}
-            className={`flex flex-shrink-0 items-center gap-1.5 rounded-lg border px-3 min-h-[44px] font-display text-xs tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
+            className={`flex flex-shrink-0 items-center gap-1 rounded-md border px-2 min-h-[32px] font-display text-[11px] tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
               selectedCategory === cat.key
                 ? "bg-accent/20 border-accent/60 text-accent"
                 : "border-accent/30 bg-card text-text-secondary hover:bg-card-hover"
             }`}
           >
-            <span className="text-text-muted">{cat.symbol}</span>
+            <span className="text-text-muted text-[10px]">{cat.symbol}</span>
             {cat.label}
           </button>
         ))}
@@ -68,7 +96,8 @@ const QuestionCategories = ({
       {activeCategory && (
         <div
           id={`question-list-${activeCategory.key}`}
-          className="flex flex-col gap-1 px-4 pb-3"
+          className="absolute bottom-full left-0 right-0 mb-1.5 rounded-lg border border-border-subtle bg-bg-elevated/95 p-1.5 shadow-lg shadow-black/30 backdrop-blur-sm"
+          style={{ animation: 'suggestion-popup-in 0.15s ease-out' }}
           role="group"
           aria-label="예시 질문"
         >
@@ -77,11 +106,11 @@ const QuestionCategories = ({
               key={q}
               type="button"
               onClick={() => onSelectQuestion(q)}
-              className={`flex items-center gap-2 rounded-lg px-3 min-h-[44px] text-left font-display text-xs tracking-wider text-text-secondary transition-all hover:bg-card hover:text-text-primary active:scale-[0.98] active:bg-card-hover${
+              className={`flex items-center gap-1.5 rounded-md px-2.5 min-h-[36px] text-left font-display text-[11px] tracking-wider text-text-secondary transition-all duration-150 hover:bg-card hover:text-text-primary active:scale-[0.98] active:bg-card-hover${
                 i === 2 ? " hidden sm:flex" : ""
               }`}
             >
-              <span className="text-accent/60">&gt;</span>
+              <span className="text-accent/60 text-[10px]">&gt;</span>
               &quot;{q}&quot;
             </button>
           ))}
@@ -289,15 +318,15 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
             <UserMessage key={msg.id} message={msg} />
           )
         )}
-        {messages.length === 1 &&
-          messages[0].id === "greeting" &&
-          !!onSuggestedQuestion && (
-            <QuestionCategories onSelectQuestion={onSuggestedQuestion} />
-          )}
         {isLoading &&
           !messages.some((m) => m.isStreaming) && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Question Categories */}
+      {!!onSuggestedQuestion && (
+        <QuestionCategories onSelectQuestion={onSuggestedQuestion} />
+      )}
 
       {/* Input */}
       <form
