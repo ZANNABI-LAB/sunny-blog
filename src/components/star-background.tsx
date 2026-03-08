@@ -28,10 +28,13 @@ const StarBackground = () => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotionRef.current = motionQuery.matches;
 
-    const getStarColor = (): string => {
-      return getComputedStyle(document.documentElement)
+    const getStarColor = (): [number, number, number] => {
+      const raw = getComputedStyle(document.documentElement)
         .getPropertyValue("--star-color")
-        .trim() || "rgba(255, 255, 255, 1)";
+        .trim();
+      const match = raw.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+      if (match) return [+match[1], +match[2], +match[3]];
+      return [255, 255, 255];
     };
 
     const getStarCountFactor = (): number => {
@@ -41,7 +44,7 @@ const StarBackground = () => {
       return parseFloat(val) || 1;
     };
 
-    let starColor = getStarColor();
+    let starRgb = getStarColor();
     let starCountFactor = getStarCountFactor();
 
     const initStars = () => {
@@ -70,9 +73,7 @@ const StarBackground = () => {
       for (const star of starsRef.current) {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = starColor.includes("rgba")
-          ? starColor.replace(/[\d.]+\)$/, `${star.baseOpacity})`)
-          : `rgba(0, 0, 0, ${star.baseOpacity})`;
+        ctx.fillStyle = `rgba(${starRgb[0]}, ${starRgb[1]}, ${starRgb[2]}, ${star.baseOpacity})`;
         ctx.fill();
       }
     };
@@ -108,9 +109,7 @@ const StarBackground = () => {
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = starColor.includes("rgba")
-          ? starColor.replace(/[\d.]+\)$/, `${opacity})`)
-          : `rgba(0, 0, 0, ${opacity})`;
+        ctx.fillStyle = `rgba(${starRgb[0]}, ${starRgb[1]}, ${starRgb[2]}, ${opacity})`;
         ctx.fill();
       }
 
@@ -136,7 +135,7 @@ const StarBackground = () => {
 
     // Watch for theme changes via MutationObserver on <html> class
     const observer = new MutationObserver(() => {
-      starColor = getStarColor();
+      starRgb = getStarColor();
       const newFactor = getStarCountFactor();
       if (newFactor !== starCountFactor) {
         starCountFactor = newFactor;
