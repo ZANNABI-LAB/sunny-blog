@@ -7,9 +7,9 @@ import ThemeToggle from "@/components/theme-toggle";
 
 const tabs = [
   { href: "/", label: "Main", index: "01" },
-  { href: "/profile", label: "Profile", index: "02" },
-  { href: "/portfolio", label: "Portfolio", index: "03" },
-  { href: "/tech", label: "Tech", index: "04" },
+  { href: "/tech", label: "Tech", index: "02" },
+  { href: "/profile", label: "Profile", index: "03" },
+  { href: "/portfolio", label: "Portfolio", index: "04" },
   { href: "/log", label: "Log", index: "05" },
 ];
 
@@ -46,7 +46,7 @@ const TabNav = () => {
       >
         <Link
           href="/"
-          className="font-display font-bold text-text-primary mr-4 shrink-0 rounded-sm tracking-[0.15em] text-xs uppercase focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
+          className="font-display font-bold text-text-primary mr-4 shrink-0 tracking-[0.15em] text-xs uppercase focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
           style={{ textShadow: "0 0 10px var(--glow-accent)" }}
         >
           Deep Thought
@@ -58,7 +58,7 @@ const TabNav = () => {
             <Link
               key={href}
               href={href}
-              className={`font-display min-h-[44px] inline-flex items-center px-4 py-2 text-xs font-medium tracking-[0.1em] uppercase rounded-sm transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+              className={`font-display min-h-[44px] inline-flex items-center px-4 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
                 isActive
                   ? "text-accent border-b-2 border-accent"
                   : "text-text-muted hover:text-text-primary hover:bg-card"

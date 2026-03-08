@@ -30,10 +30,6 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
   return (
     <div
       className="max-w-5xl mx-auto"
-      style={{
-        background:
-          "radial-gradient(ellipse at top, rgba(15,23,41,0.5) 0%, transparent 60%)",
-      }}
     >
       {/* Brutal Header */}
       <div className="animate-brutal-slide">
