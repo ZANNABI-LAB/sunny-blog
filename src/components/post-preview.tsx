@@ -82,11 +82,12 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
     const containerRect = container.getBoundingClientRect();
     const cardRect = card.getBoundingClientRect();
 
-    let x = position.x + 20;
+    const offset = 40;
+    let x = position.x + offset;
     let y = position.y;
 
     if (x + cardRect.width > containerRect.width)
-      x = position.x - cardRect.width - 20;
+      x = position.x - cardRect.width - offset;
     if (y - cardRect.height / 2 < 0) y = cardRect.height / 2;
     if (y + cardRect.height / 2 > containerRect.height)
       y = containerRect.height - cardRect.height / 2;

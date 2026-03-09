@@ -373,6 +373,7 @@ const GraphView = ({
       .data(simNodes)
       .join("g")
       .attr("cursor", "pointer")
+      .style("outline", "none")
       .attr("tabindex", "0")
       .attr("role", "button")
       .attr("aria-label", (d) =>
