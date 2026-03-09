@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
@@ -36,9 +35,11 @@ const INITIAL_GREETING: Message = {
 
 const MAX_HISTORY_TURNS = 6;
 
-const ChatbotWidget = () => {
-  const pathname = usePathname();
-  const isMainPage = pathname === "/";
+type ChatbotWidgetProps = {
+  isMainPage: boolean;
+};
+
+const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
@@ -280,12 +281,12 @@ const ChatbotWidget = () => {
         isMainPage ? (
           isMobile ? (
             // Mobile main page: FAB button
-            <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
+            <ChatbotButton isOpen={isOpen} onClick={toggle} isMainPage ref={buttonRef} />
           ) : (
             // Desktop main page: input form
             <form
               onSubmit={handleTriggerSubmit}
-              className="fixed bottom-24 right-12 z-[60]"
+              className="fixed bottom-6 right-12 z-[60]"
               style={{ paddingBottom: "var(--safe-bottom)" }}
             >
               <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">

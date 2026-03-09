@@ -16,13 +16,20 @@
 ```
 sunny-blog/
 ├── src/
-│   └── app/              # App Router 페이지
-│       ├── layout.tsx     # 루트 레이아웃 + 탭 네비게이션
-│       ├── page.tsx       # Main (그래프 뷰 + 검색)
-│       ├── tech/          # Tech 탭 (포스트 목록/상세)
-│       └── portfolio/     # Portfolio 탭
+│   ├── app/              # App Router 페이지
+│   │   ├── layout.tsx     # 루트 레이아웃 + TabNav + Footer + ChatbotWidget
+│   │   ├── page.tsx       # Main (풀스크린 그래프 + 챗봇)
+│   │   ├── profile/       # Profile 탭 (자기소개)
+│   │   ├── portfolio/     # Portfolio 탭 (프로젝트)
+│   │   ├── tech/          # Tech 탭 (포스트 목록/상세)
+│   │   ├── log/           # Log 탭 (TIL/회고)
+│   │   └── api/chat/      # 챗봇 API (SSE 스트리밍, RAG)
+│   └── components/
+│       ├── code-block-enhancer.tsx  # 코드블록 복사 버튼 (Client, DOM 주입)
+│       └── ...
 ├── content/
-│   └── posts/             # 플랫 구조 (카테고리는 frontmatter로 관리)
+│   ├── posts/             # 플랫 구조 (카테고리는 frontmatter로 관리)
+│   └── logs/              # TIL/회고 로그
 ├── scripts/               # 콘텐츠 생성 파이프라인 스크립트
 ├── .github/workflows/     # GitHub Actions (자동 생성 cron)
 └── .claude/
@@ -57,6 +64,19 @@ sunny-blog/
 npm run dev      # 로컬 개발 서버
 npm run build    # 프로덕션 빌드
 npm run lint     # ESLint
+```
+
+## z-index 체계
+```
+z-0:    배경 (radial-gradient)
+z-[5]:  별 파티클 (StarBackground canvas)
+z-10:   그래프 (D3.js SVG)
+z-20:   타이틀 오버레이 / 카테고리 레전드
+z-30:   풋터
+z-[35]: 포스트 프리뷰
+z-40:   검색 드롭다운
+z-50:   네비게이션 (TabNav)
+z-[60]: 챗봇 (버튼 + 패널)
 ```
 
 ## 참고
