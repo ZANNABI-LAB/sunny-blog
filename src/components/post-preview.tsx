@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { getCategoryColor } from "@/lib/categories";
 
@@ -16,12 +16,62 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
   const [adjustedPos, setAdjustedPos] = useState(position);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Swipe-to-dismiss state
+  const [translateY, setTranslateY] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const touchStartY = useRef<number | null>(null);
+  const prefersReducedMotion = useRef(false);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotion.current = mq.matches;
+    const motionHandler = (e: MediaQueryListEvent) => {
+      prefersReducedMotion.current = e.matches;
+    };
+    mq.addEventListener("change", motionHandler);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      mq.removeEventListener("change", motionHandler);
+    };
   }, []);
+
+  // Swipe-to-dismiss handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const el = cardRef.current;
+    if (!el) return;
+    // Only allow swipe when scrolled to top
+    if (el.scrollTop > 0) return;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+    const deltaY = e.touches[0].clientY - touchStartY.current;
+    // Only track downward swipe
+    if (deltaY > 0) {
+      setIsSwiping(true);
+      setTranslateY(deltaY);
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (touchStartY.current === null) return;
+    touchStartY.current = null;
+
+    if (translateY >= 80) {
+      // Swipe threshold met — close
+      onClose?.();
+    } else {
+      // Snap back
+      setIsSwiping(false);
+      setTranslateY(0);
+    }
+  }, [translateY, onClose]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -44,14 +94,33 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
     setAdjustedPos({ x, y });
   }, [position, containerRef, isMobile]);
 
-  // Mobile: fixed bottom sheet
+  // Mobile: fixed bottom sheet with swipe-to-dismiss
   if (isMobile) {
+    const swipeOpacity = isSwiping ? Math.max(0.3, 1 - translateY / 300) : 1;
+    const snapBackTransition = !isSwiping && translateY === 0 && !prefersReducedMotion.current
+      ? "transform 200ms ease-out, opacity 200ms ease-out"
+      : isSwiping
+        ? "none"
+        : undefined;
+
     return (
       <div
         ref={cardRef}
         className="fixed bottom-0 inset-x-0 z-[35] max-h-[60vh] overflow-y-auto overscroll-contain rounded-t-xl border-t border-border bg-bg-elevated/95 backdrop-blur-sm p-4 shadow-lg shadow-black/50 animate-sheet-up"
-        style={{ paddingBottom: "calc(1rem + var(--safe-bottom))" }}
+        style={{
+          paddingBottom: "calc(1rem + var(--safe-bottom))",
+          transform: isSwiping ? `translateY(${translateY}px)` : undefined,
+          opacity: swipeOpacity,
+          transition: snapBackTransition,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
+        {/* Drag handle */}
+        <div className="flex justify-center pb-3">
+          <div className="w-10 h-1 rounded-full bg-text-muted/30" />
+        </div>
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-sm font-semibold text-text-primary">{node.title}</h3>
           {onClose && (

@@ -44,6 +44,7 @@ const ChatbotWidget = () => {
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerInput, setTriggerInput] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const triggerInputRef = useRef<HTMLInputElement>(null);
   const pendingSendRef = useRef<string | null>(null);
@@ -57,6 +58,13 @@ const ChatbotWidget = () => {
     };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const handleClose = useCallback(() => {
@@ -270,25 +278,31 @@ const ChatbotWidget = () => {
       )}
       {!isOpen && !isClosing && (
         isMainPage ? (
-          <form
-            onSubmit={handleTriggerSubmit}
-            className="fixed bottom-24 right-6 md:right-12 z-[60]"
-            style={{ paddingBottom: "var(--safe-bottom)" }}
-          >
-            <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">
-              <span className="font-display text-accent text-xs select-none">&gt;</span>
-              <input
-                ref={triggerInputRef}
-                type="text"
-                value={triggerInput}
-                onChange={(e) => setTriggerInput(e.target.value)}
-                placeholder="Ask..."
-                aria-label="Deep Thought에게 질문하기"
-                className="font-display w-[calc(100vw-10rem)] max-w-[12rem] md:w-64 md:max-w-[16rem] bg-transparent text-base text-text-primary placeholder:text-text-muted tracking-wider outline-none"
-              />
-              <KbdShortcut />
-            </div>
-          </form>
+          isMobile ? (
+            // Mobile main page: FAB button
+            <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
+          ) : (
+            // Desktop main page: input form
+            <form
+              onSubmit={handleTriggerSubmit}
+              className="fixed bottom-24 right-12 z-[60]"
+              style={{ paddingBottom: "var(--safe-bottom)" }}
+            >
+              <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">
+                <span className="font-display text-accent text-xs select-none">&gt;</span>
+                <input
+                  ref={triggerInputRef}
+                  type="text"
+                  value={triggerInput}
+                  onChange={(e) => setTriggerInput(e.target.value)}
+                  placeholder="Ask..."
+                  aria-label="Deep Thought에게 질문하기"
+                  className="font-display w-64 max-w-[16rem] bg-transparent text-base text-text-primary placeholder:text-text-muted tracking-wider outline-none"
+                />
+                <KbdShortcut />
+              </div>
+            </form>
+          )
         ) : (
           <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
         )
