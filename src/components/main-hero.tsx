@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GraphView from "@/components/graph-view";
 import TitleOverlay from "@/components/title-overlay";
 import CategoryLegend from "@/components/category-legend";
@@ -20,13 +20,6 @@ const MainHero = ({ graphData }: MainHeroProps) => {
   const categories = graphData.nodes
     .filter((n) => n.type === "category")
     .map((n) => getCategoryRoot(n.category));
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   return (
     <div className="relative h-[calc(100dvh-var(--nav-height))] min-h-[300px] overflow-hidden">

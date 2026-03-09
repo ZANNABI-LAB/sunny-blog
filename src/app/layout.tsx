@@ -2,8 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
-import Footer from "@/components/footer";
-import ChatbotWidget from "@/components/chatbot-widget";
+import LayoutShell from "@/components/layout-shell";
 import ThemeProvider from "@/components/theme-provider";
 
 export const metadata: Metadata = {
@@ -52,11 +51,9 @@ const RootLayout = ({
             메인 콘텐츠로 건너뛰기
           </a>
           <TabNav />
-          <main id="main-content" className="flex-1 w-full px-4 py-8">
+          <LayoutShell>
             {children}
-          </main>
-          <Footer />
-          <ChatbotWidget />
+          </LayoutShell>
         </ThemeProvider>
       </body>
     </html>
