@@ -28,13 +28,15 @@ const StarBackground = () => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotionRef.current = motionQuery.matches;
 
-    const getStarColor = (): [number, number, number] => {
+    const getStarColor = (): [number, number, number, number] => {
       const raw = getComputedStyle(document.documentElement)
         .getPropertyValue("--star-color")
         .trim();
-      const match = raw.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-      if (match) return [+match[1], +match[2], +match[3]];
-      return [255, 255, 255];
+      const match = raw.match(
+        /(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+))?/
+      );
+      if (match) return [+match[1], +match[2], +match[3], match[4] != null ? +match[4] : 1];
+      return [255, 255, 255, 1];
     };
 
     const getStarCountFactor = (): number => {
@@ -44,7 +46,7 @@ const StarBackground = () => {
       return parseFloat(val) || 1;
     };
 
-    let starRgb = getStarColor();
+    let starRgba = getStarColor();
     let starCountFactor = getStarCountFactor();
 
     const initStars = () => {
@@ -71,9 +73,10 @@ const StarBackground = () => {
       ctx.clearRect(0, 0, rect.width, rect.height);
 
       for (const star of starsRef.current) {
+        const opacity = star.baseOpacity * starRgba[3];
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${starRgb[0]}, ${starRgb[1]}, ${starRgb[2]}, ${star.baseOpacity})`;
+        ctx.fillStyle = `rgba(${starRgba[0]}, ${starRgba[1]}, ${starRgba[2]}, ${opacity})`;
         ctx.fill();
       }
     };
@@ -105,11 +108,12 @@ const StarBackground = () => {
       for (const star of starsRef.current) {
         const opacity =
           star.baseOpacity *
+          starRgba[3] *
           (0.5 + 0.5 * Math.sin((time / star.period) * Math.PI * 2 + star.phase));
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${starRgb[0]}, ${starRgb[1]}, ${starRgb[2]}, ${opacity})`;
+        ctx.fillStyle = `rgba(${starRgba[0]}, ${starRgba[1]}, ${starRgba[2]}, ${opacity})`;
         ctx.fill();
       }
 
@@ -135,7 +139,7 @@ const StarBackground = () => {
 
     // Watch for theme changes via MutationObserver on <html> class
     const observer = new MutationObserver(() => {
-      starRgb = getStarColor();
+      starRgba = getStarColor();
       const newFactor = getStarCountFactor();
       if (newFactor !== starCountFactor) {
         starCountFactor = newFactor;
