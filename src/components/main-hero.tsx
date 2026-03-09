@@ -45,7 +45,7 @@ const MainHero = ({ graphData }: MainHeroProps) => {
       </div>
 
       {/* Graph layer — shifted right for asymmetric layout */}
-      <div className="absolute inset-0 z-10 md:left-[20%]">
+      <div className="absolute inset-0 z-10 md:left-[5%]">
         <GraphView
           data={graphData}
           highlightedCategory={highlightedCategory}
@@ -53,10 +53,9 @@ const MainHero = ({ graphData }: MainHeroProps) => {
         />
       </div>
 
-      {/* Left: Title + Search (asymmetric) */}
-      <div className="absolute inset-0 z-20 pointer-events-none">
+      {/* Left: Title (restricted to left region to avoid graph overlap) */}
+      <div className="absolute left-0 top-0 bottom-0 w-[300px] md:w-[25%] z-20 pointer-events-none">
         <TitleOverlay />
-
       </div>
 
       {/* Right: Category Legend */}

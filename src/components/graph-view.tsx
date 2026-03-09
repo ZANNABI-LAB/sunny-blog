@@ -609,7 +609,7 @@ const GraphView = ({
           d.type === "category" ? -800 : -400
         )
       )
-      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("center", d3.forceCenter(width * 0.55, height / 2))
       .force(
         "collide",
         d3.forceCollide<SimNode>().radius((d) =>
@@ -883,7 +883,7 @@ const GraphView = ({
     const resizeObserver = new ResizeObserver((entries) => {
       const { width: w, height: h } = entries[0].contentRect;
       svg.attr("width", w).attr("height", h);
-      simulation.force("center", d3.forceCenter(w / 2, h / 2));
+      simulation.force("center", d3.forceCenter(w * 0.55, h / 2));
       simulation.alpha(0.3).restart();
     });
     resizeObserver.observe(container);
@@ -926,6 +926,7 @@ const fitToView = (
 ) => {
   if (nodes.length === 0) return;
 
+  const paddingLeft = 100; // extra left padding to avoid TitleOverlay
   const padding = 50;
   let minX = Infinity,
     minY = Infinity,
@@ -940,12 +941,13 @@ const fitToView = (
     maxY = Math.max(maxY, n.y);
   }
 
-  const bw = maxX - minX + padding * 2;
+  const bw = maxX - minX + paddingLeft + padding;
   const bh = maxY - minY + padding * 2;
   const fitScale = Math.min(Math.min(width / bw, height / bh) * 0.85, 2.0);
   const cx = (minX + maxX) / 2;
   const cy = (minY + maxY) / 2;
-  const tx = width / 2 - cx * fitScale;
+  // Shift transform slightly right to account for left title area
+  const tx = width / 2 - cx * fitScale + (paddingLeft - padding) * 0.3;
   const ty = height / 2 - cy * fitScale;
   const transform = d3.zoomIdentity.translate(tx, ty).scale(fitScale);
 
