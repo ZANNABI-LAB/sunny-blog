@@ -281,7 +281,7 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
         isMainPage ? (
           isMobile ? (
             // Mobile main page: FAB button
-            <ChatbotButton isOpen={isOpen} onClick={toggle} isMainPage ref={buttonRef} />
+            <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
           ) : (
             // Desktop main page: input form
             <form
