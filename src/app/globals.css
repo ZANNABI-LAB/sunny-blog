@@ -359,6 +359,33 @@ article[style*="--category-color"] .prose blockquote {
   color: #24292e;
 }
 
+/* ── Code Block Mobile ── */
+.code-block-mobile {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .code-block-mobile code {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+.code-block-mobile::-webkit-scrollbar {
+  height: 6px;
+}
+.code-block-mobile::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 3px;
+}
+.code-block-mobile::-webkit-scrollbar-track {
+  background: transparent;
+}
+.code-block-mobile {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-primary) transparent;
+}
+
 /* ── Brutal Accent Line ── */
 .brutal-accent {
   position: relative;

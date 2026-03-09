@@ -204,8 +204,66 @@ const UserMessage = ({ message }: { message: Message }) => (
 const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggestedQuestion }: ChatPanelProps) => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // Mobile keyboard viewport height
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const onResize = () => {
+      requestAnimationFrame(() => setViewportHeight(vv.height));
+    };
+    vv.addEventListener("resize", onResize);
+    vv.addEventListener("scroll", onResize);
+    return () => {
+      vv.removeEventListener("resize", onResize);
+      vv.removeEventListener("scroll", onResize);
+    };
+  }, []);
+
+  // Swipe-down to close (mobile)
+  const [translateY, setTranslateY] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const [isSnappingBack, setIsSnappingBack] = useState(false);
+  const touchStartYRef = useRef(0);
+  const prefersReducedMotion = useRef(false);
+
+  useEffect(() => {
+    prefersReducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
+    setIsSnappingBack(false);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    const scrollTop = messagesRef.current?.scrollTop ?? 0;
+    if (scrollTop > 0) return;
+
+    const deltaY = e.touches[0].clientY - touchStartYRef.current;
+    if (deltaY > 0) {
+      setIsSwiping(true);
+      setTranslateY(deltaY);
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isSwiping) return;
+
+    if (translateY > 80) {
+      onClose();
+    } else {
+      setIsSnappingBack(true);
+      setTranslateY(0);
+      setTimeout(() => setIsSnappingBack(false), 200);
+    }
+    setIsSwiping(false);
+  }, [isSwiping, translateY, onClose]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -264,14 +322,41 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       aria-modal="true"
       aria-label="Deep Thought AI 채팅"
       onKeyDown={handleKeyDown}
-      className="fixed inset-4 z-[60] flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px]"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="fixed inset-0 z-[60] flex flex-col overflow-hidden rounded-none border border-border bg-bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px] sm:rounded-2xl"
       style={{
+        paddingTop: "var(--safe-top)",
         paddingBottom: "var(--safe-bottom)",
-        animation: isClosing
-          ? "slide-down 0.3s ease-in forwards"
-          : "slide-up 0.2s ease-out",
+        ...(viewportHeight && viewportHeight < (typeof window !== "undefined" ? window.innerHeight : Infinity)
+          ? { height: `${viewportHeight}px` }
+          : {}),
+        ...(isSwiping || isSnappingBack
+          ? {
+              transform: `translateY(${translateY}px)`,
+              opacity: isSwiping ? Math.max(0.3, 1 - translateY / 300) : 1,
+            }
+          : {}),
+        transition: isSwiping
+          ? "none"
+          : isSnappingBack
+            ? "transform 200ms ease-out, opacity 200ms ease-out"
+            : prefersReducedMotion.current
+              ? "none"
+              : undefined,
+        animation: isSwiping || isSnappingBack
+          ? "none"
+          : isClosing
+            ? "slide-down 0.3s ease-in forwards"
+            : "slide-up 0.2s ease-out",
       }}
     >
+      {/* Drag Handle (mobile) */}
+      <div className="flex justify-center pt-2 pb-0 sm:hidden">
+        <div className="w-10 h-1 rounded-full bg-text-muted/30" />
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
@@ -306,6 +391,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
 
       {/* Messages */}
       <div
+        ref={messagesRef}
         className="chat-scrollbar flex-1 space-y-3 overflow-y-auto px-4 py-4"
         role="log"
         aria-live="polite"

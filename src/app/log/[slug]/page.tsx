@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLogBySlug, getLogSlugs } from "@/lib/logs";
+import CodeBlockEnhancer from "@/components/code-block-enhancer";
 
 export const generateStaticParams = () => {
   return getLogSlugs().map((slug) => ({ slug }));
@@ -52,6 +53,7 @@ const LogDetailPage = async ({ params }: Props) => {
         className="prose dark:prose-invert prose-amber max-w-none"
         dangerouslySetInnerHTML={{ __html: log.contentHtml }}
       />
+      <CodeBlockEnhancer />
     </div>
   );
 };
