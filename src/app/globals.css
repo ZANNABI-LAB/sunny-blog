@@ -3,8 +3,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ── iOS Safari Auto-zoom Prevention ── */
+@layer base {
+  input, textarea, select {
+    font-size: 16px; /* iOS Safari auto-zoom prevention */
+  }
+}
+
 /* ── Theme Color Tokens ── */
 :root {
+  --nav-height: 48px;
   /* Backgrounds */
   --bg-primary: #fafaf9;
   --bg-elevated: #ffffff;
@@ -211,7 +219,8 @@
  * z-[5]:  StarBackground canvas
  * z-10:   그래프 (D3.js SVG)
  * z-20:   TitleOverlay / CategoryLegend
- * z-30:   Footer / PostPreview
+ * z-30:   Footer
+ * z-[35]: PostPreview (바텀시트 + 데스크톱)
  * z-40:   (reserved)
  * z-50:   TabNav
  * z-[60]: ChatbotWidget (버튼 + 패널)
@@ -240,6 +249,13 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ── Landscape Compact ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --nav-height: 40px;
   }
 }
 
