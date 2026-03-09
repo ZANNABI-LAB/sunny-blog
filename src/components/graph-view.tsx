@@ -29,9 +29,20 @@ type SimEdge = SimulationLinkDatum<SimNode> & {
 const HUB_INNER_R = 20;
 const HUB_OUTER_R = 22;
 const HUB_LABEL_DY = 32;
-const HUB_COLLIDE_R = 55;
-const POST_R = 14;
-const POST_COLLIDE_R = 55;
+
+// Desktop defaults
+const HUB_COLLIDE_R_DESKTOP = 55;
+const POST_COLLIDE_R_DESKTOP = 55;
+const POST_R_DESKTOP = 14;
+const CHARGE_HUB_DESKTOP = -800;
+const CHARGE_POST_DESKTOP = -400;
+
+// Mobile overrides (wider spacing, larger nodes)
+const HUB_COLLIDE_R_MOBILE = 70;
+const POST_COLLIDE_R_MOBILE = 65;
+const POST_R_MOBILE = 16;
+const CHARGE_HUB_MOBILE = -1000;
+const CHARGE_POST_MOBILE = -600;
 
 // D: Touch hit area radii (44px+ touch targets)
 const POST_HIT_R = 22;
@@ -40,6 +51,17 @@ const HUB_HIT_R = 28;
 // B: Long press duration
 const LONG_PRESS_MS = 800;
 const DRAG_THRESHOLD = 5;
+
+// Haptic feedback utility (safe for iOS Safari)
+const triggerHaptic = (duration: number) => {
+  try {
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+      navigator.vibrate(duration);
+    }
+  } catch {
+    // Silently ignore — vibrate not supported (e.g., iOS Safari)
+  }
+};
 
 const GraphView = ({
   data,
@@ -229,6 +251,14 @@ const GraphView = ({
     motionQuery.addEventListener("change", handleMotionChange);
 
     const { width, height } = container.getBoundingClientRect();
+
+    // Mobile detection based on container width
+    const isMobile = width < 768;
+    const POST_R = isMobile ? POST_R_MOBILE : POST_R_DESKTOP;
+    const HUB_COLLIDE_R = isMobile ? HUB_COLLIDE_R_MOBILE : HUB_COLLIDE_R_DESKTOP;
+    const POST_COLLIDE_R = isMobile ? POST_COLLIDE_R_MOBILE : POST_COLLIDE_R_DESKTOP;
+    const CHARGE_HUB = isMobile ? CHARGE_HUB_MOBILE : CHARGE_HUB_DESKTOP;
+    const CHARGE_POST = isMobile ? CHARGE_POST_MOBILE : CHARGE_POST_DESKTOP;
 
     const simNodes: SimNode[] = data.nodes.map((n) => ({
       ...n,
@@ -469,6 +499,9 @@ const GraphView = ({
       const g = d3.select(nodeEl);
       const reduced = prefersReducedMotionRef.current;
 
+      // Haptic feedback on navigate
+      triggerHaptic(30);
+
       // Remove progress ring
       g.selectAll(".lp-track, .lp-ring").remove();
 
@@ -554,6 +587,9 @@ const GraphView = ({
           g.transition().duration(0).attr("opacity", 1);
         }
 
+        // Haptic feedback on long press completion
+        triggerHaptic(50);
+
         flashAndNavigate(nodeEl, d);
       }, LONG_PRESS_MS);
     };
@@ -606,7 +642,7 @@ const GraphView = ({
       .force(
         "charge",
         d3.forceManyBody<SimNode>().strength((d) =>
-          d.type === "category" ? -800 : -400
+          d.type === "category" ? CHARGE_HUB : CHARGE_POST
         )
       )
       .force("center", d3.forceCenter(width * 0.55, height / 2))
@@ -926,7 +962,8 @@ const fitToView = (
 ) => {
   if (nodes.length === 0) return;
 
-  const paddingLeft = 100; // extra left padding to avoid TitleOverlay
+  const mobile = width < 768;
+  const paddingLeft = mobile ? 30 : 100; // mobile: compact, desktop: avoid TitleOverlay
   const padding = 50;
   let minX = Infinity,
     minY = Infinity,

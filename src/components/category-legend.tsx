@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState, useCallback, useEffect } from "react";
 import { getCategoryColor } from "@/lib/categories";
 
 type CategoryLegendProps = {
@@ -13,9 +14,45 @@ const CategoryLegend = ({
   activeCategory,
   onToggle,
 }: CategoryLegendProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [fadeLeft, setFadeLeft] = useState(false);
+  const [fadeRight, setFadeRight] = useState(false);
+
+  const updateFade = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    const hasOverflow = scrollWidth > clientWidth + 1;
+    setFadeLeft(hasOverflow && scrollLeft > 1);
+    setFadeRight(hasOverflow && scrollLeft < scrollWidth - clientWidth - 1);
+  }, []);
+
+  useEffect(() => {
+    updateFade();
+    const el = scrollRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(updateFade);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [updateFade, categories]);
+
+  const buildMaskImage = () => {
+    if (!fadeLeft && !fadeRight) return undefined;
+    const left = fadeLeft ? "transparent, black 16px" : "black, black 0px";
+    const right = fadeRight ? "black calc(100% - 16px), transparent" : "black 100%, black 100%";
+    return `linear-gradient(to right, ${left}, ${right})`;
+  };
+
+  const maskImage = buildMaskImage();
+
   return (
     <div className="absolute top-4 right-4 md:right-8 z-20 max-w-[calc(100vw-2rem)] pointer-events-auto">
-      <div className="overflow-x-auto scrollbar-hide legend-scroll-fade bg-bg-primary/70 backdrop-blur-sm border border-border rounded-full px-3 py-1.5">
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto scrollbar-hide bg-bg-primary/70 backdrop-blur-sm border border-border rounded-full px-3 py-1.5"
+        onScroll={updateFade}
+        style={maskImage ? { maskImage, WebkitMaskImage: maskImage } : undefined}
+      >
         <div className="flex items-center gap-1">
           {categories.map((cat) => {
             const color = getCategoryColor(cat);
