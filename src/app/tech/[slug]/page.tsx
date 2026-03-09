@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { getCategoryColor } from "@/lib/categories";
+import CodeBlockEnhancer from "@/components/code-block-enhancer";
 
 export const generateStaticParams = async () => {
   const slugs = getPostSlugs();
@@ -131,6 +132,7 @@ const PostDetailPage = async ({
         style={{ '--category-color': categoryColor } as React.CSSProperties}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
+      <CodeBlockEnhancer />
 
       {/* References */}
       {hasReferences && (
