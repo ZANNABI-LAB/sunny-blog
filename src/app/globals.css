@@ -45,7 +45,8 @@
   --nebula-opacity-1: 0.015;
   --nebula-opacity-2: 0.01;
   --nebula-opacity-3: 0.008;
-  --star-color: rgba(0,0,0,0.6);
+  --star-rgb: 0, 0, 0;
+  --star-opacity: 0.6;
   --star-count-factor: 0.7;
 }
 
@@ -76,7 +77,8 @@
   --nebula-opacity-1: 0.03;
   --nebula-opacity-2: 0.02;
   --nebula-opacity-3: 0.015;
-  --star-color: rgba(255,255,255,1);
+  --star-rgb: 255, 255, 255;
+  --star-opacity: 1;
   --star-count-factor: 1;
 }
 

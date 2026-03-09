@@ -29,13 +29,13 @@ const StarBackground = () => {
     reducedMotionRef.current = motionQuery.matches;
 
     const getStarColor = (): [number, number, number, number] => {
-      const raw = getComputedStyle(document.documentElement)
-        .getPropertyValue("--star-color")
-        .trim();
-      const match = raw.match(
-        /(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+))?/
-      );
-      if (match) return [+match[1], +match[2], +match[3], match[4] != null ? +match[4] : 1];
+      const style = getComputedStyle(document.documentElement);
+      const rgb = style.getPropertyValue("--star-rgb").trim();
+      const opacity = parseFloat(style.getPropertyValue("--star-opacity").trim()) || 1;
+      const parts = rgb.split(",").map((s) => parseInt(s.trim(), 10));
+      if (parts.length >= 3 && parts.every((n) => !isNaN(n))) {
+        return [parts[0], parts[1], parts[2], opacity];
+      }
       return [255, 255, 255, 1];
     };
 
