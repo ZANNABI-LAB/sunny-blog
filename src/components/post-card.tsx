@@ -42,9 +42,9 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
 
       {/* Title */}
       <h2
-        className={`mt-3 font-bold text-text-primary transition-colors duration-150 group-hover:text-accent ${
+        className={`mt-3 font-display font-bold text-text-primary transition-colors duration-150 group-hover:text-accent ${
           featured
-            ? "font-display text-xl md:text-2xl tracking-tight"
+            ? "text-xl md:text-2xl tracking-tight"
             : "text-lg"
         }`}
       >

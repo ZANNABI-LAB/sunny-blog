@@ -122,7 +122,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
           <div className="w-10 h-1 rounded-full bg-text-muted/30" />
         </div>
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-sm font-semibold text-text-primary">{node.title}</h3>
+          <h3 className="text-sm font-display font-semibold text-text-primary">{node.title}</h3>
           {onClose && (
             <button
               onClick={onClose}
@@ -183,7 +183,7 @@ const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps
         transform: "translateY(-50%)",
       }}
     >
-      <h3 className="text-sm font-semibold text-text-primary truncate">
+      <h3 className="text-sm font-display font-semibold text-text-primary truncate">
         {node.title}
       </h3>
       <span
