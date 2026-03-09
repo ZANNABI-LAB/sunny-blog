@@ -29,7 +29,7 @@ const MainHero = ({ graphData }: MainHeroProps) => {
   }, []);
 
   return (
-    <div className="relative h-[calc(100dvh-48px)] overflow-hidden">
+    <div className="relative h-[calc(100dvh-var(--nav-height))] min-h-[300px] overflow-hidden">
       {/* Background layer */}
       <div
         className="absolute inset-0 z-0"

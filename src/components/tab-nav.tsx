@@ -111,12 +111,13 @@ const TabNav = () => {
             )}
           </svg>
         </button>
-        <span
-          className="font-display font-bold text-text-primary ml-2 tracking-[0.15em] text-xs uppercase"
+        <Link
+          href="/"
+          className="font-display font-bold text-text-primary ml-2 tracking-[0.15em] text-xs uppercase min-h-[44px] inline-flex items-center focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
           style={{ textShadow: "0 0 10px var(--glow-accent)" }}
         >
           Deep Thought
-        </span>
+        </Link>
         <div className="ml-auto">
           <ThemeToggle />
         </div>
