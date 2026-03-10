@@ -20,7 +20,7 @@ const LayoutShell = ({ children }: LayoutShellProps) => {
       >
         {children}
         {isMainPage && (
-          <div className="absolute bottom-0 left-0 right-0">
+          <div className="absolute bottom-0 left-0 right-0 hidden md:block">
             <Footer />
           </div>
         )}
