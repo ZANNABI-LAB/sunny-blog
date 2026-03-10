@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { getCategoryColor } from "@/lib/categories";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
+import GiscusComments from "@/components/giscus-comments";
 
 export const generateStaticParams = async () => {
   const slugs = getPostSlugs();
@@ -203,6 +204,9 @@ const PostDetailPage = async ({
           </ul>
         </section>
       )}
+
+      {/* 댓글 */}
+      <GiscusComments />
 
       {/* 하단 목록 링크 */}
       <div className="mt-12 border-t border-border pt-6 pb-8">
