@@ -14,8 +14,16 @@ const LayoutShell = ({ children }: LayoutShellProps) => {
 
   return (
     <>
-      <main id="main-content" className={`flex-1 w-full ${isMainPage ? "overflow-hidden" : "px-4 py-8"}`}>
+      <main
+        id="main-content"
+        className={`w-full ${isMainPage ? "relative h-[calc(100dvh-var(--nav-height))] overflow-hidden" : "flex-1 px-4 py-8"}`}
+      >
         {children}
+        {isMainPage && (
+          <div className="absolute bottom-0 left-0 right-0">
+            <Footer />
+          </div>
+        )}
       </main>
       {!isMainPage && <Footer />}
       <ChatbotWidget isMainPage={isMainPage} />
