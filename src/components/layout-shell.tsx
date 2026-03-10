@@ -14,7 +14,7 @@ const LayoutShell = ({ children }: LayoutShellProps) => {
 
   return (
     <>
-      <main id="main-content" className="flex-1 w-full px-4 py-8">
+      <main id="main-content" className={`flex-1 w-full ${isMainPage ? "overflow-hidden" : "px-4 py-8"}`}>
         {children}
       </main>
       {!isMainPage && <Footer />}
