@@ -38,7 +38,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" className="h-full" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -60,7 +60,7 @@ const RootLayout = ({
           href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
         />
       </head>
-      <body className="flex flex-col min-h-screen bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
+      <body className="flex flex-col h-full bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
           <Script
             async
