@@ -25,6 +25,7 @@ sunny-blog/
 │   │   ├── log/           # Log 탭 (TIL/회고)
 │   │   └── api/chat/      # 챗봇 API (SSE 스트리밍, RAG)
 │   └── components/
+│       ├── layout-shell.tsx         # LayoutShell (pathname 기반 Footer 조건부 렌더링)
 │       ├── code-block-enhancer.tsx  # 코드블록 복사 버튼 (Client, DOM 주입)
 │       └── ...
 ├── content/
