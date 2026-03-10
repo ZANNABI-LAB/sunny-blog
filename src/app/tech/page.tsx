@@ -3,6 +3,7 @@ import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/post-card";
 import CategoryFilter from "@/components/category-filter";
 import { getCategoryRoot, CATEGORIES } from "@/lib/categories";
+import SidebarLayout from "@/components/sidebar-layout";
 
 type TechPageProps = {
   searchParams: Promise<{ category?: string }>;
@@ -28,42 +29,42 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
     : allPosts;
 
   return (
-    <div
-      className="max-w-5xl mx-auto"
-    >
-      {/* Brutal Header */}
-      <div className="animate-brutal-slide">
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
-          TECH
-        </h1>
-        <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
-          {allPosts.length} posts &mdash; knowledge archive
-        </p>
-      </div>
+    <SidebarLayout adSlot="tech-list">
+      <div>
+        {/* Brutal Header */}
+        <div className="animate-brutal-slide">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
+            TECH
+          </h1>
+          <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
+            {allPosts.length} posts &mdash; knowledge archive
+          </p>
+        </div>
 
-      <div className="mt-8">
-        <Suspense fallback={null}>
-          <CategoryFilter categories={activeCategories} counts={counts} />
-        </Suspense>
-      </div>
+        <div className="mt-8">
+          <Suspense fallback={null}>
+            <CategoryFilter categories={activeCategories} counts={counts} />
+          </Suspense>
+        </div>
 
-      {posts.length > 0 ? (
-        <section className="mt-10 bento-grid">
-          {posts.map((post, i) => (
-            <PostCard
-              key={post.slug}
-              post={post}
-              featured={i === 0}
-              index={i}
-            />
-          ))}
-        </section>
-      ) : (
-        <p className="py-16 text-center text-text-secondary font-display text-sm tracking-wider">
-          NO POSTS FOUND
-        </p>
-      )}
-    </div>
+        {posts.length > 0 ? (
+          <section className="mt-10 bento-grid">
+            {posts.map((post, i) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                featured={i === 0}
+                index={i}
+              />
+            ))}
+          </section>
+        ) : (
+          <p className="py-16 text-center text-text-secondary font-display text-sm tracking-wider">
+            NO POSTS FOUND
+          </p>
+        )}
+      </div>
+    </SidebarLayout>
   );
 };
 

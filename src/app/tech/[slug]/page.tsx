@@ -5,6 +5,7 @@ import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { getCategoryColor } from "@/lib/categories";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
 import GiscusComments from "@/components/giscus-comments";
+import SidebarLayout from "@/components/sidebar-layout";
 
 export const generateStaticParams = async () => {
   const slugs = getPostSlugs();
@@ -107,7 +108,8 @@ const PostDetailPage = async ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto animate-page-fade-in">
+    <SidebarLayout adSlot="tech-detail">
+    <div className="animate-page-fade-in">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -218,6 +220,7 @@ const PostDetailPage = async ({
         </Link>
       </div>
     </div>
+    </SidebarLayout>
   );
 };
 

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
@@ -60,6 +61,14 @@ const RootLayout = ({
         />
       </head>
       <body className="flex flex-col min-h-screen bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
         <ThemeProvider>
           <a
             href="#main-content"
