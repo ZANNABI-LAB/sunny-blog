@@ -7,7 +7,7 @@ const MainPage = () => {
   const graphData = buildGraphData(posts);
 
   return (
-    <div>
+    <div className="h-full">
       <MainHero graphData={graphData} />
     </div>
   );
