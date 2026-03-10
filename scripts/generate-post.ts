@@ -76,16 +76,44 @@ const getExistingSlugs = (): string[] => {
     .map((f) => path.basename(f, ".md"));
 };
 
+// ─── 기존 포스트의 sourceUrl에서 매일메일 ID 추출 ────────
+
+const getExistingSourceIds = (): Set<number> => {
+  const ids = new Set<number>();
+  if (!fs.existsSync(POSTS_DIR)) return ids;
+
+  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(POSTS_DIR, file), "utf-8");
+    const { data } = matter(content);
+    if (data.sourceUrl && typeof data.sourceUrl === "string") {
+      const match = data.sourceUrl.match(/\/question\/(\d+)/);
+      if (match) {
+        ids.add(parseInt(match[1], 10));
+      }
+    }
+  }
+  return ids;
+};
+
 // ─── 단일 질문 처리 ─────────────────────────────────────
 
 const processQuestion = async (
   id: number,
-  existingSlugs: string[]
+  existingSlugs: string[],
+  existingSourceIds: Set<number>
 ): Promise<ProcessResult> => {
   // 1. 처리 이력 확인
   const { processedIds } = loadProcessedIds();
   if (processedIds.includes(id)) {
     console.log(`[건너뜀] ID ${id}: 이미 처리된 질문`);
+    return { id, status: "skipped" };
+  }
+
+  // 1-1. 기존 포스트의 sourceUrl 기반 중복 확인
+  if (existingSourceIds.has(id)) {
+    console.log(`[건너뜀] ID ${id}: 동일 sourceUrl의 포스트가 이미 존재`);
+    saveProcessedId(id);
     return { id, status: "skipped" };
   }
 
@@ -227,6 +255,7 @@ const printReport = (results: ProcessResult[]): void => {
 const main = async (): Promise<void> => {
   const cliArgs = parseArgs();
   const existingSlugs = getExistingSlugs();
+  const existingSourceIds = getExistingSourceIds();
   const results: ProcessResult[] = [];
 
   // 처리할 ID 목록 결정
@@ -294,7 +323,7 @@ const main = async (): Promise<void> => {
   // 순차 처리
   for (const id of ids) {
     try {
-      const result = await processQuestion(id, existingSlugs);
+      const result = await processQuestion(id, existingSlugs, existingSourceIds);
       results.push(result);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
