@@ -286,7 +286,7 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
             // Desktop main page: input form
             <form
               onSubmit={handleTriggerSubmit}
-              className="fixed bottom-6 right-12 z-[60]"
+              className="fixed bottom-20 right-12 z-[60]"
               style={{ paddingBottom: "var(--safe-bottom)" }}
             >
               <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">
