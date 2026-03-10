@@ -6,6 +6,7 @@ import { getCategoryColor } from "@/lib/categories";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
 import GiscusComments from "@/components/giscus-comments";
 import SidebarLayout from "@/components/sidebar-layout";
+import AdUnit from "@/components/ad-unit";
 
 export const generateStaticParams = async () => {
   const slugs = getPostSlugs();
@@ -166,6 +167,11 @@ const PostDetailPage = async ({
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
       <CodeBlockEnhancer />
+
+      {/* 인라인 광고 */}
+      <div className="my-10">
+        <AdUnit slot="tech-inline" className="min-h-[90px]" />
+      </div>
 
       {/* References */}
       {hasReferences && (
