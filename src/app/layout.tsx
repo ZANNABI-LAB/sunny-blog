@@ -7,7 +7,7 @@ import LayoutShell from "@/components/layout-shell";
 import ThemeProvider from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://deep-thought.dev"),
+  metadataBase: new URL("https://deep-thought.space"),
   title: {
     default: "Deep Thought",
     template: "%s | Deep Thought",

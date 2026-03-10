@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { getAllLogs } from "@/lib/logs";
 
-const BASE_URL = "https://deep-thought.dev";
+const BASE_URL = "https://deep-thought.space";
 
 const sitemap = (): MetadataRoute.Sitemap => {
   const posts = getAllPosts();

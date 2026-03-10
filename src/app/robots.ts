@@ -5,7 +5,7 @@ const robots = (): MetadataRoute.Robots => ({
     userAgent: "*",
     allow: "/",
   },
-  sitemap: "https://deep-thought.dev/sitemap.xml",
+  sitemap: "https://deep-thought.space/sitemap.xml",
 });
 
 export default robots;
