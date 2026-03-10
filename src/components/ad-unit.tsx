@@ -23,23 +23,11 @@ const AdUnit = ({ slot, className = "" }: AdUnitProps) => {
     }
   }, []);
 
-  const adClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
-
-  if (!adClientId) {
-    return (
-      <div
-        className={`rounded-md border border-dashed border-border p-4 text-center text-xs text-text-muted font-display ${className}`}
-      >
-        AD SPACE
-      </div>
-    );
-  }
-
   return (
     <ins
       ref={adRef}
       className={`adsbygoogle block ${className}`}
-      data-ad-client={adClientId}
+      data-ad-client="ca-pub-6873591317343081"
       data-ad-slot={slot}
       data-ad-format="auto"
       data-full-width-responsive="true"
