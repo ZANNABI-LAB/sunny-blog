@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getLogBySlug, getLogSlugs } from "@/lib/logs";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
 
@@ -9,6 +10,29 @@ export const generateStaticParams = () => {
 
 type Props = {
   params: Promise<{ slug: string }>;
+};
+
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { slug } = await params;
+  const log = await getLogBySlug(slug);
+
+  if (!log) {
+    return { title: "Log Not Found" };
+  }
+
+  return {
+    title: log.title,
+    description: log.summary,
+    openGraph: {
+      type: "article",
+      title: log.title,
+      description: log.summary,
+      publishedTime: log.date,
+      tags: log.tags,
+    },
+  };
 };
 
 const LogDetailPage = async ({ params }: Props) => {

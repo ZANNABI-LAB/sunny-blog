@@ -6,8 +6,25 @@ import LayoutShell from "@/components/layout-shell";
 import ThemeProvider from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: "Deep Thought",
-  description: "The answer to the ultimate question of life, the universe, and code.",
+  metadataBase: new URL("https://deep-thought.dev"),
+  title: {
+    default: "Deep Thought",
+    template: "%s | Deep Thought",
+  },
+  description:
+    "The answer to the ultimate question of life, the universe, and code.",
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: "Deep Thought",
+    title: "Deep Thought",
+    description:
+      "The answer to the ultimate question of life, the universe, and code.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport: Viewport = {

@@ -25,6 +25,22 @@ export const generateMetadata = async ({
   return {
     title: post.title,
     description: post.summary,
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.summary,
+      publishedTime: post.date,
+      authors: [post.author],
+      tags: post.tags,
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category)}`,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
   };
 };
 
@@ -79,8 +95,22 @@ const PostDetailPage = async ({
   );
   const hasReferences = showSourceUrl || filteredReferences.length > 0;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    author: { "@type": "Person", name: post.author },
+    publisher: { "@type": "Organization", name: "Deep Thought" },
+  };
+
   return (
     <div className="max-w-4xl mx-auto animate-page-fade-in">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* BackLink */}
       <Link
         href="/tech"
