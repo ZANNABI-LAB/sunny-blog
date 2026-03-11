@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getLogBySlug, getLogSlugs } from "@/lib/logs";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
+import GiscusComments from "@/components/giscus-comments";
 
 export const generateStaticParams = () => {
   return getLogSlugs().map((slug) => ({ slug }));
@@ -31,6 +32,14 @@ export const generateMetadata = async ({
       description: log.summary,
       publishedTime: log.date,
       tags: log.tags,
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent(log.title)}`,
+          width: 1200,
+          height: 630,
+          alt: log.title,
+        },
+      ],
     },
   };
 };
@@ -78,6 +87,8 @@ const LogDetailPage = async ({ params }: Props) => {
         dangerouslySetInnerHTML={{ __html: log.contentHtml }}
       />
       <CodeBlockEnhancer />
+
+      <GiscusComments />
     </div>
   );
 };

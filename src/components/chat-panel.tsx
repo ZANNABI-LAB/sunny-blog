@@ -325,7 +325,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className="fixed inset-0 z-[60] flex flex-col overflow-hidden rounded-none border border-border bg-bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px] sm:rounded-2xl"
+      className="fixed inset-0 z-[60] flex flex-col overflow-hidden rounded-none border border-border bg-bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-sm sm:inset-auto sm:bottom-16 sm:right-6 sm:h-[520px] sm:w-[380px] sm:rounded-2xl overscroll-contain"
       style={{
         paddingTop: "var(--safe-top)",
         paddingBottom: "var(--safe-bottom)",

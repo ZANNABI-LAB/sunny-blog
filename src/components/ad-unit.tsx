@@ -7,11 +7,14 @@ type AdUnitProps = {
   className?: string;
 };
 
+const isAdsenseEnabled =
+  process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true";
+
 const AdUnit = ({ slot, className = "" }: AdUnitProps) => {
   const adRef = useRef<HTMLModElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && adRef.current) {
+    if (typeof window !== "undefined" && adRef.current && isAdsenseEnabled) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
@@ -22,6 +25,8 @@ const AdUnit = ({ slot, className = "" }: AdUnitProps) => {
       }
     }
   }, []);
+
+  if (!isAdsenseEnabled) return null;
 
   return (
     <ins
