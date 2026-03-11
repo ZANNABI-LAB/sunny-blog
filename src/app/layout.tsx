@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     title: "Deep Thought",
     description:
       "The answer to the ultimate question of life, the universe, and code.",
+    images: [
+      {
+        url: "/api/og?title=Deep%20Thought",
+        width: 1200,
+        height: 630,
+        alt: "Deep Thought",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -28,6 +36,14 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "Rb4p0xrGmuz3tPkebAeRxpWCLbaG5ffXvDn8yoJUQ6c",
+    other: {
+      "naver-site-verification": "be210a5940ac2c67d682e36441a60b385f3354a5",
+    },
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   },
 };
 
@@ -64,6 +80,14 @@ const RootLayout = ({
         />
       </head>
       <body className="flex flex-col h-full bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-SEG9MW5TKD"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SEG9MW5TKD');`}
+        </Script>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6873591317343081"
