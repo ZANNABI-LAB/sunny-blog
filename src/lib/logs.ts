@@ -1,12 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeHighlight from "rehype-highlight";
-import rehypeStringify from "rehype-stringify";
+import { processMarkdown } from "@/lib/markdown";
 import type { LogMeta, Log } from "@/types/log";
 
 const LOGS_DIR = path.join(process.cwd(), "content", "logs");
@@ -58,13 +53,7 @@ export const getLogBySlug = async (slug: string): Promise<Log | null> => {
   const fileContents = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContents);
 
-  const processedContent = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(content);
+  const contentHtml = await processMarkdown(content);
 
   return {
     slug,
@@ -72,6 +61,6 @@ export const getLogBySlug = async (slug: string): Promise<Log | null> => {
     date: (data.date as string) ?? "1970-01-01",
     tags: (data.tags as string[]) ?? [],
     summary: (data.summary as string) ?? "",
-    contentHtml: processedContent.toString(),
+    contentHtml,
   };
 };

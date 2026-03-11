@@ -1,12 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeHighlight from "rehype-highlight";
-import rehypeStringify from "rehype-stringify";
+import { processMarkdown } from "@/lib/markdown";
 import type { PostMeta, Post } from "@/types/post";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
@@ -70,15 +65,7 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
   const fileContents = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContents);
 
-  const processedContent = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(content);
-
-  const contentHtml = processedContent.toString();
+  const contentHtml = await processMarkdown(content);
 
   return {
     slug,
