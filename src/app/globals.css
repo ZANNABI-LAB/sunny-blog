@@ -42,9 +42,9 @@
 
   /* Special */
   --noise-opacity: 0.02;
-  --nebula-opacity-1: 0.015;
-  --nebula-opacity-2: 0.01;
-  --nebula-opacity-3: 0.008;
+  --nebula-opacity-1: 0.04;
+  --nebula-opacity-2: 0.03;
+  --nebula-opacity-3: 0.02;
   --star-rgb: 0, 0, 0;
   --star-opacity: 0.6;
   --star-count-factor: 0.7;
@@ -74,17 +74,17 @@
   --glow-secondary: rgba(99,102,241,0.4);
 
   --noise-opacity: 0.035;
-  --nebula-opacity-1: 0.03;
-  --nebula-opacity-2: 0.02;
-  --nebula-opacity-3: 0.015;
+  --nebula-opacity-1: 0.08;
+  --nebula-opacity-2: 0.06;
+  --nebula-opacity-3: 0.04;
   --star-rgb: 255, 255, 255;
   --star-opacity: 1;
   --star-count-factor: 1;
 }
 
 @theme {
-  --font-sans: 'Space Mono', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-display: 'Space Mono', monospace;
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* Tailwind color aliases from CSS variables */
   --color-bg-primary: var(--bg-primary);
@@ -131,9 +131,11 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, var(--nebula-opacity-1)) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, var(--nebula-opacity-2)) 0%, transparent 40%),
-    radial-gradient(ellipse at 60% 80%, rgba(245, 158, 11, var(--nebula-opacity-3)) 0%, transparent 45%);
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(99, 102, 241, var(--nebula-opacity-1)) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(168, 85, 247, var(--nebula-opacity-2)) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 60% 80%, rgba(245, 158, 11, var(--nebula-opacity-3)) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 40% 30%, rgba(139, 92, 246, calc(var(--nebula-opacity-2) * 0.7)) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 45% at 75% 65%, rgba(59, 130, 246, calc(var(--nebula-opacity-3) * 0.8)) 0%, transparent 50%);
 }
 
 /* ── Keyframes ── */

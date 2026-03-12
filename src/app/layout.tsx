@@ -65,19 +65,6 @@ const RootLayout = ({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
-        />
       </head>
       <body className="flex flex-col h-full bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
         <Script
