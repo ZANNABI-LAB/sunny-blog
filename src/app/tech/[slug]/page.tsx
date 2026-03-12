@@ -7,6 +7,7 @@ import CodeBlockEnhancer from "@/components/code-block-enhancer";
 import GiscusComments from "@/components/giscus-comments";
 import SidebarLayout from "@/components/sidebar-layout";
 import AdUnit from "@/components/ad-unit";
+import ViewCounter from "@/components/view-counter";
 
 export const generateStaticParams = async () => {
   const slugs = getPostSlugs();
@@ -142,6 +143,8 @@ const PostDetailPage = async ({
           <time dateTime={post.date}>{formatDateKo(post.date)}</time>
           <span aria-hidden="true">&middot;</span>
           <span>{post.author}</span>
+          <span aria-hidden="true">&middot;</span>
+          <ViewCounter slug={`tech/${slug}`} className="text-sm text-text-secondary" />
         </div>
         {post.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">

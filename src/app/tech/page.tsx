@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
-import PostCard from "@/components/post-card";
 import CategoryFilter from "@/components/category-filter";
 import { getCategoryRoot, CATEGORIES } from "@/lib/categories";
 import SidebarLayout from "@/components/sidebar-layout";
+import PostListWithViews from "@/components/post-list-with-views";
 
 type TechPageProps = {
   searchParams: Promise<{ category?: string }>;
@@ -48,16 +48,7 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
         </div>
 
         {posts.length > 0 ? (
-          <section className="mt-10 bento-grid">
-            {posts.map((post, i) => (
-              <PostCard
-                key={post.slug}
-                post={post}
-                featured={i === 0}
-                index={i}
-              />
-            ))}
-          </section>
+          <PostListWithViews posts={posts} />
         ) : (
           <p className="py-16 text-center text-text-secondary font-display text-sm tracking-wider">
             NO POSTS FOUND

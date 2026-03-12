@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getLogBySlug, getLogSlugs } from "@/lib/logs";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
 import GiscusComments from "@/components/giscus-comments";
+import ViewCounter from "@/components/view-counter";
 
 export const generateStaticParams = () => {
   return getLogSlugs().map((slug) => ({ slug }));
@@ -67,6 +68,8 @@ const LogDetailPage = async ({ params }: Props) => {
           <time className="font-display text-xs text-text-muted tracking-wider">
             {log.date}
           </time>
+          <span aria-hidden="true">&middot;</span>
+          <ViewCounter slug={`log/${slug}`} />
           {log.tags.length > 0 && (
             <div className="flex gap-2">
               {log.tags.map((tag) => (

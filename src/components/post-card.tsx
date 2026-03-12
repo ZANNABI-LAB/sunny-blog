@@ -1,14 +1,16 @@
 import Link from "next/link";
 import type { PostMeta } from "@/types/post";
 import { getCategoryColor } from "@/lib/categories";
+import ViewBadge from "@/components/view-badge";
 
 type PostCardProps = {
   post: PostMeta;
   featured?: boolean;
   index?: number;
+  viewCount?: number;
 };
 
-const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
+const PostCard = ({ post, featured = false, index = 0, viewCount }: PostCardProps) => {
   const categoryColor = getCategoryColor(post.category);
 
   return (
@@ -35,9 +37,17 @@ const PostCard = ({ post, featured = false, index = 0 }: PostCardProps) => {
         >
           {post.category}
         </span>
-        <time className="font-display text-xs text-text-muted tracking-wider">
-          {post.date}
-        </time>
+        <div className="flex items-center gap-2">
+          <time className="font-display text-xs text-text-muted tracking-wider">
+            {post.date}
+          </time>
+          {viewCount !== undefined && (
+            <>
+              <span className="text-text-muted" aria-hidden="true">&middot;</span>
+              <ViewBadge viewCount={viewCount} />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Title */}
