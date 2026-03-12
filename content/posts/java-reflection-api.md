@@ -3,7 +3,7 @@ title: "Java Reflection API: 런타임 클래스 정보 탐색"
 shortTitle: "Reflection API"
 date: "2026-03-11"
 tags: ["java", "reflection", "runtime", "class-info", "dynamic-loading"]
-category: "Backend"
+category: "Backend.Java"
 summary: "Java Reflection API를 통해 런타임에 클래스 정보를 동적으로 탐색하고 활용하는 방법을 학습합니다"
 author: "신중선"
 source: "maeil-mail"

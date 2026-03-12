@@ -30,22 +30,32 @@ const HUB_INNER_R = 20;
 const HUB_OUTER_R = 22;
 const HUB_LABEL_DY = 32;
 
+// Subcategory size constants
+const SUB_INNER_R = 14;
+const SUB_OUTER_R = 16;
+const SUB_LABEL_DY = 26;
+
 // Desktop defaults
 const HUB_COLLIDE_R_DESKTOP = 55;
+const SUB_COLLIDE_R_DESKTOP = 45;
 const POST_COLLIDE_R_DESKTOP = 55;
 const POST_R_DESKTOP = 14;
 const CHARGE_HUB_DESKTOP = -800;
+const CHARGE_SUB_DESKTOP = -500;
 const CHARGE_POST_DESKTOP = -400;
 
 // Mobile overrides (wider spacing, larger nodes)
 const HUB_COLLIDE_R_MOBILE = 70;
+const SUB_COLLIDE_R_MOBILE = 55;
 const POST_COLLIDE_R_MOBILE = 65;
 const POST_R_MOBILE = 16;
 const CHARGE_HUB_MOBILE = -1000;
+const CHARGE_SUB_MOBILE = -650;
 const CHARGE_POST_MOBILE = -600;
 
 // D: Touch hit area radii (44px+ touch targets)
 const POST_HIT_R = 22;
+const SUB_HIT_R = 24;
 const HUB_HIT_R = 28;
 
 // B: Long press duration
@@ -170,6 +180,7 @@ const GraphView = ({
           if (d.type === "category") {
             return d.title === highlightedCategory ? 1 : 0.1;
           }
+          // subcategory and post both use root category matching
           return getCategoryRoot(d.category) === highlightedCategory ? 1 : 0.1;
         });
 
@@ -251,13 +262,16 @@ const GraphView = ({
     motionQuery.addEventListener("change", handleMotionChange);
 
     const { width, height } = container.getBoundingClientRect();
+    const viewportMin = Math.min(width, height);
 
     // Mobile detection based on container width
     const isMobile = width < 768;
     const POST_R = isMobile ? POST_R_MOBILE : POST_R_DESKTOP;
     const HUB_COLLIDE_R = isMobile ? HUB_COLLIDE_R_MOBILE : HUB_COLLIDE_R_DESKTOP;
+    const SUB_COLLIDE_R = isMobile ? SUB_COLLIDE_R_MOBILE : SUB_COLLIDE_R_DESKTOP;
     const POST_COLLIDE_R = isMobile ? POST_COLLIDE_R_MOBILE : POST_COLLIDE_R_DESKTOP;
     const CHARGE_HUB = isMobile ? CHARGE_HUB_MOBILE : CHARGE_HUB_DESKTOP;
+    const CHARGE_SUB = isMobile ? CHARGE_SUB_MOBILE : CHARGE_SUB_DESKTOP;
     const CHARGE_POST = isMobile ? CHARGE_POST_MOBILE : CHARGE_POST_DESKTOP;
 
     const simNodes: SimNode[] = data.nodes.map((n) => ({
@@ -290,7 +304,7 @@ const GraphView = ({
 
     const defs = svg.append("defs");
 
-    // Glow filter for post nodes
+    // Glow filter for post/subcategory nodes
     const filter = defs
       .append("filter")
       .attr("id", "glow")
@@ -376,11 +390,15 @@ const GraphView = ({
       .style("outline", "none")
       .attr("tabindex", "0")
       .attr("role", "button")
-      .attr("aria-label", (d) =>
-        d.type === "category"
-          ? `${d.title} 카테고리 — 클릭하여 필터링`
-          : `${d.title} — 탭하여 미리보기, 길게 눌러 상세 보기`
-      )
+      .attr("aria-label", (d) => {
+        if (d.type === "category") {
+          return `${d.title} 카테고리 — 클릭하여 필터링`;
+        }
+        if (d.type === "subcategory") {
+          return `${d.category} > ${d.title} 서브카테고리 — 탭하여 하이라이트, 길게 눌러 필터링`;
+        }
+        return `${d.title} — 탭하여 미리보기, 길게 눌러 상세 보기`;
+      })
       .attr("opacity", 0); // A2: Start hidden
 
     nodeElementsRef.current = nodeElements;
@@ -391,14 +409,15 @@ const GraphView = ({
       const color = getCategoryColor(d.category);
 
       // D: Transparent hit area for touch targets
+      const hitR = d.type === "category" ? HUB_HIT_R : d.type === "subcategory" ? SUB_HIT_R : POST_HIT_R;
       g.append("circle")
         .attr("class", "hit-area")
-        .attr("r", d.type === "category" ? HUB_HIT_R : POST_HIT_R)
+        .attr("r", hitR)
         .attr("fill", "transparent")
         .attr("pointer-events", "all");
 
       if (d.type === "category") {
-        // B4: Hub node: outer ring (28 -> 22)
+        // B4: Hub node: outer ring
         g.append("circle")
           .attr("r", 0) // A2: Start at 0
           .attr("fill", "none")
@@ -407,7 +426,7 @@ const GraphView = ({
           .attr("opacity", 0.3)
           .attr("class", "hub-outer");
 
-        // B4: Hub node: inner filled circle (26 -> 20)
+        // B4: Hub node: inner filled circle
         g.append("circle")
           .attr("r", 0) // A2: Start at 0
           .attr("fill", color)
@@ -415,13 +434,40 @@ const GraphView = ({
           .attr("filter", "url(#hub-glow)")
           .attr("class", "hub-inner");
 
-        // B4: Hub label (dy 40 -> 32)
+        // B4: Hub label
         g.append("text")
           .attr("dy", HUB_LABEL_DY)
           .attr("text-anchor", "middle")
           .attr("fill", "var(--text-secondary)")
           .attr("font-size", "13")
           .attr("font-weight", "600")
+          .text(d.title);
+      } else if (d.type === "subcategory") {
+        // Subcategory node: outer ring (dashed)
+        g.append("circle")
+          .attr("r", 0) // A2: Start at 0
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 1.5)
+          .attr("stroke-dasharray", "3 3")
+          .attr("opacity", 0.3)
+          .attr("class", "sub-outer");
+
+        // Subcategory node: inner filled circle
+        g.append("circle")
+          .attr("r", 0) // A2: Start at 0
+          .attr("fill", color)
+          .attr("opacity", 0.7)
+          .attr("filter", "url(#glow)")
+          .attr("class", "sub-inner");
+
+        // Subcategory label
+        g.append("text")
+          .attr("dy", SUB_LABEL_DY)
+          .attr("text-anchor", "middle")
+          .attr("fill", "var(--text-muted)")
+          .attr("font-size", "11")
+          .attr("font-weight", "500")
           .text(d.title);
       } else {
         // Post node
@@ -446,13 +492,22 @@ const GraphView = ({
       const connectedIds = new Set<string>([node.id]);
 
       if (node.type === "category") {
+        // Hub: highlight all subcategories and posts in this category
         simNodes.forEach((n) => {
           if (
-            n.type === "post" &&
+            (n.type === "post" || n.type === "subcategory") &&
             getCategoryRoot(n.category) === node.title
           ) {
             connectedIds.add(n.id);
           }
+        });
+      } else if (node.type === "subcategory") {
+        // Subcategory: highlight connected hub and posts
+        simEdges.forEach((e) => {
+          const src = (e.source as SimNode).id;
+          const tgt = (e.target as SimNode).id;
+          if (src === node.id) connectedIds.add(tgt);
+          if (tgt === node.id) connectedIds.add(src);
         });
       } else {
         simEdges.forEach((e) => {
@@ -520,6 +575,21 @@ const GraphView = ({
           () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
           reduced ? 0 : 300
         );
+      } else if (d.type === "subcategory") {
+        // Subcategory long press: navigate to root category page
+        if (!reduced) {
+          g.select(".sub-inner")
+            .transition()
+            .duration(150)
+            .attr("r", SUB_INNER_R + 3)
+            .transition()
+            .duration(200)
+            .attr("r", SUB_INNER_R);
+        }
+        setTimeout(
+          () => router.push(`/tech?category=${encodeURIComponent(d.category)}`),
+          reduced ? 0 : 300
+        );
       } else {
         if (!reduced) {
           g.select(".post-circle")
@@ -545,7 +615,11 @@ const GraphView = ({
 
       const g = d3.select(nodeEl);
       const color = getCategoryColor(d.category);
-      const progressR = d.type === "category" ? HUB_INNER_R + 4 : POST_R + 4;
+      const progressR = d.type === "category"
+        ? HUB_INNER_R + 4
+        : d.type === "subcategory"
+          ? SUB_INNER_R + 3
+          : POST_R + 4;
       const circumference = 2 * Math.PI * progressR;
       const reduced = prefersReducedMotionRef.current;
 
@@ -602,6 +676,8 @@ const GraphView = ({
           event.preventDefault();
           if (d.type === "category") {
             router.push(`/tech?category=${encodeURIComponent(d.title)}`);
+          } else if (d.type === "subcategory") {
+            router.push(`/tech?category=${encodeURIComponent(d.category)}`);
           } else {
             router.push(`/tech/${d.slug}`);
           }
@@ -610,7 +686,11 @@ const GraphView = ({
       .on("focus", function (_event, d) {
         const g = d3.select(this);
         const color = getCategoryColor(d.category);
-        const r = d.type === "category" ? HUB_INNER_R + 4 : POST_R + 4;
+        const r = d.type === "category"
+          ? HUB_INNER_R + 4
+          : d.type === "subcategory"
+            ? SUB_INNER_R + 3
+            : POST_R + 4;
         g.append("circle")
           .attr("class", "focus-ring")
           .attr("r", r)
@@ -626,7 +706,7 @@ const GraphView = ({
         resetHighlight();
       });
 
-    // Custom force: hub-post distance vs post-post distance
+    // Custom force: link distances based on node types
     const linkForce = d3
       .forceLink<SimNode, SimEdge>(simEdges)
       .id((d) => d.id)
@@ -634,7 +714,11 @@ const GraphView = ({
         const src = d.source as SimNode;
         const tgt = d.target as SimNode;
         const hasHub = src.type === "category" || tgt.type === "category";
-        return hasHub ? 120 : 200;
+        const hasSub = src.type === "subcategory" || tgt.type === "subcategory";
+        if (hasHub && hasSub) return 80;      // hub <-> subcategory
+        if (hasSub) return 100;               // subcategory <-> post
+        if (hasHub) return 120;               // hub <-> post (direct)
+        return 200;                           // post <-> post
       });
 
     const simulation = d3
@@ -642,16 +726,36 @@ const GraphView = ({
       .force("link", linkForce)
       .force(
         "charge",
-        d3.forceManyBody<SimNode>().strength((d) =>
-          d.type === "category" ? CHARGE_HUB : CHARGE_POST
-        )
+        d3.forceManyBody<SimNode>().strength((d) => {
+          if (d.type === "category") return CHARGE_HUB;
+          if (d.type === "subcategory") return CHARGE_SUB;
+          return CHARGE_POST;
+        })
       )
       .force("center", d3.forceCenter(width * 0.55, height / 2))
       .force(
         "collide",
-        d3.forceCollide<SimNode>().radius((d) =>
-          d.type === "category" ? HUB_COLLIDE_R : POST_COLLIDE_R
-        )
+        d3.forceCollide<SimNode>().radius((d) => {
+          if (d.type === "category") return HUB_COLLIDE_R;
+          if (d.type === "subcategory") return SUB_COLLIDE_R;
+          return POST_COLLIDE_R;
+        })
+      )
+      .force(
+        "radial",
+        d3.forceRadial<SimNode>(
+          (d) => {
+            if (d.type === "category") return 0;
+            if (d.type === "subcategory") return viewportMin * 0.15;
+            return viewportMin * 0.3;
+          },
+          width / 2,
+          height / 2
+        ).strength((d) => {
+          if (d.type === "category") return 0.3;
+          if (d.type === "subcategory") return 0.2;
+          return 0.1;
+        })
       )
       .on("tick", () => {
         // A4: Update edge gradient positions
@@ -724,35 +828,55 @@ const GraphView = ({
       // B3: fitToView first
       fitToView(svgSel, zoomBehavior, nodes, w, h, fitDur);
 
-      // Hubs animate first
-      const hubNodes = nodeEls.filter((d) => d.type === "category");
-      const postNodes = nodeEls.filter((d) => d.type === "post");
+      // Hubs animate first (0ms delay)
+      const hubNodeEls = nodeEls.filter((d) => d.type === "category");
+      const subNodeEls = nodeEls.filter((d) => d.type === "subcategory");
+      const postNodeEls = nodeEls.filter((d) => d.type === "post");
 
-      hubNodes
+      hubNodeEls
         .transition()
         .duration(dur)
         .attr("opacity", 1);
-      hubNodes
+      hubNodeEls
         .selectAll<SVGCircleElement, unknown>(".hub-inner")
         .transition()
         .duration(dur)
         .attr("r", HUB_INNER_R);
-      hubNodes
+      hubNodeEls
         .selectAll<SVGCircleElement, unknown>(".hub-outer")
         .transition()
         .duration(dur)
         .attr("r", HUB_OUTER_R);
 
-      // Posts animate with stagger (no stagger if reduced motion)
-      postNodes
+      // Subcategories animate with 150ms delay
+      subNodeEls
         .transition()
-        .delay((_, i) => (reduced ? 0 : 200 + i * 50))
+        .delay(reduced ? 0 : 150)
         .duration(dur)
         .attr("opacity", 1);
-      postNodes
+      subNodeEls
+        .selectAll<SVGCircleElement, unknown>(".sub-inner")
+        .transition()
+        .delay(reduced ? 0 : 150)
+        .duration(dur)
+        .attr("r", SUB_INNER_R);
+      subNodeEls
+        .selectAll<SVGCircleElement, unknown>(".sub-outer")
+        .transition()
+        .delay(reduced ? 0 : 150)
+        .duration(dur)
+        .attr("r", SUB_OUTER_R);
+
+      // Posts animate with stagger (300ms+ delay)
+      postNodeEls
+        .transition()
+        .delay((_, i) => (reduced ? 0 : 300 + i * 50))
+        .duration(dur)
+        .attr("opacity", 1);
+      postNodeEls
         .selectAll<SVGCircleElement, unknown>(".post-circle")
         .transition()
-        .delay((_, i) => (reduced ? 0 : 200 + i * 50))
+        .delay((_, i) => (reduced ? 0 : 300 + i * 50))
         .duration(dur)
         .attr("r", POST_R);
 
@@ -765,7 +889,7 @@ const GraphView = ({
 
       // A3: Start breathing after entry animation completes (skip if reduced motion)
       if (!reduced) {
-        const totalDelay = 200 + postNodes.size() * 50 + 400;
+        const totalDelay = 300 + postNodeEls.size() * 50 + 400;
         setTimeout(() => {
           startBreathing(nodes, nodeEls);
         }, totalDelay);
@@ -780,16 +904,26 @@ const GraphView = ({
       const hubCircles = nodeEls
         .filter((d) => d.type === "category")
         .selectAll<SVGCircleElement, unknown>(".hub-inner");
-      const postCircles = nodeEls
-        .filter((d) => d.type === "post")
-        .selectAll<SVGCircleElement, unknown>(".post-circle");
       const hubOuters = nodeEls
         .filter((d) => d.type === "category")
         .selectAll<SVGCircleElement, unknown>(".hub-outer");
+      const subCircles = nodeEls
+        .filter((d) => d.type === "subcategory")
+        .selectAll<SVGCircleElement, unknown>(".sub-inner");
+      const subOuters = nodeEls
+        .filter((d) => d.type === "subcategory")
+        .selectAll<SVGCircleElement, unknown>(".sub-outer");
+      const postCircles = nodeEls
+        .filter((d) => d.type === "post")
+        .selectAll<SVGCircleElement, unknown>(".post-circle");
+
+      const hubNodesData = nodes.filter((n) => n.type === "category");
+      const subNodesData = nodes.filter((n) => n.type === "subcategory");
+      const postNodesData = nodes.filter((n) => n.type === "post");
 
       breathTimerRef.current = d3.timer((elapsed) => {
         hubCircles.each(function (_, i) {
-          const nodeData = nodes.filter((n) => n.type === "category")[i];
+          const nodeData = hubNodesData[i];
           if (!nodeData) return;
           const r =
             HUB_INNER_R +
@@ -799,7 +933,7 @@ const GraphView = ({
         });
 
         hubOuters.each(function (_, i) {
-          const nodeData = nodes.filter((n) => n.type === "category")[i];
+          const nodeData = hubNodesData[i];
           if (!nodeData) return;
           const r =
             HUB_OUTER_R +
@@ -808,8 +942,28 @@ const GraphView = ({
           d3.select(this).attr("r", r);
         });
 
+        subCircles.each(function (_, i) {
+          const nodeData = subNodesData[i];
+          if (!nodeData) return;
+          const r =
+            SUB_INNER_R +
+            Math.sin(elapsed / nodeData.breathPeriod + nodeData.breathPhase) *
+              0.6;
+          d3.select(this).attr("r", r);
+        });
+
+        subOuters.each(function (_, i) {
+          const nodeData = subNodesData[i];
+          if (!nodeData) return;
+          const r =
+            SUB_OUTER_R +
+            Math.sin(elapsed / nodeData.breathPeriod + nodeData.breathPhase) *
+              0.6;
+          d3.select(this).attr("r", r);
+        });
+
         postCircles.each(function (_, i) {
-          const nodeData = nodes.filter((n) => n.type === "post")[i];
+          const nodeData = postNodesData[i];
           if (!nodeData) return;
           const r =
             POST_R +
@@ -885,6 +1039,9 @@ const GraphView = ({
                 () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
                 reduced ? 0 : 300
               );
+            } else if (d.type === "subcategory") {
+              // Subcategory tap — highlight connected nodes (no PostPreview)
+              highlightConnected(d);
             } else {
               // Post node tap — show/toggle PostPreview
               if (hoveredNodeRef.current?.id === d.id) {

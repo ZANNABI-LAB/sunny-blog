@@ -1,6 +1,9 @@
 import type { PostMeta } from "@/types/post";
 import type { GraphData, GraphNode, GraphEdge } from "@/types/graph";
-import { getCategoryRoot } from "@/lib/categories";
+import { getCategoryRoot, getCategorySub } from "@/lib/categories";
+
+/** 서브카테고리 노드 생성 임계값 — 이 수 이상의 포스트가 있어야 서브카테고리 노드 생성 */
+const SUB_MIN_POSTS = 1;
 
 const toGraphNode = (post: PostMeta): GraphNode => ({
   id: post.slug,
@@ -22,7 +25,7 @@ export const buildGraphData = (posts: PostMeta[]): GraphData => {
   const postNodes = posts.map(toGraphNode);
   const edges: GraphEdge[] = [];
 
-  // Collect unique categories that have posts
+  // Collect unique root categories that have posts
   const categorySet = new Set<string>();
   for (const node of postNodes) {
     categorySet.add(getCategoryRoot(node.category));
@@ -39,15 +42,68 @@ export const buildGraphData = (posts: PostMeta[]): GraphData => {
     type: "category",
   }));
 
-  // Post -> Hub edges
+  // Collect subcategories and count posts per subcategory
+  const subCategoryPostCount = new Map<string, number>(); // "Backend.Spring" -> count
   for (const node of postNodes) {
-    const root = getCategoryRoot(node.category);
+    const sub = getCategorySub(node.category);
+    if (sub) {
+      const key = node.category; // e.g. "Backend.Spring"
+      subCategoryPostCount.set(key, (subCategoryPostCount.get(key) ?? 0) + 1);
+    }
+  }
+
+  // Create subcategory nodes for those meeting the threshold
+  const validSubCategories = new Set<string>();
+  const subCategoryNodes: GraphNode[] = [];
+  for (const [fullCat, count] of subCategoryPostCount) {
+    if (count >= SUB_MIN_POSTS) {
+      validSubCategories.add(fullCat);
+      const root = getCategoryRoot(fullCat);
+      const sub = getCategorySub(fullCat)!;
+      subCategoryNodes.push({
+        id: `subcategory::${fullCat}`,
+        slug: "",
+        title: sub,
+        category: root,
+        tags: [],
+        summary: "",
+        type: "subcategory",
+      });
+    }
+  }
+
+  // Hub <-> Subcategory edges
+  for (const fullCat of validSubCategories) {
+    const root = getCategoryRoot(fullCat);
     edges.push({
-      source: node.id,
+      source: `subcategory::${fullCat}`,
       target: `category::${root}`,
-      weight: 2,
+      weight: 3,
       sharedTags: [],
     });
+  }
+
+  // Post -> Subcategory or Post -> Hub edges
+  for (const node of postNodes) {
+    const sub = getCategorySub(node.category);
+    if (sub && validSubCategories.has(node.category)) {
+      // Post connects to subcategory (not directly to hub)
+      edges.push({
+        source: node.id,
+        target: `subcategory::${node.category}`,
+        weight: 2,
+        sharedTags: [],
+      });
+    } else {
+      // Post connects directly to hub
+      const root = getCategoryRoot(node.category);
+      edges.push({
+        source: node.id,
+        target: `category::${root}`,
+        weight: 2,
+        sharedTags: [],
+      });
+    }
   }
 
   // Post <-> Post edges (shared tags only, no sameCategory condition)
@@ -68,5 +124,5 @@ export const buildGraphData = (posts: PostMeta[]): GraphData => {
     }
   }
 
-  return { nodes: [...hubNodes, ...postNodes], edges };
+  return { nodes: [...hubNodes, ...subCategoryNodes, ...postNodes], edges };
 };
