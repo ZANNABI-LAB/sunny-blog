@@ -3,7 +3,7 @@ title: "Redis 분산 잠금: 동시성 제어의 핵심 메커니즘"
 shortTitle: "Redis 분산 잠금"
 date: "2026-03-08"
 tags: ["redis", "distributed-lock", "concurrency", "backend", "redlock"]
-category: "Backend"
+category: "Backend.Redis"
 summary: "Redis SET 명령어와 RedLock 알고리즘을 활용한 분산 환경 잠금 구현 방법을 다룹니다"
 author: "신중선"
 source: "maeil-mail"

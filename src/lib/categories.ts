@@ -42,6 +42,16 @@ export const getCategoryRoot = (category: string): string =>
   category.split(".")[0];
 
 /**
+ * 도트 표기법에서 서브카테고리를 추출한다.
+ * 예: "Backend.Spring" -> "Spring"
+ * 서브카테고리가 없으면 null 반환.
+ */
+export const getCategorySub = (category: string): string | null => {
+  const parts = category.split(".");
+  return parts.length > 1 ? parts[1] : null;
+};
+
+/**
  * 카테고리 색상을 반환한다. 도트 표기법 지원.
  * 매칭 실패 시 기본 색상 반환.
  * theme 인자로 light/dark 팔레트를 선택할 수 있다.

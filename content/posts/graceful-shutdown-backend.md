@@ -3,7 +3,7 @@ title: "Graceful Shutdown: 백엔드 서버의 우아한 종료 전략"
 shortTitle: "Graceful Shutdown"
 date: "2026-03-07"
 tags: ["graceful-shutdown", "backend-server", "system-reliability", "spring-boot", "process-management"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "서버 애플리케이션의 안전한 종료를 위한 Graceful Shutdown 구현 방법과 필요성을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

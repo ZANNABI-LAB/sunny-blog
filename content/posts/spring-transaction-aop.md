@@ -3,7 +3,7 @@ title: "스프링 트랜잭션 AOP 동작 흐름"
 shortTitle: "트랜잭션 AOP"
 date: "2026-03-06"
 tags: ["spring", "aop", "transaction", "backend"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "스프링 트랜잭션 AOP의 핵심 구성 요소와 동작 흐름을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

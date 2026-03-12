@@ -3,7 +3,7 @@ title: "경쟁 상태와 동시성 문제 해결"
 shortTitle: "Race Condition"
 date: "2026-03-12"
 tags: ["race-condition", "concurrency", "thread-safety", "atomicity", "visibility"]
-category: "Backend"
+category: "Backend.Concurrency"
 summary: "경쟁 상태를 해결하기 위해 원자성과 가시성을 보장하는 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

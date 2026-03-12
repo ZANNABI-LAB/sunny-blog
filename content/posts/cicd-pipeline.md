@@ -3,7 +3,7 @@ title: "CI/CD 파이프라인: 자동화된 개발 워크플로우의 핵심"
 shortTitle: "CI/CD 파이프라인"
 date: "2026-03-06"
 tags: ["ci-cd", "devops", "automation", "pipeline"]
-category: "Infrastructure"
+category: "Infrastructure.CI/CD"
 summary: "지속적 통합과 지속적 배포를 통해 개발 생산성을 높이는 자동화 시스템입니다"
 author: "신중선"
 source: "maeil-mail"
