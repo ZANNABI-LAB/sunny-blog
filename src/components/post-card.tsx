@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { PostMeta } from "@/types/post";
-import { getCategoryColor } from "@/lib/categories";
+import { getCategoryColor, getCategoryRoot, getCategorySub } from "@/lib/categories";
 import ViewBadge from "@/components/view-badge";
 
 type PostCardProps = {
@@ -28,15 +28,28 @@ const PostCard = ({ post, featured = false, index = 0, viewCount }: PostCardProp
     >
       {/* Category + Date */}
       <div className="flex items-center justify-between">
-        <span
-          className="rounded-md px-2 py-0.5 text-xs font-medium"
-          style={{
-            backgroundColor: `${categoryColor}15`,
-            color: categoryColor,
-          }}
-        >
-          {post.category}
-        </span>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span
+            className="rounded-md px-2 py-0.5 text-xs font-medium"
+            style={{
+              backgroundColor: `${categoryColor}15`,
+              color: categoryColor,
+            }}
+          >
+            {getCategoryRoot(post.category)}
+          </span>
+          {getCategorySub(post.category) && (
+            <span
+              className="rounded-md px-2 py-0.5 text-xs font-medium"
+              style={{
+                backgroundColor: `${categoryColor}10`,
+                color: categoryColor,
+              }}
+            >
+              {getCategorySub(post.category)}
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-2">
           <time className="font-display text-xs text-text-muted tracking-wider">
             {post.date}

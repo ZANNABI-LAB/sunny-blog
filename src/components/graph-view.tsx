@@ -124,6 +124,9 @@ const GraphView = ({
     undefined
   > | null>(null);
 
+  // PRD-91: Track currently focused node (category/subcategory)
+  const focusedNodeRef = useRef<SimNode | null>(null);
+
   // A2/A3: Animation state refs
   const hasAnimatedRef = useRef(false);
   const breathTimerRef = useRef<d3.Timer | null>(null);
@@ -163,6 +166,96 @@ const GraphView = ({
     longPressActiveRef.current = false;
     longPressNodeRef.current = null;
   }, []);
+
+  // PRD-91: Focus zoom to a specific node (category or subcategory)
+  const focusZoomToNode = useCallback((node: SimNode) => {
+    const zoom = zoomRef.current;
+    const svgSel = svgSelectionRef.current;
+    const container = containerRef.current;
+    if (!zoom || !svgSel || !container) return;
+    if (node.x == null || node.y == null) return;
+
+    const { width, height } = container.getBoundingClientRect();
+    const dur = prefersReducedMotionRef.current ? 0 : 600;
+    const scale = node.type === "subcategory" ? 2.2 : 1.8;
+    const tx = width / 2 - node.x * scale;
+    const ty = height / 2 - node.y * scale;
+    const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+    svgSel.transition().duration(dur).call(zoom.transform, transform);
+  }, []);
+
+  // PRD-91: Apply visual emphasis to focused node outer ring
+  const applyFocusRingStyle = useCallback((node: SimNode) => {
+    const nodeElements = nodeElementsRef.current;
+    if (!nodeElements) return;
+    const dur = prefersReducedMotionRef.current ? 0 : 200;
+
+    nodeElements.each(function (d) {
+      if (d.id !== node.id) return;
+      const g = d3.select(this);
+      if (d.type === "category") {
+        g.select(".hub-outer")
+          .transition().duration(dur)
+          .attr("opacity", 0.8)
+          .attr("stroke-width", 3);
+      } else if (d.type === "subcategory") {
+        g.select(".sub-outer")
+          .transition().duration(dur)
+          .attr("opacity", 0.7)
+          .attr("stroke-dasharray", "none")
+          .attr("stroke-width", 2);
+      }
+    });
+  }, []);
+
+  // PRD-91: Restore focused node outer ring to default style
+  const resetFocusRingStyle = useCallback(() => {
+    const nodeElements = nodeElementsRef.current;
+    if (!nodeElements) return;
+    const dur = prefersReducedMotionRef.current ? 0 : 200;
+
+    nodeElements.each(function (d) {
+      const g = d3.select(this);
+      if (d.type === "category") {
+        g.select(".hub-outer")
+          .transition().duration(dur)
+          .attr("opacity", 0.3)
+          .attr("stroke-width", 2);
+      } else if (d.type === "subcategory") {
+        g.select(".sub-outer")
+          .transition().duration(dur)
+          .attr("opacity", 0.3)
+          .attr("stroke-dasharray", "3 3")
+          .attr("stroke-width", 1.5);
+      }
+    });
+  }, []);
+
+  // PRD-91: Unfocus - reset highlight, ring style, fitToView
+  const unfocusNode = useCallback(() => {
+    focusedNodeRef.current = null;
+    resetFocusRingStyle();
+    const nodeElements = nodeElementsRef.current;
+    const linkElements = linkElementsRef.current;
+    if (nodeElements && linkElements) {
+      const dur = prefersReducedMotionRef.current ? 0 : 200;
+      nodeElements.transition().duration(dur).attr("opacity", 1);
+      linkElements
+        .transition()
+        .duration(dur)
+        .attr("stroke", (_: SimEdge, i: number) => `url(#edge-gradient-${i})`)
+        .attr("opacity", 0.25);
+    }
+    // fitToView
+    const zoom = zoomRef.current;
+    const svgSel = svgSelectionRef.current;
+    const container = containerRef.current;
+    if (zoom && svgSel && container) {
+      const { width, height } = container.getBoundingClientRect();
+      const dur = prefersReducedMotionRef.current ? 0 : 600;
+      fitToView(svgSel, zoom, simNodesRef.current, width, height, dur);
+    }
+  }, [resetFocusRingStyle]);
 
   // Apply category highlight via ref (avoids re-creating simulation)
   useEffect(() => {
@@ -219,6 +312,12 @@ const GraphView = ({
 
     const dur = prefersReducedMotionRef.current ? 0 : 600;
 
+    // PRD-91: Clear internal node focus when legend focus is triggered
+    if (focusedNodeRef.current) {
+      focusedNodeRef.current = null;
+      resetFocusRingStyle();
+    }
+
     if (focusCategory) {
       // Find the hub node for this category
       const hubNode = simNodes.find(
@@ -235,7 +334,7 @@ const GraphView = ({
       // Fit to view (same as B3 logic)
       fitToView(svgSel, zoom, simNodes, width, height, dur);
     }
-  }, [focusCategory]);
+  }, [focusCategory, resetFocusRingStyle]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -358,13 +457,17 @@ const GraphView = ({
     zoomRef.current = zoom;
     svg.call(zoom);
 
-    // B: SVG background click to dismiss preview
+    // B: SVG background click to dismiss preview + unfocus
     svg.on("click", (event) => {
       // Only if clicking on the SVG background (not on a node)
       if (event.target === svgEl || (event.target as Element).classList.contains("zoom-container")) {
         setHoveredNode(null);
         setPreviewPos(null);
-        resetHighlight();
+        if (focusedNodeRef.current) {
+          unfocusNode();
+        } else {
+          resetHighlight();
+        }
       }
     });
 
@@ -670,9 +773,31 @@ const GraphView = ({
     };
 
     // B: Event handlers — remove mouseenter/mouseleave, use tap-based interaction
+    // PRD-91: Enter = focus (category/subcategory), Enter again = navigate, Space = immediate navigate
     nodeElements
       .on("keydown", (event: KeyboardEvent, d) => {
-        if (event.key === "Enter" || event.key === " ") {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          if (d.type === "category" || d.type === "subcategory") {
+            if (focusedNodeRef.current?.id === d.id) {
+              // Already focused — navigate
+              if (d.type === "category") {
+                router.push(`/tech?category=${encodeURIComponent(d.title)}`);
+              } else {
+                router.push(`/tech?category=${encodeURIComponent(d.category)}`);
+              }
+            } else {
+              // Focus this node
+              resetFocusRingStyle();
+              focusedNodeRef.current = d;
+              highlightConnected(d);
+              focusZoomToNode(d);
+              applyFocusRingStyle(d);
+            }
+          } else {
+            router.push(`/tech/${d.slug}`);
+          }
+        } else if (event.key === " ") {
           event.preventDefault();
           if (d.type === "category") {
             router.push(`/tech?category=${encodeURIComponent(d.title)}`);
@@ -1022,26 +1147,13 @@ const GraphView = ({
         if (!isDragging.current && !wasLongPressActive) {
           // B: Tap/click — toggle PostPreview (not navigate)
           try {
-            if (d.type === "category") {
-              // Category tap — keep existing behavior: navigate to tech page
-              const el = d3.select(this);
-              const reduced = prefersReducedMotionRef.current;
-              if (!reduced) {
-                el.select(".hub-inner")
-                  .transition()
-                  .duration(150)
-                  .attr("r", HUB_INNER_R + 4)
-                  .transition()
-                  .duration(200)
-                  .attr("r", HUB_INNER_R);
-              }
-              setTimeout(
-                () => router.push(`/tech?category=${encodeURIComponent(d.title)}`),
-                reduced ? 0 : 300
-              );
-            } else if (d.type === "subcategory") {
-              // Subcategory tap — highlight connected nodes (no PostPreview)
+            if (d.type === "category" || d.type === "subcategory") {
+              // PRD-91: Category/subcategory tap — focus (zoom + highlight)
+              resetFocusRingStyle();
+              focusedNodeRef.current = d;
               highlightConnected(d);
+              focusZoomToNode(d);
+              applyFocusRingStyle(d);
             } else {
               // Post node tap — show/toggle PostPreview
               if (hoveredNodeRef.current?.id === d.id) {
@@ -1092,7 +1204,7 @@ const GraphView = ({
         breathTimerRef.current = null;
       }
     };
-  }, [data, router, cancelLongPress]);
+  }, [data, router, cancelLongPress, focusZoomToNode, applyFocusRingStyle, resetFocusRingStyle, unfocusNode]);
 
   return (
     <div ref={containerRef} className="absolute inset-0 touch-none">
