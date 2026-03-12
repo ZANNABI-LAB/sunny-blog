@@ -26,8 +26,8 @@ const ProjectCard = ({ project }: { project: PortfolioProject }) => (
           {project.name}
         </h3>
         <span className="font-display text-[10px] text-text-muted tracking-wider uppercase shrink-0 ml-2">
-          {project.period.start?.slice(0, 4)}
-          {project.period.end && ` ~ ${project.period.end.slice(0, 4)}`}
+          {project.period.start?.slice(0, 7)}
+          {project.period.end && ` ~ ${project.period.end.slice(0, 7)}`}
         </span>
       </div>
       <p className="text-sm text-text-secondary leading-relaxed mb-4">
