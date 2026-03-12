@@ -6,9 +6,10 @@ import PostCard from "@/components/post-card";
 
 type PostListWithViewsProps = {
   posts: PostMeta[];
+  showFeatured?: boolean;
 };
 
-const PostListWithViews = ({ posts }: PostListWithViewsProps) => {
+const PostListWithViews = ({ posts, showFeatured = true }: PostListWithViewsProps) => {
   const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const PostListWithViews = ({ posts }: PostListWithViewsProps) => {
         <PostCard
           key={post.slug}
           post={post}
-          featured={i === 0}
+          featured={showFeatured && i === 0}
           index={i}
           viewCount={viewCounts[`tech/${post.slug}`]}
         />

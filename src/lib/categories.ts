@@ -52,6 +52,24 @@ export const getCategorySub = (category: string): string | null => {
 };
 
 /**
+ * 포스트 목록에서 특정 root 카테고리의 서브카테고리(full dotted path)를 추출한다.
+ * 예: getSubCategories(posts, "Backend") -> ["Backend.Java", "Backend.Spring"]
+ */
+export const getSubCategories = (
+  posts: { category: string }[],
+  rootCategory: string
+): string[] => {
+  const subs = new Set<string>();
+  for (const post of posts) {
+    if (getCategoryRoot(post.category) === rootCategory) {
+      const sub = getCategorySub(post.category);
+      if (sub) subs.add(post.category);
+    }
+  }
+  return Array.from(subs).sort();
+};
+
+/**
  * 카테고리 색상을 반환한다. 도트 표기법 지원.
  * 매칭 실패 시 기본 색상 반환.
  * theme 인자로 light/dark 팔레트를 선택할 수 있다.
