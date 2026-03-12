@@ -42,9 +42,9 @@
 
   /* Special */
   --noise-opacity: 0.02;
-  --nebula-opacity-1: 0.04;
-  --nebula-opacity-2: 0.03;
-  --nebula-opacity-3: 0.02;
+  --nebula-opacity-1: 0.06;
+  --nebula-opacity-2: 0.045;
+  --nebula-opacity-3: 0.03;
   --star-rgb: 0, 0, 0;
   --star-opacity: 0.6;
   --star-count-factor: 0.7;
