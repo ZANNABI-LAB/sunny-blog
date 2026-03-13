@@ -1148,12 +1148,8 @@ const GraphView = ({
           // B: Tap/click — toggle PostPreview (not navigate)
           try {
             if (d.type === "category" || d.type === "subcategory") {
-              // PRD-91: Category/subcategory tap — focus (zoom + highlight)
-              resetFocusRingStyle();
-              focusedNodeRef.current = d;
-              highlightConnected(d);
-              focusZoomToNode(d);
-              applyFocusRingStyle(d);
+              // PRD-94: Category/subcategory tap — navigate to category page
+              flashAndNavigate(this, d);
             } else {
               // Post node tap — show/toggle PostPreview
               if (hoveredNodeRef.current?.id === d.id) {
