@@ -8,31 +8,31 @@ export type Category =
   | "Frontend";
 
 export const CATEGORY_COLORS: Record<Category, string> = {
-  Architecture: "#fbbf24",     // amber-400
-  "Design Pattern": "#f5b120", // amber-420
-  Testing: "#efa31c",          // amber-440
-  Frontend: "#e99518",         // amber-460
-  Security: "#e38714",         // amber-480
-  Infrastructure: "#dd7910",   // amber-540
-  Backend: "#d97706",          // amber-600
+  Backend: "#9bb0ff",          // O형 청백색
+  Frontend: "#aabfff",         // B형 청색
+  Testing: "#cad8ff",          // A형 백색 (연한 청백)
+  Architecture: "#fff4ea",     // F형 황백색
+  "Design Pattern": "#ffd700", // G형 황색
+  Infrastructure: "#ffb347",   // K형 주황색
+  Security: "#ff6b6b",         // M형 적색
 };
 
 export const CATEGORY_COLORS_LIGHT: Record<Category, string> = {
-  Architecture: "#b45309",     // amber-700
-  "Design Pattern": "#a64b08",
-  Testing: "#984308",
-  Frontend: "#8a3b07",
-  Security: "#893507",
-  Infrastructure: "#832d06",
-  Backend: "#78350f",          // amber-900
+  Backend: "#4a6cf7",          // O형 진한 청
+  Frontend: "#5a7df7",         // B형 청색
+  Testing: "#6b6bbd",          // A형 보라청
+  Architecture: "#c89a45",     // F형 황갈
+  "Design Pattern": "#b8960a", // G형 진한 황
+  Infrastructure: "#d4801a",   // K형 진한 주황
+  Security: "#c0392b",         // M형 진한 적
 };
 
 export const CATEGORIES: Category[] = Object.keys(
   CATEGORY_COLORS
 ) as Category[];
 
-const DEFAULT_COLOR = "#e99518";
-const DEFAULT_COLOR_LIGHT = "#8a3b07";
+const DEFAULT_COLOR = "#ffd700";      // G형 황색 (가장 보편적인 별)
+const DEFAULT_COLOR_LIGHT = "#b8960a";
 
 /**
  * 도트 표기법에서 root 카테고리를 추출한다.
