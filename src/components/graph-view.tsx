@@ -690,7 +690,7 @@ const GraphView = ({
             .attr("r", SUB_INNER_R);
         }
         setTimeout(
-          () => router.push(`/tech?category=${encodeURIComponent(d.category)}`),
+          () => router.push(`/tech?category=${encodeURIComponent(getCategoryRoot(d.category))}`),
           reduced ? 0 : 300
         );
       } else {
@@ -799,10 +799,17 @@ const GraphView = ({
           }
         } else if (event.key === " ") {
           event.preventDefault();
-          if (d.type === "category") {
-            router.push(`/tech?category=${encodeURIComponent(d.title)}`);
-          } else if (d.type === "subcategory") {
-            router.push(`/tech?category=${encodeURIComponent(d.category)}`);
+          if (d.type === "category" || d.type === "subcategory") {
+            // PRD-99: Space = focus (same as tap)
+            if (focusedNodeRef.current?.id === d.id) {
+              unfocusNode();
+            } else {
+              resetFocusRingStyle();
+              focusedNodeRef.current = d;
+              highlightConnected(d);
+              focusZoomToNode(d);
+              applyFocusRingStyle(d);
+            }
           } else {
             router.push(`/tech/${d.slug}`);
           }
@@ -1148,8 +1155,17 @@ const GraphView = ({
           // B: Tap/click — toggle PostPreview (not navigate)
           try {
             if (d.type === "category" || d.type === "subcategory") {
-              // PRD-94: Category/subcategory tap — navigate to category page
-              flashAndNavigate(this, d);
+              // PRD-99: Category/subcategory tap — focus (zoom + highlight)
+              if (focusedNodeRef.current?.id === d.id) {
+                // Already focused — unfocus
+                unfocusNode();
+              } else {
+                resetFocusRingStyle();
+                focusedNodeRef.current = d;
+                highlightConnected(d);
+                focusZoomToNode(d);
+                applyFocusRingStyle(d);
+              }
             } else {
               // Post node tap — show/toggle PostPreview
               if (hoveredNodeRef.current?.id === d.id) {
