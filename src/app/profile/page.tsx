@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactLinks } from "@/components/contact-links";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description:
+    "신중선 — 백엔드 개발자, AI Native 풀스택 개발자를 꿈꾸는 엔지니어",
+  alternates: { canonical: "/profile" },
+};
 
 /* ── Data ── */
 
@@ -110,9 +118,22 @@ const Tag = ({ children }: { children: React.ReactNode }) => (
 
 /* ── Page ── */
 
+const profileJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "신중선",
+  jobTitle: "Backend Developer",
+  url: "https://deep-thought.space/profile",
+  sameAs: ["https://github.com/ZANNABI-LAB"],
+};
+
 const ProfilePage = () => {
   return (
     <div className="max-w-5xl mx-auto animate-page-fade-in space-y-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
+      />
       {/* Hero */}
       <header className="flex flex-col md:flex-row items-center md:items-start gap-8">
         <div className="relative shrink-0">

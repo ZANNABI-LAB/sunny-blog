@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { getPublishedPortfolios } from "@/lib/notion";
 import type { PortfolioProject } from "@/types/portfolio";
 
 export const revalidate = 3600; // ISR 1시간
+
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description: "프로젝트 포트폴리오 — 개인 프로젝트와 오픈소스 기여",
+  alternates: { canonical: "/portfolio" },
+};
 
 const ProjectCard = ({ project }: { project: PortfolioProject }) => (
   <a

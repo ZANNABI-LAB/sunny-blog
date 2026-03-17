@@ -8,34 +8,41 @@ const sitemap = (): MetadataRoute.Sitemap => {
   const posts = getAllPosts();
   const logs = getAllLogs();
 
+  const latestPostDate =
+    posts.length > 0 ? new Date(posts[0].date) : new Date("2025-01-01");
+  const latestLogDate =
+    logs.length > 0 ? new Date(logs[0].date) : new Date("2025-01-01");
+  const latestContentDate =
+    latestPostDate > latestLogDate ? latestPostDate : latestLogDate;
+
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
-      lastModified: new Date(),
+      lastModified: latestContentDate,
       changeFrequency: "daily",
       priority: 1,
     },
     {
       url: `${BASE_URL}/tech`,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: "daily",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/profile`,
-      lastModified: new Date(),
+      lastModified: new Date("2025-01-01"),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${BASE_URL}/portfolio`,
-      lastModified: new Date(),
+      lastModified: new Date("2025-01-01"),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${BASE_URL}/log`,
-      lastModified: new Date(),
+      lastModified: latestLogDate,
       changeFrequency: "weekly",
       priority: 0.7,
     },

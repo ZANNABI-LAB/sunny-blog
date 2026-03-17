@@ -30,6 +30,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Deep Thought",
+    description:
+      "The answer to the ultimate question of life, the universe, and code.",
+    images: ["/api/og?title=Deep%20Thought"],
+  },
   robots: {
     index: true,
     follow: true,
@@ -83,6 +90,30 @@ const RootLayout = ({
             strategy="afterInteractive"
           />
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  name: "Deep Thought",
+                  url: "https://deep-thought.space",
+                  inLanguage: "ko",
+                  description:
+                    "The answer to the ultimate question of life, the universe, and code.",
+                },
+                {
+                  "@type": "Person",
+                  name: "신중선",
+                  url: "https://deep-thought.space/profile",
+                  jobTitle: "Backend Developer",
+                },
+              ],
+            }),
+          }}
+        />
         <ThemeProvider>
           <a
             href="#main-content"

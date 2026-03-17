@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { getAllLogs } from "@/lib/logs";
 import LogListWithViews from "@/components/log-list-with-views";
+
+export const metadata: Metadata = {
+  title: "Log",
+  description: "TIL & Retrospectives — 매일 배운 것과 회고 기록",
+  alternates: { canonical: "/log" },
+};
 
 const LogPage = () => {
   const logs = getAllLogs();

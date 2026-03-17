@@ -27,6 +27,7 @@ export const generateMetadata = async ({
   return {
     title: log.title,
     description: log.summary,
+    alternates: { canonical: `/log/${slug}` },
     openGraph: {
       type: "article",
       title: log.title,
@@ -51,8 +52,22 @@ const LogDetailPage = async ({ params }: Props) => {
 
   if (!log) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: log.title,
+    description: log.summary,
+    datePublished: log.date,
+    author: { "@type": "Person", name: "신중선" },
+    publisher: { "@type": "Organization", name: "Deep Thought" },
+  };
+
   return (
     <div className="max-w-3xl mx-auto animate-page-fade-in">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/log"
         className="font-display text-xs text-text-muted tracking-[0.15em] uppercase hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
 import CategoryFilter from "@/components/category-filter";
@@ -9,6 +10,13 @@ import {
 } from "@/lib/categories";
 import SidebarLayout from "@/components/sidebar-layout";
 import PostListWithViews from "@/components/post-list-with-views";
+
+export const metadata: Metadata = {
+  title: "Tech",
+  description:
+    "소프트웨어 엔지니어링 기술 포스트 — Backend, Frontend, AI, DevOps, Security 등",
+  alternates: { canonical: "/tech" },
+};
 
 const POSTS_PER_PAGE = 9;
 
