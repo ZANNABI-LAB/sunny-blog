@@ -46,6 +46,12 @@ const sitemap = (): MetadataRoute.Sitemap => {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified: new Date("2026-03-17"),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 
   const postPages: MetadataRoute.Sitemap = posts.map((post) => ({

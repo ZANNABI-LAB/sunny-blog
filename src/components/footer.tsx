@@ -1,3 +1,4 @@
+import Link from "next/link";
 import VisitorStats from "@/components/visitor-stats";
 
 const Footer = () => {
@@ -5,7 +6,16 @@ const Footer = () => {
     <footer className="relative z-30 footer-gradient-border bg-[var(--bg-footer)] backdrop-blur-sm">
       <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-between" style={{ paddingBottom: "calc(1.5rem + var(--safe-bottom))" }}>
         <VisitorStats className="hidden sm:block" />
-        <span className="font-display text-xs text-text-muted tracking-wider">&copy; 2026 Deep Thought</span>
+        <div className="flex items-center gap-3">
+          <span className="font-display text-xs text-text-muted tracking-wider">&copy; 2026 Deep Thought</span>
+          <span className="text-text-muted/40">·</span>
+          <Link
+            href="/privacy"
+            className="font-display text-xs text-text-muted tracking-wider transition-colors duration-150 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
+          >
+            Privacy
+          </Link>
+        </div>
         <a
           href="https://github.com/ZANNABI-LAB"
           target="_blank"
