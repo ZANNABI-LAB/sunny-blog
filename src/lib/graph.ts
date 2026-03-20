@@ -106,11 +106,14 @@ export const buildGraphData = (posts: PostMeta[]): GraphData => {
     }
   }
 
-  // Post <-> Post edges (shared tags only, no sameCategory condition)
+  // Post <-> Post edges (같은 루트 카테고리 + 공유 태그)
   for (let i = 0; i < postNodes.length; i++) {
     for (let j = i + 1; j < postNodes.length; j++) {
       const a = postNodes[i];
       const b = postNodes[j];
+
+      if (getCategoryRoot(a.category) !== getCategoryRoot(b.category)) continue;
+
       const sharedTags = findSharedTags(a.tags, b.tags);
 
       if (sharedTags.length > 0) {
