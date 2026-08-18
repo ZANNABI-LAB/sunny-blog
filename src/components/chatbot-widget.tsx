@@ -4,20 +4,9 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
-import { useIsMobile } from "@/hooks/use-is-mobile";
 import { usePrefersReducedMotionRef } from "@/hooks/use-prefers-reduced-motion";
+import { ASK_EVENT } from "@/lib/ask-event";
 
-const KbdShortcut = () => {
-  const [isMac, setIsMac] = useState(false);
-  useEffect(() => {
-    setIsMac(navigator.platform.toUpperCase().includes("MAC"));
-  }, []);
-  return (
-    <kbd className="hidden md:inline text-[10px] text-text-muted border border-border rounded px-1 py-0.5 select-none">
-      {isMac ? "⌘" : "Ctrl+"}K
-    </kbd>
-  );
-};
 
 type Message = {
   id: string;
@@ -46,10 +35,10 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [isLoading, setIsLoading] = useState(false);
-  const [triggerInput, setTriggerInput] = useState("");
-  const isMobile = useIsMobile();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const triggerInputRef = useRef<HTMLInputElement>(null);
+  // 패널을 연 요소를 기억해 두었다가 닫을 때 그리로 포커스를 돌려준다.
+  // 메인에서는 콘솔 입력, 그 밖에서는 FAB이 그 대상이 된다.
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
   const pendingSendRef = useRef<string | null>(null);
   const prefersReducedMotionRef = usePrefersReducedMotionRef();
 
@@ -74,28 +63,25 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
     };
   }, [isOpen]);
 
+  const restoreFocus = useCallback(() => {
+    const target = lastTriggerRef.current ?? buttonRef.current;
+    target?.focus();
+  }, []);
+
   const handleClose = useCallback(() => {
     if (prefersReducedMotionRef.current) {
       setIsOpen(false);
       setIsClosing(false);
-      if (isMainPage) {
-        triggerInputRef.current?.focus();
-      } else {
-        buttonRef.current?.focus();
-      }
+      restoreFocus();
       return;
     }
     setIsClosing(true);
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-      if (isMainPage) {
-        triggerInputRef.current?.focus();
-      } else {
-        buttonRef.current?.focus();
-      }
+      restoreFocus();
     }, 300);
-  }, [isMainPage]);
+  }, [restoreFocus, prefersReducedMotionRef]);
 
   const toggle = useCallback(() => {
     if (isOpen) {
@@ -261,15 +247,18 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
     }
   }, [isOpen, handleSend]);
 
-  const handleTriggerSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = triggerInput.trim();
-    if (trimmed) {
-      pendingSendRef.current = trimmed;
-      setTriggerInput("");
-    }
-    setIsOpen(true);
-  };
+  // 메인 페이지 콘솔에서 넘어오는 질문 — 패널을 열고 그대로 전송한다
+  useEffect(() => {
+    const onAsk = (e: Event) => {
+      lastTriggerRef.current = document.activeElement as HTMLElement | null;
+      const question = (e as CustomEvent<string | undefined>).detail?.trim();
+      if (question) pendingSendRef.current = question;
+      setIsOpen(true);
+    };
+    window.addEventListener(ASK_EVENT, onAsk);
+    return () => window.removeEventListener(ASK_EVENT, onAsk);
+  }, []);
+
 
   return (
     <>
@@ -283,36 +272,10 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
           onSuggestedQuestion={handleSend}
         />
       )}
-      {!isOpen && !isClosing && (
-        isMainPage ? (
-          isMobile ? (
-            // Mobile main page: FAB button
-            <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
-          ) : (
-            // Desktop main page: input form
-            <form
-              onSubmit={handleTriggerSubmit}
-              className="fixed bottom-20 right-12 z-[60]"
-              style={{ paddingBottom: "var(--safe-bottom)" }}
-            >
-              <div className="flex items-center gap-2 bg-bg-primary/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 transition-colors hover:border-border-subtle">
-                <span className="font-display text-accent text-xs select-none">&gt;</span>
-                <input
-                  ref={triggerInputRef}
-                  type="text"
-                  value={triggerInput}
-                  onChange={(e) => setTriggerInput(e.target.value)}
-                  placeholder="Ask..."
-                  aria-label="Deep Thought에게 질문하기"
-                  className="font-display w-64 max-w-[16rem] bg-transparent text-base text-text-primary placeholder:text-text-muted tracking-wider outline-none"
-                />
-                <KbdShortcut />
-              </div>
-            </form>
-          )
-        ) : (
-          <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
-        )
+      {/* 메인에서는 에어록 창의 ConsolePrompt가 입구 역할을 하므로
+          떠다니는 트리거를 따로 띄우지 않는다 */}
+      {!isOpen && !isClosing && !isMainPage && (
+        <ChatbotButton isOpen={isOpen} onClick={toggle} ref={buttonRef} />
       )}
     </>
   );
