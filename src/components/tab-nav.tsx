@@ -46,8 +46,7 @@ const TabNav = () => {
       >
         <Link
           href="/"
-          className="font-display font-bold text-text-primary mr-4 shrink-0 tracking-[0.15em] text-xs uppercase min-h-[44px] inline-flex items-center focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
-          style={{ textShadow: "0 0 10px var(--glow-accent)" }}
+          className="font-display font-bold text-text-primary mr-4 shrink-0 tracking-[0.15em] text-xs uppercase min-h-[44px] inline-flex items-center focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none text-glow-accent-sm"
         >
           Deep Thought
         </Link>
@@ -58,16 +57,11 @@ const TabNav = () => {
             <Link
               key={href}
               href={href}
-              className={`font-display min-h-[44px] inline-flex items-center px-4 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+              className={`font-display min-h-[44px] inline-flex items-center px-4 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
                 isActive
-                  ? "text-accent border-b-2 border-accent"
+                  ? "text-accent border-b-2 border-accent text-glow-accent-xs"
                   : "text-text-muted hover:text-text-primary hover:bg-card"
               }`}
-              style={
-                isActive
-                  ? { textShadow: "0 0 8px var(--glow-accent)" }
-                  : undefined
-              }
             >
               {label}
             </Link>
@@ -113,8 +107,7 @@ const TabNav = () => {
         </button>
         <Link
           href="/"
-          className="font-display font-bold text-text-primary ml-2 tracking-[0.15em] text-xs uppercase min-h-[44px] inline-flex items-center focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
-          style={{ textShadow: "0 0 10px var(--glow-accent)" }}
+          className="font-display font-bold text-text-primary ml-2 tracking-[0.15em] text-xs uppercase min-h-[44px] inline-flex items-center focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none text-glow-accent-sm"
         >
           Deep Thought
         </Link>
@@ -137,7 +130,7 @@ const TabNav = () => {
                 key={href}
                 href={href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`block px-6 py-3 font-display text-sm tracking-[0.1em] uppercase transition-colors focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+                className={`block px-6 py-3 font-display text-sm tracking-[0.1em] uppercase transition-colors focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
                   isActive
                     ? "text-accent bg-accent/5"
                     : "text-text-muted hover:text-text-primary hover:bg-card"

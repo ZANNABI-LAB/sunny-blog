@@ -70,13 +70,13 @@ const LogDetailPage = async ({ params }: Props) => {
       />
       <Link
         href="/log"
-        className="font-display text-xs text-text-muted tracking-[0.15em] uppercase hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
+        className="font-display text-xs text-text-muted tracking-[0.15em] uppercase hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none"
       >
         &larr; Back to Log
       </Link>
 
       <header className="mt-6 mb-8">
-        <h1 className="font-display text-3xl md:text-5xl font-bold text-text-primary tracking-tight text-glow-amber">
+        <h1 className="font-display text-3xl md:text-5xl font-bold text-text-primary tracking-tight text-glow-accent">
           {log.title}
         </h1>
         <div className="mt-3 flex items-center gap-3">

@@ -47,11 +47,11 @@ const VisitorStats = ({ className }: VisitorStatsProps) => {
     <span
       className={`font-display text-xs text-text-muted tracking-wider ${className ?? ""}`}
     >
-      <span className="text-glow-amber-sm">
+      <span className="text-glow-accent-sm">
         {stats ? formatNumber(stats.daily) : "--"}
       </span>{" "}
       today{" / "}
-      <span className="text-glow-amber-sm">
+      <span className="text-glow-accent-sm">
         {stats ? formatNumber(stats.total) : "--"}
       </span>{" "}
       total

@@ -82,7 +82,7 @@ const QuestionCategories = ({
             onClick={() => handleChipClick(cat.key)}
             aria-expanded={selectedCategory === cat.key}
             aria-controls={`question-list-${cat.key}`}
-            className={`flex flex-shrink-0 items-center gap-1 rounded-md border px-2 min-h-[32px] font-display text-[11px] tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400/50 focus-visible:outline-offset-2 ${
+            className={`flex flex-shrink-0 items-center gap-1 rounded-md border px-2 min-h-[32px] font-display text-[11px] tracking-wider transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent/50 focus-visible:outline-offset-2 ${
               selectedCategory === cat.key
                 ? "bg-accent/20 border-accent/60 text-accent"
                 : "border-accent/30 bg-card text-text-secondary hover:bg-card-hover"
@@ -361,8 +361,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
           <span
-            className="font-display text-sm font-semibold text-text-primary tracking-wider"
-            style={{ textShadow: "0 0 8px var(--glow-accent)" }}
+            className="font-display text-sm font-semibold text-text-primary tracking-wider text-glow-accent-xs"
           >
             Deep Thought
           </span>
@@ -432,7 +431,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-500 text-white transition-colors hover:bg-amber-400 disabled:opacity-30 disabled:hover:bg-amber-500"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-text-inverse transition-colors hover:bg-accent-hover disabled:opacity-30 disabled:hover:bg-accent"
           aria-label="전송"
         >
           <svg

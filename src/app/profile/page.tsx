@@ -149,7 +149,7 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="text-center md:text-left">
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
             SUNNY
           </h1>
           <p className="mt-1 font-display text-xs text-text-muted tracking-[0.2em] uppercase">

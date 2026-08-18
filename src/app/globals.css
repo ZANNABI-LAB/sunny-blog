@@ -10,35 +10,46 @@
   }
 }
 
-/* ── Theme Color Tokens ── */
+/* ── Theme Color Tokens ──
+ * 라이트 = 새벽 하늘(옅은 쿨 그레이 + 브론즈 악센트)
+ * 다크 = 심우주(남색이 도는 흑배경 + 별빛 앰버 + 페리윙클 인디고)
+ * 변수명/구조는 고정. 리스킨은 값만 교체한다.
+ */
 :root {
   --nav-height: 48px;
   /* Backgrounds */
-  --bg-primary: #fafaf9;
+  --bg-primary: #f7f7fb;
   --bg-elevated: #ffffff;
-  --bg-nav: rgba(255,255,255,0.8);
-  --bg-footer: rgba(250,250,249,0.6);
+  --bg-nav: rgba(247,247,251,0.82);
+  --bg-footer: rgba(247,247,251,0.65);
   --bg-card: #ffffff;
-  --bg-card-hover: #f5f5f4;
+  --bg-card-hover: #f1f1f8;
 
   /* Text */
-  --text-primary: #1c1917;
-  --text-secondary: #57534e;
-  --text-muted: #6b6560;
+  --text-primary: #16161d;
+  --text-secondary: #4b4b5a;
+  --text-muted: #6e6e80;
   --text-inverse: #ffffff;
 
   /* Accents */
-  --accent-primary: #92400e;
-  --accent-hover: #78350f;
-  --accent-secondary: #4338ca;
+  --accent-primary: #a04e0a;
+  --accent-hover: #7c3a05;
+  --accent-secondary: #4f46e5;
 
   /* Borders */
-  --border-primary: #e7e5e4;
-  --border-subtle: #d6d3d1;
+  --border-primary: #e5e5ef;
+  --border-subtle: #d5d5e2;
 
   /* Glows */
-  --glow-accent: rgba(146,64,14,0.15);
-  --glow-secondary: rgba(67,56,202,0.2);
+  --glow-accent: rgba(160,78,10,0.16);
+  --glow-secondary: rgba(79,70,229,0.22);
+
+  /* Nebula tints (r,g,b) */
+  --nebula-rgb-1: 99, 102, 241;
+  --nebula-rgb-2: 168, 85, 247;
+  --nebula-rgb-3: 245, 158, 11;
+  --nebula-rgb-4: 139, 92, 246;
+  --nebula-rgb-5: 59, 130, 246;
 
   /* Special */
   --noise-opacity: 0.02;
@@ -51,27 +62,33 @@
 }
 
 .dark {
-  --bg-primary: #070709;
-  --bg-elevated: #0a0a0f;
-  --bg-nav: rgba(10,10,15,0.8);
-  --bg-footer: rgba(10,10,15,0.6);
-  --bg-card: rgba(255,255,255,0.05);
-  --bg-card-hover: rgba(255,255,255,0.1);
+  --bg-primary: #05060c;
+  --bg-elevated: #0b0d18;
+  --bg-nav: rgba(11,13,24,0.82);
+  --bg-footer: rgba(11,13,24,0.6);
+  --bg-card: rgba(255,255,255,0.045);
+  --bg-card-hover: rgba(255,255,255,0.09);
 
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-inverse: #070709;
+  --text-primary: #f4f4f8;
+  --text-secondary: #a8a8bb;
+  --text-muted: #74748a;
+  --text-inverse: #05060c;
 
   --accent-primary: #fbbf24;
-  --accent-hover: #f59e0b;
+  --accent-hover: #fcd34d;
   --accent-secondary: #818cf8;
 
-  --border-primary: rgba(255,255,255,0.1);
-  --border-subtle: rgba(255,255,255,0.05);
+  --border-primary: rgba(190,195,255,0.12);
+  --border-subtle: rgba(190,195,255,0.06);
 
-  --glow-accent: rgba(245,158,11,0.3);
-  --glow-secondary: rgba(99,102,241,0.4);
+  --glow-accent: rgba(251,191,36,0.32);
+  --glow-secondary: rgba(129,140,248,0.42);
+
+  --nebula-rgb-1: 99, 102, 241;
+  --nebula-rgb-2: 168, 85, 247;
+  --nebula-rgb-3: 251, 191, 36;
+  --nebula-rgb-4: 139, 92, 246;
+  --nebula-rgb-5: 56, 118, 245;
 
   --noise-opacity: 0.035;
   --nebula-opacity-1: 0.08;
@@ -84,7 +101,30 @@
 
 @theme {
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-display: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: var(--font-orbit), 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Typography scale — display는 Orbit(400) 전용, 나머지는 본문 폰트 기준 */
+  --text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: 0.02em;
+
+  --text-h1: clamp(1.875rem, 3.5vw, 2.75rem);
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.01em;
+
+  --text-h2: clamp(1.5rem, 2.5vw, 2rem);
+  --text-h2--line-height: 1.3;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.4;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.75;
+
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.02em;
 
   /* Tailwind color aliases from CSS variables */
   --color-bg-primary: var(--bg-primary);
@@ -102,9 +142,13 @@
   --color-card-hover: var(--bg-card-hover);
 }
 
-/* ── Display Font Utility ── */
+/* ── Display Font Utility ──
+ * Orbit은 Regular(400) 단일 굵기라 font-bold가 붙으면 브라우저가 가짜 볼드를
+ * 합성한다. font-synthesis-weight를 꺼서 원본 자간/획을 유지한다.
+ */
 .font-display {
   font-family: var(--font-display);
+  font-synthesis-weight: none;
 }
 
 /* ── Noise Grain Overlay ── */
@@ -131,11 +175,21 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(99, 102, 241, var(--nebula-opacity-1)) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(168, 85, 247, var(--nebula-opacity-2)) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 55% at 60% 80%, rgba(245, 158, 11, var(--nebula-opacity-3)) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 40% 30%, rgba(139, 92, 246, calc(var(--nebula-opacity-2) * 0.7)) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 45% at 75% 65%, rgba(59, 130, 246, calc(var(--nebula-opacity-3) * 0.8)) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(var(--nebula-rgb-1), var(--nebula-opacity-1)) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(var(--nebula-rgb-2), var(--nebula-opacity-2)) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 60% 80%, rgba(var(--nebula-rgb-3), var(--nebula-opacity-3)) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 40% 30%, rgba(var(--nebula-rgb-4), calc(var(--nebula-opacity-2) * 0.7)) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 45% at 75% 65%, rgba(var(--nebula-rgb-5), calc(var(--nebula-opacity-3) * 0.8)) 0%, transparent 50%);
+}
+
+/* ── Hero Vignette ──
+ * 메인 히어로는 nebula-bg(layout) 위에 얹히는 중앙 비네트만 담당한다.
+ * 배경색 자체를 다시 칠하면 nebula가 가려지므로 투명 그라디언트만 사용.
+ */
+.hero-vignette {
+  background:
+    radial-gradient(ellipse 70% 70% at 70% 50%, var(--bg-elevated) 0%, transparent 65%);
+  opacity: 0.55;
 }
 
 /* ── Keyframes ── */
@@ -286,17 +340,23 @@
 }
 
 /* ── Text Glow ── */
-.text-glow-indigo {
+.text-glow-secondary {
   text-shadow: 0 0 20px var(--glow-secondary);
 }
-.text-glow-indigo-sm {
+.text-glow-secondary-sm {
   text-shadow: 0 0 10px var(--glow-secondary);
 }
-.text-glow-amber {
+.text-glow-accent {
   text-shadow: 0 0 20px var(--glow-accent);
 }
-.text-glow-amber-sm {
+.text-glow-accent-sm {
   text-shadow: 0 0 10px var(--glow-accent);
+}
+.drop-glow-accent {
+  filter: drop-shadow(0 0 30px var(--glow-accent));
+}
+.text-glow-accent-xs {
+  text-shadow: 0 0 8px var(--glow-accent);
 }
 
 /* ── PostCard Hover Glow ── */
@@ -304,24 +364,24 @@
   transition: border-color 200ms ease, box-shadow 200ms ease, background-color 150ms ease;
 }
 .post-card-glow:hover {
-  border-color: var(--card-category-color, rgba(255, 255, 255, 0.2));
+  border-color: var(--card-category-color, var(--border-subtle));
   box-shadow: 0 0 16px color-mix(in srgb, var(--card-category-color, transparent) 25%, transparent);
 }
 
 /* ── Prose Category Accent ── */
 article[style*="--category-color"] .prose pre {
-  border-left: 3px solid var(--category-color, rgba(99, 102, 241, 0.5));
+  border-left: 3px solid var(--category-color, var(--accent-secondary));
 }
 
 article[style*="--category-color"] .prose hr {
   border: none;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--category-color, rgba(99, 102, 241, 0.3)), transparent);
+  background: linear-gradient(to right, transparent, var(--category-color, var(--accent-secondary)), transparent);
 }
 
 article[style*="--category-color"] .prose blockquote {
-  border-left-color: var(--category-color, rgba(99, 102, 241, 0.5));
-  background: color-mix(in srgb, var(--category-color, #818cf8) 5%, transparent);
+  border-left-color: var(--category-color, var(--accent-secondary));
+  background: color-mix(in srgb, var(--category-color, var(--accent-secondary)) 5%, transparent);
 }
 
 /* ── Footer ── */
@@ -407,5 +467,5 @@ article[style*="--category-color"] .prose blockquote {
   top: 0;
   width: 4px;
   height: 100%;
-  background: var(--card-category-color, #6366f1);
+  background: var(--card-category-color, var(--accent-secondary));
 }

@@ -14,7 +14,7 @@ const LogPage = () => {
   return (
     <div className="max-w-4xl mx-auto animate-page-fade-in space-y-12">
       <header>
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
+        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
           LOG
         </h1>
         <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">

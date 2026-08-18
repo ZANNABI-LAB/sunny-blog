@@ -5,6 +5,7 @@ import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
 import LayoutShell from "@/components/layout-shell";
 import ThemeProvider from "@/components/theme-provider";
+import { orbit } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://deep-thought.space"),
@@ -64,7 +65,11 @@ const RootLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <html lang="ko" className="h-full" suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={`h-full ${orbit.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <link
           rel="stylesheet"
@@ -117,7 +122,7 @@ const RootLayout = ({
         <ThemeProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-accent focus:text-text-inverse focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
           >
             메인 콘텐츠로 건너뛰기
           </a>
