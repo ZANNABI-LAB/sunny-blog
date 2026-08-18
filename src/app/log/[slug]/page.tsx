@@ -101,7 +101,7 @@ const LogDetailPage = async ({ params }: Props) => {
       </header>
 
       <article
-        className="prose dark:prose-invert prose-amber max-w-none"
+        className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: log.contentHtml }}
       />
       <CodeBlockEnhancer />

@@ -5,7 +5,7 @@ import "highlight.js/styles/github-dark.css";
 import TabNav from "@/components/tab-nav";
 import LayoutShell from "@/components/layout-shell";
 import ThemeProvider from "@/components/theme-provider";
-import { orbit } from "@/lib/fonts";
+import { denkiChip } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://deep-thought.space"),
@@ -67,7 +67,7 @@ const RootLayout = ({
   return (
     <html
       lang="ko"
-      className={`h-full ${orbit.variable}`}
+      className={`h-full ${denkiChip.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -78,7 +78,7 @@ const RootLayout = ({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
       </head>
-      <body className="flex flex-col h-full bg-bg-primary text-text-primary font-sans noise-overlay nebula-bg">
+      <body className="flex flex-col h-full bg-bg-primary text-text-primary font-sans dither-overlay grid-bg">
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-SEG9MW5TKD"

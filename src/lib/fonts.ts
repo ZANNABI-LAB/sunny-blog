@@ -1,22 +1,21 @@
-import { Orbit } from "next/font/google";
+import localFont from "next/font/local";
 
 /**
- * Orbit — 디스플레이 폰트 (워드마크 / 페이지 타이틀 / 레이블 전용)
- * Regular(400) 단일 굵기. 본문에는 사용하지 않는다.
+ * 전기칩 한글 (x10y12pxDenkiChipHangul) — 디스플레이 / UI 폰트
+ * Lee Minseo, SIL OFL 1.1 (public/fonts/DenkiChipHangul-OFL.txt)
  *
- * subsets에 "korean"을 넣지 못하는 이유: next/font의 폰트 메타데이터가 Orbit에
- * latin / latin-ext만 등록하고 있어 타입 레벨에서 거부된다.
+ * 12px 비트맵 기반 픽셀 폰트다. **12의 배수 크기에서만 픽셀이 정확히 떨어진다** —
+ * clamp()나 vw 같은 유동 크기를 주면 글자가 뭉개지므로, 타이포 스케일은
+ * globals.css에서 12·24·36·48px 계단으로 고정해 두었다.
  *
- * 단, subsets는 "무엇을 preload할지"만 고르는 값이다. next/font는 Google이 주는
- * @font-face 91개(한글 unicode-range 포함)를 전부 셀프호스팅하므로 한글도 Orbit으로
- * 렌더되고, 한글 청크는 해당 글자가 실제로 쓰일 때만 내려온다. 즉 preload는 라틴만,
- * 한글은 지연 로드 — 우주 컨셉 유지와 초기 요청 수 억제를 동시에 만족한다.
+ * 본문에는 쓰지 않는다. 긴 한글 기술 문서는 Pretendard가 받는다.
  */
-export const orbit = Orbit({
+export const denkiChip = localFont({
+  src: "../../public/fonts/DenkiChipHangul.woff2",
   weight: "400",
-  subsets: ["latin"],
+  style: "normal",
   display: "swap",
-  variable: "--font-orbit",
+  variable: "--font-pixel",
   fallback: [
     "Pretendard Variable",
     "Pretendard",

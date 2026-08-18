@@ -23,9 +23,6 @@ const MainHero = ({ graphData }: MainHeroProps) => {
 
   return (
     <div className="relative h-[calc(100dvh-var(--nav-height))] min-h-[300px] overflow-hidden">
-      {/* Vignette layer — 실제 배경(nebula)은 layout의 .nebula-bg가 담당 */}
-      <div className="absolute inset-0 z-0 hero-vignette pointer-events-none" />
-
       {/* Star particle layer */}
       <div className="absolute inset-0 z-[5]">
         <StarBackground />

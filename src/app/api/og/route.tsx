@@ -26,7 +26,7 @@ export const GET = async (request: NextRequest) => {
         {/* Top: Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <span
-            style={{ fontSize: "24px", color: "#fbbf24", fontWeight: 700 }}
+            style={{ fontSize: "24px", color: "#3dff88", fontWeight: 700 }}
           >
             &gt;_
           </span>
@@ -66,8 +66,8 @@ export const GET = async (request: NextRequest) => {
             <span
               style={{
                 fontSize: "16px",
-                color: "#fbbf24",
-                border: "1px solid #fbbf2440",
+                color: "#3dff88",
+                border: "1px solid #3dff8840",
                 borderRadius: "6px",
                 padding: "4px 16px",
                 letterSpacing: "0.1em",
