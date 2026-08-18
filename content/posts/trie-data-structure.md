@@ -3,7 +3,7 @@ title: "트라이(Trie) 자료구조: 문자열 탐색을 위한 트리 구조"
 shortTitle: "트라이 자료구조"
 date: "2026-03-20"
 tags: ["trie", "data-structure", "string-search", "autocomplete", "tree-structure"]
-category: "Backend"
+category: "Backend.CS"
 summary: "문자열을 효율적으로 저장하고 탐색하기 위한 트리 형태의 자료구조입니다."
 author: "신중선"
 source: "maeil-mail"

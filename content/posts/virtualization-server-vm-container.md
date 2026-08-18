@@ -3,7 +3,7 @@ title: "가상화 기술: VM과 컨테이너의 차이점과 활용 방법"
 shortTitle: "가상화 기술"
 date: "2026-03-23"
 tags: ["virtualization", "virtual-machine", "container", "hypervisor", "infrastructure"]
-category: "Infrastructure"
+category: "Infrastructure.Cloud"
 summary: "물리적 리소스를 논리적으로 분리하여 여러 가상 환경을 구성하는 가상화 기술의 핵심 개념과 VM, 컨테이너의 차이점을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

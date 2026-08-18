@@ -3,7 +3,7 @@ title: "자바 제네릭의 공변성과 반공변성"
 shortTitle: "제네릭 변성"
 date: "2026-03-21"
 tags: ["java", "generics", "variance", "type-safety", "wildcards"]
-category: "Backend"
+category: "Backend.Java"
 summary: "자바 제네릭의 무공변 특성과 와일드카드를 통한 공변성, 반공변성 지원 방식을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

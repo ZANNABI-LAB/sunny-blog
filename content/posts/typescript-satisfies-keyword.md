@@ -3,7 +3,7 @@ title: "TypeScript satisfies 키워드로 타입 안전성 확보하기"
 shortTitle: "satisfies 키워드"
 date: "2026-03-21"
 tags: ["typescript", "type-safety", "satisfies", "type-inference", "frontend"]
-category: "Frontend"
+category: "Frontend.TypeScript"
 summary: "TypeScript satisfies 키워드를 통해 기존 타입 정보를 유지하면서 타입 조건을 검사하는 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

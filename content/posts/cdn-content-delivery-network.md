@@ -3,7 +3,7 @@ title: "CDN(Content Delivery Network) - 전 세계 콘텐츠 배포 네트워크
 shortTitle: "CDN"
 date: "2026-03-14"
 tags: ["cdn", "content-delivery-network", "web-performance", "caching", "distributed-systems"]
-category: "Infrastructure"
+category: "Infrastructure.Cloud"
 summary: "전 세계에 분산된 서버 네트워크를 통해 사용자에게 빠르고 안정적으로 콘텐츠를 제공하는 CDN의 개념과 동작 방식을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

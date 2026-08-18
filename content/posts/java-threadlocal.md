@@ -3,7 +3,7 @@ title: "Java ThreadLocal: 스레드별 독립 변수 관리"
 shortTitle: "ThreadLocal"
 date: "2026-04-03"
 tags: ["threadlocal", "java", "concurrency", "spring", "thread-safety"]
-category: "Backend"
+category: "Backend.Concurrency"
 summary: "Java ThreadLocal의 동작 원리와 Spring에서의 활용, 그리고 주의사항을 살펴봅니다."
 author: "신중선"
 source: "maeil-mail"

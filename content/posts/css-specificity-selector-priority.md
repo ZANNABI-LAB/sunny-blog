@@ -3,7 +3,7 @@ title: "CSS 명시도(Specificity)와 스타일 우선순위"
 shortTitle: "CSS 명시도"
 date: "2026-03-24"
 tags: ["css", "specificity", "frontend", "styling", "selector"]
-category: "Frontend"
+category: "Frontend.CSS"
 summary: "CSS 명시도 계산 방식과 스타일 우선순위 결정 원리를 설명합니다."
 author: "신중선"
 source: "maeil-mail"

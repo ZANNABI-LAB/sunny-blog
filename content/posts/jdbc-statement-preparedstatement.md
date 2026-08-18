@@ -3,7 +3,7 @@ title: "JDBC Statement와 PreparedStatement의 차이점"
 shortTitle: "Statement vs PreparedStatement"
 date: "2026-04-11"
 tags: ["jdbc", "database", "sql-injection", "prepared-statement", "java"]
-category: "Backend"
+category: "Backend.Database"
 summary: "JDBC에서 Statement와 PreparedStatement의 성능, 보안, 사용법 차이점을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

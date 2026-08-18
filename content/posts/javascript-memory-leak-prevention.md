@@ -3,7 +3,7 @@ title: "JavaScript 메모리 누수 발생 원인과 해결 방법"
 shortTitle: "메모리 누수 방지"
 date: "2026-03-24"
 tags: ["memory-leak", "javascript", "performance", "garbage-collection", "event-listener"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "JavaScript에서 메모리 누수가 발생하는 주요 원인들과 예방 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

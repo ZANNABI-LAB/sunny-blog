@@ -3,7 +3,7 @@ title: "클라이언트 사이드 라우팅의 동작 원리"
 shortTitle: "CSR 라우팅"
 date: "2026-04-01"
 tags: ["client-side-routing", "spa", "history-api", "react-router"]
-category: "Frontend"
+category: "Frontend.Browser"
 summary: "브라우저에서 페이지 새로고침 없이 URL을 변경하고 컴포넌트를 교체하는 클라이언트 사이드 라우팅의 동작 과정을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

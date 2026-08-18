@@ -3,7 +3,7 @@ title: "JSON Schema를 활용한 데이터 검증과 타입 안전성"
 shortTitle: "JSON Schema"
 date: "2026-04-01"
 tags: ["json-schema", "data-validation", "typescript", "api-contract"]
-category: "Frontend"
+category: "Frontend.TypeScript"
 summary: "JSON 데이터의 구조와 타입을 정의하고 검증하는 JSON Schema의 개념과 프론트엔드 개발에서의 활용 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

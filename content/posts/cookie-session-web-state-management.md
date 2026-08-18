@@ -3,7 +3,7 @@ title: "쿠키와 세션: 웹 상태 관리의 핵심 메커니즘"
 shortTitle: "쿠키와 세션"
 date: "2026-04-15"
 tags: ["cookie", "session", "web-security", "state-management", "authentication"]
-category: "Frontend"
+category: "Frontend.Browser"
 summary: "웹 애플리케이션에서 사용자 상태를 유지하기 위한 쿠키와 세션의 동작 원리와 활용 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

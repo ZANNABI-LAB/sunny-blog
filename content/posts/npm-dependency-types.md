@@ -3,7 +3,7 @@ title: "npm 의존성 타입별 관리 가이드"
 shortTitle: "npm 의존성 타입"
 date: "2026-03-24"
 tags: ["npm", "package-manager", "frontend", "dependency-management", "node-modules"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "dependencies, devDependencies, peerDependencies의 차이점과 올바른 사용법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

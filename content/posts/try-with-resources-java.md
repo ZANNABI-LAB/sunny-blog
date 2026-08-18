@@ -3,7 +3,7 @@ title: "Try-with-resources로 자원 관리하기"
 shortTitle: "Try-with-resources"
 date: "2026-03-15"
 tags: ["java", "resource-management", "exception-handling", "autocloseable", "memory-leak"]
-category: "Backend"
+category: "Backend.Java"
 summary: "Java 7에서 도입된 try-with-resources 구문으로 자원을 자동으로 해제하고 예외를 안전하게 처리하는 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

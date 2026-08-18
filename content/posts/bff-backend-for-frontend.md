@@ -3,7 +3,7 @@ title: "BFF(Backend For Frontend) 패턴"
 shortTitle: "BFF 패턴"
 date: "2026-03-09"
 tags: ["bff", "architecture", "microservices", "api-gateway", "frontend"]
-category: "Architecture"
+category: "Architecture.Pattern"
 summary: "프론트엔드를 위한 전용 백엔드 계층인 BFF 패턴의 개념과 활용 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

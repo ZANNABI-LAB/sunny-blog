@@ -3,7 +3,7 @@ title: "TCP 3-way Handshake: 신뢰성 있는 연결 수립 과정"
 shortTitle: "TCP Handshake"
 date: "2026-03-26"
 tags: ["tcp", "network", "handshake", "connection", "protocol"]
-category: "Infrastructure"
+category: "Infrastructure.Network"
 summary: "TCP 3-way handshake는 클라이언트와 서버 간 신뢰성 있는 연결을 수립하는 3단계 과정입니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "Next.js 캐싱 메커니즘: 성능 최적화를 위한 4가지 캐시 �
 shortTitle: "Next.js 캐싱"
 date: "2026-03-26"
 tags: ["nextjs", "caching", "performance", "web-optimization"]
-category: "Frontend"
+category: "Frontend.Next"
 summary: "Next.js의 Request Memoization, Router Cache, Data Cache, Full Route Cache 등 4가지 캐싱 전략을 통한 성능 최적화 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

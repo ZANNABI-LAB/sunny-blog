@@ -3,7 +3,7 @@ title: "TypeScript의 never와 unknown 타입"
 shortTitle: "never unknown 타입"
 date: "2026-03-18"
 tags: ["typescript", "type-system", "frontend", "type-safety", "javascript"]
-category: "Frontend"
+category: "Frontend.TypeScript"
 summary: "TypeScript의 never와 unknown 타입의 특징과 활용 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

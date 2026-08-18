@@ -3,7 +3,7 @@ title: "HTTP와 TCP Keep Alive 이해하기"
 shortTitle: "Keep Alive"
 date: "2026-03-22"
 tags: ["keep-alive", "http", "tcp", "network-optimization", "connection-pooling"]
-category: "Backend"
+category: "Backend.Web"
 summary: "네트워크 성능 최적화를 위한 Keep Alive 메커니즘을 HTTP와 TCP 차원에서 설명합니다."
 author: "신중선"
 source: "maeil-mail"

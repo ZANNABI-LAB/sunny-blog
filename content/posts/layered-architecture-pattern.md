@@ -3,7 +3,7 @@ title: "레이어드 아키텍처: 관심사 분리를 통한 체계적인 소�
 shortTitle: "레이어드 아키텍처"
 date: "2026-04-18"
 tags: ["layered-architecture", "software-architecture", "separation-of-concerns", "backend-design"]
-category: "Architecture"
+category: "Architecture.Pattern"
 summary: "소프트웨어를 관심사별로 계층화하여 유지보수성과 확장성을 높이는 레이어드 아키텍처 패턴을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

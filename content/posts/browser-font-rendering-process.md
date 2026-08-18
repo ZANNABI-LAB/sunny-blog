@@ -3,7 +3,7 @@ title: "브라우저 폰트 렌더링 과정과 최적화 방법"
 shortTitle: "폰트 렌더링"
 date: "2026-03-19"
 tags: ["font-rendering", "web-fonts", "font-display", "performance", "fout-foit"]
-category: "Frontend"
+category: "Frontend.CSS"
 summary: "브라우저가 웹 폰트를 로드하고 렌더링하는 과정과 FOUT/FOIT 현상을 해결하는 최적화 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "JPA Fetch Join과 페이징 함께 사용 시 주의점"
 shortTitle: "Fetch Join 페이징"
 date: "2026-03-31"
 tags: ["jpa", "fetch-join", "pagination", "performance", "n-plus-one"]
-category: "Backend"
+category: "Backend.JPA"
 summary: "JPA에서 ToMany 관계의 Fetch Join과 페이징을 함께 사용할 때 발생하는 메모리 문제와 해결 방안을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

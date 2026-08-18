@@ -3,7 +3,7 @@ title: "SQL 인젝션 공격과 방어 기법"
 shortTitle: "SQL 인젝션"
 date: "2026-04-09"
 tags: ["sql-injection", "web-security", "database-security", "backend-security", "prepared-statement"]
-category: "Security"
+category: "Security.Web"
 summary: "SQL 인젝션 공격의 원리와 PreparedStatement, ORM 등을 활용한 방어 기법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

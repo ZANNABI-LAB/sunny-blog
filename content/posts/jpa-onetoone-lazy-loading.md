@@ -3,7 +3,7 @@ title: "JPA @OneToOne 연관관계에서 Lazy Loading 설정 시 주의점"
 shortTitle: "OneToOne Lazy Loading"
 date: "2026-03-18"
 tags: ["jpa", "hibernate", "lazy-loading", "onetoone", "database"]
-category: "Backend"
+category: "Backend.JPA"
 summary: "양방향 @OneToOne 연관관계에서 연관관계 주인이 아닌 엔티티 조회 시 Lazy Loading이 동작하지 않는 문제와 해결방안을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "PRG 패턴: Post-Redirect-Get으로 중복 요청 방지하기"
 shortTitle: "PRG 패턴"
 date: "2026-03-27"
 tags: ["prg-pattern", "web-development", "http-redirect", "form-handling", "backend-pattern"]
-category: "Backend"
+category: "Backend.Web"
 summary: "POST 요청 후 리다이렉트를 통해 중복 제출을 방지하는 PRG 패턴을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

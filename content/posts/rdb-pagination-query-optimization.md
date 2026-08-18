@@ -3,7 +3,7 @@ title: "RDB 페이징 쿼리의 필요성과 성능 최적화"
 shortTitle: "RDB 페이징"
 date: "2026-03-26"
 tags: ["database", "pagination", "sql-optimization", "rdb", "performance"]
-category: "Backend"
+category: "Backend.Database"
 summary: "RDB에서 페이징 쿼리의 필요성과 LIMIT/OFFSET의 성능 문제, No Offset 방식을 통한 최적화 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

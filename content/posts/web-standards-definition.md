@@ -3,7 +3,7 @@ title: "웹표준이 무엇인가요?"
 shortTitle: "웹표준"
 date: "2026-04-13"
 tags: ["web-standards", "html", "css", "accessibility", "cross-browser"]
-category: "Frontend"
+category: "Frontend.Web"
 summary: "다양한 브라우저와 기기에서 일관된 웹 경험을 보장하는 국제 규약입니다"
 author: "신중선"
 source: "maeil-mail"

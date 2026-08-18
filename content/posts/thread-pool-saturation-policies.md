@@ -3,7 +3,7 @@ title: "스레드 풀 포화 정책(Thread Pool Saturation Policies)"
 shortTitle: "스레드 풀 포화"
 date: "2026-04-03"
 tags: ["thread-pool", "concurrent-programming", "java", "backend", "performance"]
-category: "Backend"
+category: "Backend.Concurrency"
 summary: "스레드 풀이 포화 상태일 때 새로운 작업 요청을 처리하는 정책들에 대해 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

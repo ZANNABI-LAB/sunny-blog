@@ -3,7 +3,7 @@ title: "Spring Bean으로 객체를 관리하는 이유"
 shortTitle: "Spring Bean"
 date: "2026-04-12"
 tags: ["spring-framework", "dependency-injection", "bean-container", "java-spring", "object-lifecycle"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "Spring이 객체를 Bean으로 관리하여 의존성 주입, 생명주기 관리, AOP 지원을 통해 애플리케이션 개발을 효율화하는 방식을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

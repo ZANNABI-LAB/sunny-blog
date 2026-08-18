@@ -3,7 +3,7 @@ title: "OSI 7계층 모델: 네트워크 통신의 표준 구조"
 shortTitle: "OSI 7계층"
 date: "2026-03-29"
 tags: ["osi-model", "network-protocol", "web-communication", "system-design"]
-category: "Infrastructure"
+category: "Infrastructure.Network"
 summary: "네트워크 통신을 7개 계층으로 나누어 정의한 OSI 모델의 각 계층 역할과 동작 방식을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

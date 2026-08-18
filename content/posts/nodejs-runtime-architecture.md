@@ -3,7 +3,7 @@ title: "Node.js의 주요 특징과 아키텍처"
 shortTitle: "Node.js 아키텍처"
 date: "2026-04-06"
 tags: ["nodejs", "javascript-runtime", "event-driven", "non-blocking-io", "single-thread"]
-category: "Backend"
+category: "Backend.Node"
 summary: "Chrome V8 엔진 기반의 Node.js 런타임 환경과 싱글 스레드, 이벤트 기반, 논 블로킹 I/O 특징을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

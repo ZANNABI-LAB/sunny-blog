@@ -3,7 +3,7 @@ title: "시간 복잡도와 공간 복잡도의 차이점"
 shortTitle: "시간-공간 복잡도"
 date: "2026-03-14"
 tags: ["time-complexity", "space-complexity", "big-o", "algorithm-analysis", "performance"]
-category: "Backend"
+category: "Backend.CS"
 summary: "알고리즘 성능을 평가하는 두 가지 핵심 지표인 시간 복잡도와 공간 복잡도의 개념과 차이점을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

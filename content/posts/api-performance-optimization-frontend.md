@@ -3,7 +3,7 @@ title: "느린 API 응답 대응 전략"
 shortTitle: "API 성능 최적화"
 date: "2026-04-13"
 tags: ["api-optimization", "frontend-performance", "user-experience", "caching", "prefetch"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "백엔드 API 응답이 느린 상황에서 프론트엔드에서 적용할 수 있는 성능 최적화 및 UX 개선 전략을 소개합니다."
 author: "신중선"
 source: "maeil-mail"

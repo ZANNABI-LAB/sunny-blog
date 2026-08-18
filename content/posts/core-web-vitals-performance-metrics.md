@@ -3,7 +3,7 @@ title: "Core Web Vitals: 웹 성능 최적화의 핵심 지표"
 shortTitle: "Core Web Vitals"
 date: "2026-03-20"
 tags: ["web-performance", "core-web-vitals", "user-experience", "seo", "optimization"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "구글이 제안한 웹사이트 사용자 경험 평가의 핵심 지표인 Core Web Vitals의 개념과 최적화 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

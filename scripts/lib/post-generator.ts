@@ -67,7 +67,17 @@ const SYSTEM_PROMPT = `당신은 기술 블로그 포스트 작성 전문가입�
 - Backend: 백엔드 프레임워크, Spring, DB
 - Frontend: 프론트엔드, 브라우저 API, 패키지 매니저
 
-도트 표기법도 지원합니다 (예: "Backend.Spring"). root 카테고리는 반드시 위 7개 중 하나여야 합니다.
+도트 표기법으로 서브카테고리를 지정하세요 (예: "Backend.Spring"). root 카테고리는 반드시 위 7개 중 하나여야 합니다.
+
+## 표준 서브카테고리 (가급적 아래 목록에서 선택)
+- Backend: Java, Spring, JPA, Database, Concurrency, OS, CS, Web, Node
+- Frontend: JavaScript, TypeScript, React, Next, Browser, CSS, Performance, Tooling, Web
+- Infrastructure: Network, Deployment, Cloud
+- Architecture: Pattern
+- Security: Auth, Web
+- Design Pattern, Testing: 서브카테고리 없이 root만 사용
+
+주제가 어느 서브에도 맞지 않으면 root만 사용해도 됩니다. 목록에 없는 새 서브카테고리는 만들지 마세요.
 
 ## 포스트 스타일 가이드
 

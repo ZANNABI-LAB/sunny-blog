@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { getPostBySlug, getPostSlugs, getSeriesPosts } from "@/lib/posts";
+import SeriesNav from "@/components/series-nav";
 import { getCategoryColor } from "@/lib/categories";
 import CodeBlockEnhancer from "@/components/code-block-enhancer";
 import GiscusComments from "@/components/giscus-comments";
@@ -163,6 +164,15 @@ const PostDetailPage = async ({
 
       {/* Divider */}
       <div className="mt-8 border-t border-border pt-8" />
+
+      {/* SeriesNav */}
+      {post.series && (
+        <SeriesNav
+          currentSlug={slug}
+          seriesTitle={post.series.title}
+          posts={getSeriesPosts(post.series.id)}
+        />
+      )}
 
       {/* PostBody */}
       <article

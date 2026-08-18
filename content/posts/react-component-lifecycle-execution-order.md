@@ -3,7 +3,7 @@ title: "React 컴포넌트 생명주기와 실행 순서"
 shortTitle: "React 실행 순서"
 date: "2026-04-14"
 tags: ["react", "lifecycle", "useeffect", "component-rendering", "execution-order"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "React 컴포넌트의 마운트, 렌더링, useEffect 실행 순서를 상세히 분석합니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "Yarn Berry와 PnP: 차세대 패키지 매니저의 혁신"
 shortTitle: "Yarn Berry PnP"
 date: "2026-04-16"
 tags: ["yarn", "package-manager", "pnp", "zero-install", "frontend"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "Yarn Berry의 Plug'n'Play 방식과 Zero-Install로 패키지 관리의 패러다임을 바꾼 차세대 패키지 매니저를 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

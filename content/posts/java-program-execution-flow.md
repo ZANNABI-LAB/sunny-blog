@@ -3,7 +3,7 @@ title: "자바 프로그램 실행 흐름과 JVM 동작 원리"
 shortTitle: "자바 실행 흐름"
 date: "2026-03-25"
 tags: ["java", "jvm", "bytecode", "execution-engine"]
-category: "Backend"
+category: "Backend.Java"
 summary: "자바 코드가 컴파일되고 JVM에서 실행되는 전체 과정을 살펴봅니다."
 author: "신중선"
 source: "maeil-mail"

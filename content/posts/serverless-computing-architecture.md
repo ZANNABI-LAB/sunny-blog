@@ -3,7 +3,7 @@ title: "서버리스 컴퓨팅: 인프라 관리 없는 백엔드 개발"
 shortTitle: "서버리스 컴퓨팅"
 date: "2026-03-31"
 tags: ["serverless", "cloud-computing", "faas", "baas", "infrastructure"]
-category: "Infrastructure"
+category: "Infrastructure.Cloud"
 summary: "서버리스는 클라우드 업체가 인프라를 완전히 관리하고 사용한 만큼만 비용을 지불하는 컴퓨팅 모델입니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "멀티쓰레딩으로 동시성 프로그래밍 구현하기"
 shortTitle: "멀티쓰레딩"
 date: "2026-03-27"
 tags: ["multithreading", "concurrency", "parallel-programming", "thread-management"]
-category: "Backend"
+category: "Backend.Concurrency"
 summary: "하나의 프로세스 내에서 여러 쓰레드를 활용해 동시에 작업을 처리하는 멀티쓰레딩의 핵심 개념과 구현 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

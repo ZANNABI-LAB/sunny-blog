@@ -3,7 +3,7 @@ title: "단일 프로세스 시스템의 개념과 한계점"
 shortTitle: "단일 프로세스 시스템"
 date: "2026-03-22"
 tags: ["operating-system", "process", "cpu-utilization", "multitasking", "multiprogramming"]
-category: "Backend"
+category: "Backend.OS"
 summary: "단일 프로세스 시스템의 동작 원리와 CPU 효율성 문제, 멀티프로그래밍과 멀티태스킹을 통한 개선 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

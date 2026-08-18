@@ -3,7 +3,7 @@ title: "Next.js Image 컴포넌트를 사용하는 이유"
 shortTitle: "Next.js Image"
 date: "2026-03-16"
 tags: ["nextjs", "image-optimization", "web-performance", "react", "frontend"]
-category: "Frontend"
+category: "Frontend.Next"
 summary: "Next.js Image 컴포넌트가 기본 img 태그 대비 제공하는 성능 최적화와 사용자 경험 개선 기능을 살펴봅니다"
 author: "신중선"
 source: "maeil-mail"

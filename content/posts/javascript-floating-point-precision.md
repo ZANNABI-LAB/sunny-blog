@@ -3,7 +3,7 @@ title: "자바스크립트 부동소수점 연산의 정밀도 문제"
 shortTitle: "부동소수점 정밀도"
 date: "2026-03-19"
 tags: ["javascript", "floating-point", "ieee-754", "precision", "number-comparison"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "자바스크립트에서 0.1 + 0.2 === 0.3이 false인 이유와 해결 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

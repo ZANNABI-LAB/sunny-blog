@@ -3,7 +3,7 @@ title: "스택으로 구현하는 브라우저 히스토리 관리"
 shortTitle: "브라우저 히스토리 스택"
 date: "2026-04-15"
 tags: ["stack", "browser-history", "data-structure", "frontend-navigation"]
-category: "Frontend"
+category: "Frontend.Browser"
 summary: "스택 자료구조를 활용하여 브라우저의 뒤로가기/앞으로가기 기능을 구현하는 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

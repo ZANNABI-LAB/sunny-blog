@@ -3,7 +3,7 @@ title: "논리 삭제와 물리 삭제: 데이터베이스 삭제 전략 비교"
 shortTitle: "논리 삭제 vs 물리 삭제"
 date: "2026-04-07"
 tags: ["database", "data-management", "soft-delete", "hard-delete", "backend"]
-category: "Backend"
+category: "Backend.Database"
 summary: "데이터베이스에서 사용되는 논리 삭제와 물리 삭제의 차이점과 각각의 장단점을 분석합니다"
 author: "신중선"
 source: "maeil-mail"

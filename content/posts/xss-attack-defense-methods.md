@@ -3,7 +3,7 @@ title: "XSS 공격과 프론트엔드 방어 전략"
 shortTitle: "XSS 방어"
 date: "2026-04-08"
 tags: ["xss", "web-security", "frontend-security", "dom-manipulation", "csp"]
-category: "Security"
+category: "Security.Web"
 summary: "XSS 공격의 유형과 프론트엔드에서 사용할 수 있는 방어 기법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

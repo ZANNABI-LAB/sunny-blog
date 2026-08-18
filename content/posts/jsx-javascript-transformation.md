@@ -3,7 +3,7 @@ title: "JSX 문법과 JavaScript 변환 과정"
 shortTitle: "JSX 변환"
 date: "2026-03-23"
 tags: ["jsx", "react", "javascript", "transpilation", "babel"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "JSX의 정의와 JavaScript로 변환되는 과정, 그리고 실제 활용 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

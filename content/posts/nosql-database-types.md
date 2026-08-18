@@ -3,7 +3,7 @@ title: "NoSQL 데이터베이스의 5가지 유형과 활용 사례"
 shortTitle: "NoSQL 데이터베이스 유형"
 date: "2026-04-08"
 tags: ["nosql", "database", "backend", "data-storage", "scalability"]
-category: "Backend"
+category: "Backend.Database"
 summary: "키-값, 문서, 열 지향, 그래프, 시계열 데이터베이스의 특징과 실제 사용 사례를 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

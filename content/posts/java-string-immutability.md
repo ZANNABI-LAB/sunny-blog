@@ -3,7 +3,7 @@ title: "Java String 불변성과 메모리 최적화"
 shortTitle: "String 불변성"
 date: "2026-03-17"
 tags: ["java", "string", "immutability", "memory-management", "thread-safety"]
-category: "Backend"
+category: "Backend.Java"
 summary: "Java String이 불변 객체로 설계된 이유와 메모리 최적화 메커니즘을 설명합니다."
 author: "신중선"
 source: "maeil-mail"
