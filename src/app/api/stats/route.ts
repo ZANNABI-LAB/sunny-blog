@@ -64,17 +64,30 @@ export const GET = async () => {
       .select("*", { count: "exact", head: true })
       .eq("visited_date", today);
 
-    // 총 유니크 방문자 수 (고유 fingerprint 수)
-    const { data: totalData } = await supabase
-      .from("visitors")
-      .select("fingerprint");
-
-    const uniqueFingerprints = new Set(
-      (totalData ?? []).map((row: { fingerprint: string }) => row.fingerprint)
+    // 총 유니크 방문자 수 — RPC로 DB에서 COUNT(DISTINCT) 집계
+    //    (scripts/migration/002-atomic-view-stats.sql 미적용 환경에서는 레거시 경로 폴백)
+    let total: number;
+    const { data: rpcTotal, error: rpcError } = await supabase.rpc(
+      "count_unique_visitors"
     );
 
+    if (rpcError) {
+      console.warn(
+        "count_unique_visitors RPC 실패, 레거시 경로 사용:",
+        rpcError.message
+      );
+      const { data: totalData } = await supabase
+        .from("visitors")
+        .select("fingerprint");
+      total = new Set(
+        (totalData ?? []).map((row: { fingerprint: string }) => row.fingerprint)
+      ).size;
+    } else {
+      total = Number(rpcTotal ?? 0);
+    }
+
     return NextResponse.json(
-      { daily: daily ?? 0, total: uniqueFingerprints.size },
+      { daily: daily ?? 0, total },
       {
         headers: {
           "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",

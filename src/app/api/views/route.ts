@@ -32,27 +32,36 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ viewCount: 0 });
     }
 
-    // 1. page_views upsert (조회수 증가)
-    const { data: existing } = await supabase
-      .from("page_views")
-      .select("view_count")
-      .eq("slug", slug)
-      .single();
-
+    // 1. 조회수 증가 — RPC(increment_view)로 원자적 처리
+    //    (scripts/migration/002-atomic-view-stats.sql 미적용 환경에서는 레거시 경로 폴백)
     let viewCount: number;
 
-    if (existing) {
-      const newCount = existing.view_count + 1;
-      await supabase
+    const { data: rpcCount, error: rpcError } = await supabase.rpc(
+      "increment_view",
+      { p_slug: slug }
+    );
+
+    if (rpcError) {
+      console.warn("increment_view RPC 실패, 레거시 경로 사용:", rpcError.message);
+      const { data: existing } = await supabase
         .from("page_views")
-        .update({ view_count: newCount, updated_at: new Date().toISOString() })
-        .eq("slug", slug);
-      viewCount = newCount;
+        .select("view_count")
+        .eq("slug", slug)
+        .single();
+
+      if (existing) {
+        const newCount = existing.view_count + 1;
+        await supabase
+          .from("page_views")
+          .update({ view_count: newCount, updated_at: new Date().toISOString() })
+          .eq("slug", slug);
+        viewCount = newCount;
+      } else {
+        await supabase.from("page_views").insert({ slug, view_count: 1 });
+        viewCount = 1;
+      }
     } else {
-      await supabase
-        .from("page_views")
-        .insert({ slug, view_count: 1 });
-      viewCount = 1;
+      viewCount = rpcCount as number;
     }
 
     // 2. 방문자 fingerprint 기록
