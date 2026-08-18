@@ -23,15 +23,6 @@ const MainHero = ({ graphData }: MainHeroProps) => {
 
   return (
     <div className="relative h-[calc(100dvh-var(--nav-height))] min-h-[300px] overflow-hidden">
-      {/* Background layer */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 70% 50%, var(--bg-elevated) 0%, var(--bg-primary) 70%)",
-        }}
-      />
-
       {/* Star particle layer */}
       <div className="absolute inset-0 z-[5]">
         <StarBackground />

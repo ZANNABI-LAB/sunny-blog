@@ -47,7 +47,7 @@ const getPageNumbers = (
 };
 
 const baseClass =
-  "min-w-[44px] min-h-[44px] flex items-center justify-center font-display text-sm tracking-wider rounded-md transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none";
+  "min-w-[44px] min-h-[44px] flex items-center justify-center font-display text-sm tracking-wider rounded-md transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none";
 
 const Pagination = ({ currentPage, totalPages, basePath }: PaginationProps) => {
   if (totalPages <= 1) return null;
@@ -108,7 +108,7 @@ const Pagination = ({ currentPage, totalPages, basePath }: PaginationProps) => {
               aria-current={isCurrent ? "page" : undefined}
               className={`${baseClass} ${
                 isCurrent
-                  ? "bg-amber-500/15 text-accent font-bold border border-amber-500/30"
+                  ? "bg-accent/15 text-accent font-bold border border-accent/30"
                   : "text-text-secondary hover:text-text-primary hover:bg-card-hover"
               }`}
             >

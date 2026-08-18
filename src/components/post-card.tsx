@@ -16,7 +16,7 @@ const PostCard = ({ post, featured = false, index = 0, viewCount }: PostCardProp
   return (
     <Link
       href={`/tech/${post.slug}`}
-      className={`group relative block rounded-lg border border-border bg-card post-card-glow brutal-accent hover:bg-card-hover focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none animate-stagger-in overflow-hidden ${
+      className={`group relative block rounded-lg border border-border bg-card post-card-glow brutal-accent hover:bg-card-hover focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none animate-stagger-in overflow-hidden ${
         featured ? "bento-span-2 p-6 md:p-8" : "p-5"
       }`}
       style={

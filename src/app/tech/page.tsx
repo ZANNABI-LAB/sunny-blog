@@ -87,7 +87,7 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
       <div>
         {/* Brutal Header */}
         <div className="animate-brutal-slide">
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
             TECH
           </h1>
           <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">

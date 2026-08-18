@@ -10,81 +10,116 @@
   }
 }
 
-/* ── Theme Color Tokens ── */
+/* ── Theme Color Tokens ──
+ * ZANNABI LAB 정거장 — 1비트 도트 + 형광 그린 단색 악센트.
+ * 다크가 기준(배너가 검정 바탕 전제)이고 라이트는 그 반전이다.
+ * 라이트에서 형광 그린을 그대로 쓰면 흰 바탕 대비가 2:1까지 떨어져 글자로 못 쓰므로
+ * 같은 색상의 어두운 단계(#067a3c)로 내렸다 — 브랜드는 유지, 대비는 7:1 확보.
+ * 변수명/구조는 고정. 리스킨은 값만 교체한다.
+ */
 :root {
   --nav-height: 48px;
   /* Backgrounds */
-  --bg-primary: #fafaf9;
+  --bg-primary: #e9ece4;
   --bg-elevated: #ffffff;
-  --bg-nav: rgba(255,255,255,0.8);
-  --bg-footer: rgba(250,250,249,0.6);
+  --bg-nav: rgba(233,236,228,0.86);
+  --bg-footer: rgba(233,236,228,0.7);
   --bg-card: #ffffff;
-  --bg-card-hover: #f5f5f4;
+  --bg-card-hover: #f3f5ef;
 
   /* Text */
-  --text-primary: #1c1917;
-  --text-secondary: #57534e;
-  --text-muted: #6b6560;
+  --text-primary: #0c1218;
+  --text-secondary: #3d4a44;
+  --text-muted: #5c6660;
   --text-inverse: #ffffff;
 
-  /* Accents */
-  --accent-primary: #92400e;
-  --accent-hover: #78350f;
-  --accent-secondary: #4338ca;
+  /* Accents — 인광체 그린 하나로 통일 */
+  --accent-primary: #067a3c;
+  --accent-hover: #0a9c4e;
+  --accent-secondary: #0c7a3a;
 
   /* Borders */
-  --border-primary: #e7e5e4;
-  --border-subtle: #d6d3d1;
+  --border-primary: #c3cbc0;
+  --border-subtle: #d8ded4;
 
-  /* Glows */
-  --glow-accent: rgba(146,64,14,0.15);
-  --glow-secondary: rgba(67,56,202,0.2);
+  /* Glows — 도트 컨셉은 번짐을 쓰지 않는다. 아주 옅은 후광만 남긴다 */
+  --glow-accent: rgba(6,122,60,0.18);
+  --glow-secondary: rgba(6,122,60,0.12);
+
+  /* Dither / scanline */
+  --dither-rgb: 12, 18, 24;
+  --dither-opacity: 0.055;
+  --scanline-opacity: 0.035;
 
   /* Special */
-  --noise-opacity: 0.02;
-  --nebula-opacity-1: 0.06;
-  --nebula-opacity-2: 0.045;
-  --nebula-opacity-3: 0.03;
-  --star-rgb: 0, 0, 0;
-  --star-opacity: 0.6;
+  --noise-opacity: 0;
+  --star-rgb: 12, 18, 24;
+  --star-opacity: 0.45;
   --star-count-factor: 0.7;
 }
 
 .dark {
-  --bg-primary: #070709;
-  --bg-elevated: #0a0a0f;
-  --bg-nav: rgba(10,10,15,0.8);
-  --bg-footer: rgba(10,10,15,0.6);
-  --bg-card: rgba(255,255,255,0.05);
-  --bg-card-hover: rgba(255,255,255,0.1);
+  --bg-primary: #04070b;
+  --bg-elevated: #0c1218;
+  --bg-nav: rgba(4,7,11,0.88);
+  --bg-footer: rgba(4,7,11,0.72);
+  --bg-card: #0a1016;
+  --bg-card-hover: #101922;
 
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-inverse: #070709;
+  --text-primary: #e6efe8;
+  --text-secondary: #9aa8a0;
+  --text-muted: #7c8c84;
+  --text-inverse: #04070b;
 
-  --accent-primary: #fbbf24;
-  --accent-hover: #f59e0b;
-  --accent-secondary: #818cf8;
+  --accent-primary: #3dff88;
+  --accent-hover: #8cffbf;
+  --accent-secondary: #26c468;
 
-  --border-primary: rgba(255,255,255,0.1);
-  --border-subtle: rgba(255,255,255,0.05);
+  --border-primary: #1b2630;
+  --border-subtle: #131c24;
 
-  --glow-accent: rgba(245,158,11,0.3);
-  --glow-secondary: rgba(99,102,241,0.4);
+  --glow-accent: rgba(61,255,136,0.28);
+  --glow-secondary: rgba(61,255,136,0.16);
 
-  --noise-opacity: 0.035;
-  --nebula-opacity-1: 0.08;
-  --nebula-opacity-2: 0.06;
-  --nebula-opacity-3: 0.04;
-  --star-rgb: 255, 255, 255;
+  --dither-rgb: 230, 239, 232;
+  --dither-opacity: 0.045;
+  --scanline-opacity: 0.05;
+
+  --noise-opacity: 0;
+  --star-rgb: 230, 239, 232;
   --star-opacity: 1;
   --star-count-factor: 1;
 }
 
 @theme {
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-display: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: var(--font-pixel), 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Typography scale — 픽셀 폰트는 12px 비트맵이라 12의 배수에서만 선명하다.
+   * 유동 clamp를 쓰면 화면 폭마다 글자가 뭉개지므로 계단식 고정값을 쓰고,
+   * 반응형은 크기를 연속으로 줄이는 대신 단을 갈아탄다(48 → 36 → 24). */
+  --text-display: 48px;
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: 0;
+
+  --text-h1: 36px;
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: 0;
+
+  --text-h2: 24px;
+  --text-h2--line-height: 1.3;
+  --text-h2--letter-spacing: 0;
+
+  --text-h3: 24px;
+  --text-h3--line-height: 1.4;
+
+  /* 본문은 Pretendard라 픽셀 격자 제약이 없다 */
+  --text-body: 1rem;
+  --text-body--line-height: 1.75;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.04em;
 
   /* Tailwind color aliases from CSS variables */
   --color-bg-primary: var(--bg-primary);
@@ -102,40 +137,96 @@
   --color-card-hover: var(--bg-card-hover);
 }
 
-/* ── Display Font Utility ── */
+/* ── Display Font Utility ──
+ * 전기칩은 400 단일 굵기 비트맵 폰트다. font-bold가 붙으면 브라우저가 가짜
+ * 볼드를 합성해 픽셀이 뭉개지므로 합성을 끄고, 안티에일리어싱도 꺼서
+ * 도트 경계를 살린다.
+ */
 .font-display {
   font-family: var(--font-display);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
 }
 
-/* ── Noise Grain Overlay ── */
-.noise-overlay::before {
+/* ── Dither Overlay ──
+ * 프랙탈 노이즈(연속 계조)를 2px 체커보드로 교체했다. 1비트 도트 미학에서
+ * 명암은 난수가 아니라 규칙적인 디더 패턴으로 만든다.
+ */
+.dither-overlay::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
+  background-image: repeating-conic-gradient(
+    rgba(var(--dither-rgb), var(--dither-opacity)) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 4px 4px;
 }
 
-/* ── Nebula Background Effects ── */
-.nebula-bg {
+/* CRT 주사선 — 정거장 모니터 느낌. 아주 옅게 깔아 질감만 남긴다 */
+.dither-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(var(--dither-rgb), var(--scanline-opacity)) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* ── Board Grid Background ──
+ * 성운 그라디언트를 기판 격자로 교체했다. 부드러운 번짐은 하드 엣지 도트
+ * 세계와 충돌한다. 16px 격자를 아주 옅게 깔아 "기판 위" 느낌만 준다.
+ */
+.grid-bg {
   position: relative;
 }
-.nebula-bg::after {
+.grid-bg::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(99, 102, 241, var(--nebula-opacity-1)) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(168, 85, 247, var(--nebula-opacity-2)) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 55% at 60% 80%, rgba(245, 158, 11, var(--nebula-opacity-3)) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 40% 30%, rgba(139, 92, 246, calc(var(--nebula-opacity-2) * 0.7)) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 45% at 75% 65%, rgba(59, 130, 246, calc(var(--nebula-opacity-3) * 0.8)) 0%, transparent 50%);
+  background-image:
+    linear-gradient(to right, var(--glow-secondary) 0 1px, transparent 1px),
+    linear-gradient(to bottom, var(--glow-secondary) 0 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.5;
+}
+
+/* ── Panel ──
+ * 정거장 계기판 한 칸. 둥근 모서리 없이 각진 2px 테두리 + 오프셋 그림자.
+ */
+.panel {
+  background: var(--bg-card);
+  border: 2px solid var(--border-primary);
+}
+.panel-accent {
+  border-color: var(--accent-primary);
+  box-shadow: 3px 3px 0 var(--glow-accent);
+}
+
+/* 모따기 코너 — HUD 패널 (참조 이미지의 DANGER/DATA SCAN 박스) */
+.chamfer {
+  clip-path: polygon(
+    14px 0, 100% 0, 100% calc(100% - 14px),
+    calc(100% - 14px) 100%, 0 100%, 0 14px
+  );
+}
+
+/* 사선 해치 — 패널 헤더 아래 구분 띠 */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--accent-primary) 0 3px,
+    transparent 3px 8px
+  );
 }
 
 /* ── Keyframes ── */
@@ -286,17 +377,23 @@
 }
 
 /* ── Text Glow ── */
-.text-glow-indigo {
+.text-glow-secondary {
   text-shadow: 0 0 20px var(--glow-secondary);
 }
-.text-glow-indigo-sm {
+.text-glow-secondary-sm {
   text-shadow: 0 0 10px var(--glow-secondary);
 }
-.text-glow-amber {
+.text-glow-accent {
   text-shadow: 0 0 20px var(--glow-accent);
 }
-.text-glow-amber-sm {
+.text-glow-accent-sm {
   text-shadow: 0 0 10px var(--glow-accent);
+}
+.drop-glow-accent {
+  filter: drop-shadow(0 0 30px var(--glow-accent));
+}
+.text-glow-accent-xs {
+  text-shadow: 0 0 8px var(--glow-accent);
 }
 
 /* ── PostCard Hover Glow ── */
@@ -304,24 +401,24 @@
   transition: border-color 200ms ease, box-shadow 200ms ease, background-color 150ms ease;
 }
 .post-card-glow:hover {
-  border-color: var(--card-category-color, rgba(255, 255, 255, 0.2));
+  border-color: var(--card-category-color, var(--border-subtle));
   box-shadow: 0 0 16px color-mix(in srgb, var(--card-category-color, transparent) 25%, transparent);
 }
 
 /* ── Prose Category Accent ── */
 article[style*="--category-color"] .prose pre {
-  border-left: 3px solid var(--category-color, rgba(99, 102, 241, 0.5));
+  border-left: 3px solid var(--category-color, var(--accent-secondary));
 }
 
 article[style*="--category-color"] .prose hr {
   border: none;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--category-color, rgba(99, 102, 241, 0.3)), transparent);
+  background: linear-gradient(to right, transparent, var(--category-color, var(--accent-secondary)), transparent);
 }
 
 article[style*="--category-color"] .prose blockquote {
-  border-left-color: var(--category-color, rgba(99, 102, 241, 0.5));
-  background: color-mix(in srgb, var(--category-color, #818cf8) 5%, transparent);
+  border-left-color: var(--category-color, var(--accent-secondary));
+  background: color-mix(in srgb, var(--category-color, var(--accent-secondary)) 5%, transparent);
 }
 
 /* ── Footer ── */
@@ -407,5 +504,5 @@ article[style*="--category-color"] .prose blockquote {
   top: 0;
   width: 4px;
   height: 100%;
-  background: var(--card-category-color, #6366f1);
+  background: var(--card-category-color, var(--accent-secondary));
 }

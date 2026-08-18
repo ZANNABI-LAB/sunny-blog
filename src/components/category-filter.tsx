@@ -48,7 +48,7 @@ const CategoryFilter = ({
         <button
           onClick={() => handleClick(null)}
           aria-pressed={!activeCategory}
-          className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+          className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
             !activeCategory
               ? "bg-card-hover text-text-primary border-border"
               : "bg-card text-text-secondary border-transparent hover:bg-card-hover"
@@ -65,7 +65,7 @@ const CategoryFilter = ({
               key={cat}
               onClick={() => handleClick(cat)}
               aria-pressed={isActive}
-              className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+              className={`min-h-[44px] rounded-full px-3 py-2 text-sm font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
                 !isActive
                   ? "bg-card text-text-secondary border-transparent hover:bg-card-hover"
                   : ""
@@ -93,7 +93,7 @@ const CategoryFilter = ({
           <button
             onClick={() => handleClick(activeRoot)}
             aria-pressed={activeCategory === activeRoot}
-            className={`min-h-[36px] rounded-full px-2.5 py-1 text-xs font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+            className={`min-h-[36px] rounded-full px-2.5 py-1 text-xs font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
               !isSubActive
                 ? ""
                 : "bg-card text-text-secondary border-transparent hover:bg-card-hover"
@@ -120,7 +120,7 @@ const CategoryFilter = ({
                 key={sub}
                 onClick={() => handleClick(sub)}
                 aria-pressed={isActive}
-                className={`min-h-[36px] rounded-full px-2.5 py-1 text-xs font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+                className={`min-h-[36px] rounded-full px-2.5 py-1 text-xs font-medium border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
                   !isActive
                     ? "bg-card text-text-secondary border-transparent hover:bg-card-hover"
                     : ""

@@ -11,7 +11,7 @@ const Footer = () => {
           <span className="text-text-muted/40">·</span>
           <Link
             href="/privacy"
-            className="font-display text-xs text-text-muted tracking-wider transition-colors duration-150 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
+            className="font-display text-xs text-text-muted tracking-wider transition-colors duration-150 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none"
           >
             Privacy
           </Link>
@@ -20,7 +20,7 @@ const Footer = () => {
           href="https://github.com/ZANNABI-LAB"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-display text-xs text-text-muted tracking-[0.2em] uppercase transition-colors duration-150 hover:text-text-primary zannabi-glow focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:outline-none"
+          className="font-display text-xs text-text-muted tracking-[0.2em] uppercase transition-colors duration-150 hover:text-text-primary zannabi-glow focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none"
         >
           ZANNABI LAB
         </a>

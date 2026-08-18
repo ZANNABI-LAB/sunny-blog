@@ -77,7 +77,7 @@ const CategoryLegend = ({
                 key={cat}
                 data-category={cat}
                 onClick={() => onToggle(isActive ? null : cat)}
-                className={`flex items-center gap-1 md:gap-1.5 px-1.5 md:px-2.5 py-1 md:py-1.5 min-h-[36px] md:min-h-[44px] rounded-full cursor-pointer transition-all duration-200 shrink-0 focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none ${
+                className={`flex items-center gap-1 md:gap-1.5 px-1.5 md:px-2.5 py-1 md:py-1.5 min-h-[36px] md:min-h-[44px] rounded-full cursor-pointer transition-all duration-200 shrink-0 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${
                   isActive ? "bg-card-hover" : "hover:bg-card"
                 }`}
               >

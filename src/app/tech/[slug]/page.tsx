@@ -137,7 +137,7 @@ const PostDetailPage = async ({
         >
           {post.category}
         </span>
-        <h1 className="mt-4 font-display text-2xl font-bold text-text-primary sm:text-3xl tracking-tight text-glow-amber-sm">
+        <h1 className="mt-4 font-display text-2xl font-bold text-text-primary sm:text-3xl tracking-tight text-glow-accent-sm">
           {post.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-text-secondary font-display tracking-wider">

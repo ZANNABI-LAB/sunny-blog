@@ -17,7 +17,11 @@ const ProjectCard = ({ project }: { project: PortfolioProject }) => {
       target="_blank"
       rel="noopener noreferrer"
       className="group relative border border-border rounded-lg overflow-hidden bg-card hover:border-accent/30 transition-colors brutal-accent block"
-      style={{ "--card-category-color": "#f59e0b" } as React.CSSProperties}
+      style={
+        {
+          "--card-category-color": "var(--accent-primary)",
+        } as React.CSSProperties
+      }
     >
       {project.thumbnail && (
         <div className="aspect-video w-full overflow-hidden">
@@ -62,7 +66,7 @@ const PortfolioPage = () => {
   return (
     <div className="max-w-5xl mx-auto animate-page-fade-in space-y-12">
       <header>
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-amber">
+        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
           PORTFOLIO
         </h1>
         <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
