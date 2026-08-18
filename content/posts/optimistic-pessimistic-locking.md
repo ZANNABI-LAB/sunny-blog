@@ -3,7 +3,7 @@ title: "낙관적 락과 비관적 락: 데이터베이스 동시성 제어 기�
 shortTitle: "낙관적/비관적 락"
 date: "2026-03-25"
 tags: ["database", "concurrency", "locking", "transaction", "data-integrity"]
-category: "Backend"
+category: "Backend.Database"
 summary: "데이터베이스에서 동시성 제어를 위한 낙관적 락과 비관적 락의 개념과 적용 시나리오를 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

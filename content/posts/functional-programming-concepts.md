@@ -3,7 +3,7 @@ title: "함수형 프로그래밍의 핵심 개념과 프론트엔드 적용"
 shortTitle: "함수형 프로그래밍"
 date: "2026-03-19"
 tags: ["functional-programming", "javascript", "immutability", "pure-function"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "순수 함수와 불변성을 기반으로 한 함수형 프로그래밍의 핵심 개념과 프론트엔드 개발에서의 실용적 적용 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

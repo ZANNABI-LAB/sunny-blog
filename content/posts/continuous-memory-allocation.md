@@ -3,7 +3,7 @@ title: "연속 메모리 할당 기법"
 shortTitle: "메모리 할당"
 date: "2026-03-11"
 tags: ["memory-allocation", "operating-system", "fragmentation", "memory-management", "backend"]
-category: "Backend"
+category: "Backend.OS"
 summary: "운영체제에서 프로세스에 연속적인 메모리 공간을 할당하는 기법과 단편화 문제를 해결하는 방법들을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

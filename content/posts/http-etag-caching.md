@@ -3,7 +3,7 @@ title: "HTTP ETag를 활용한 효율적인 웹 캐싱 전략"
 shortTitle: "ETag 캐싱"
 date: "2026-03-30"
 tags: ["http", "caching", "web-performance", "etag", "browser-cache"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "HTTP ETag를 통해 웹 리소스의 변경을 감지하고 효율적인 캐싱을 구현하는 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "자바스크립트 생성자 함수와 Class 문법"
 shortTitle: "생성자 함수 Class"
 date: "2026-03-28"
 tags: ["constructor-function", "class-syntax", "javascript", "object-oriented", "es6"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "자바스크립트의 생성자 함수와 ES6 Class 문법의 차이점과 Class가 도입된 이유를 설명합니다."
 author: "신중선"
 source: "maeil-mail"

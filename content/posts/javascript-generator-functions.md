@@ -3,7 +3,7 @@ title: "JavaScript 제네레이터 함수 완전 가이드"
 shortTitle: "제네레이터 함수"
 date: "2026-04-10"
 tags: ["javascript", "generator", "iterator", "es6", "functional-programming"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "함수 실행을 중단하고 재개할 수 있는 JavaScript 제네레이터 함수의 동작 원리와 활용법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

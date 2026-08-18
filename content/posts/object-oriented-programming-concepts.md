@@ -3,7 +3,7 @@ title: "객체 지향 프로그래밍의 핵심 개념과 설계 원칙"
 shortTitle: "객체 지향 프로그래밍"
 date: "2026-03-30"
 tags: ["object-oriented", "programming-paradigm", "design-principles", "java", "encapsulation"]
-category: "Backend"
+category: "Backend.CS"
 summary: "객체 지향 프로그래밍의 4가지 핵심 특징과 TDA 원칙을 통한 올바른 객체 설계 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

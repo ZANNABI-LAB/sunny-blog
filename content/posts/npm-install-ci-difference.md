@@ -3,7 +3,7 @@ title: "npm install과 npm ci의 차이점"
 shortTitle: "npm install vs ci"
 date: "2026-03-08"
 tags: ["npm", "package-manager", "dependency-management", "ci-cd", "frontend-tooling"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "npm install과 npm ci의 동작 방식과 사용 시나리오별 차이점을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "멀티태스킹 시스템의 한계와 스레드의 등장"
 shortTitle: "멀티태스킹 한계"
 date: "2026-03-22"
 tags: ["multitasking", "thread", "process", "concurrency", "operating-system"]
-category: "Backend"
+category: "Backend.OS"
 summary: "멀티태스킹 시스템의 한계를 분석하고 스레드가 이를 어떻게 해결하는지 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "자바 String 변환: 타입 캐스팅 vs String.valueOf() 차이점"
 shortTitle: "String 변환 방법"
 date: "2026-03-18"
 tags: ["java", "type-casting", "string-conversion", "null-safety"]
-category: "Backend"
+category: "Backend.Java"
 summary: "자바에서 Object를 String으로 변환하는 두 가지 방법의 차이점과 안전한 사용법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

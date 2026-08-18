@@ -31,6 +31,43 @@ export const CATEGORIES: Category[] = Object.keys(
   CATEGORY_COLORS
 ) as Category[];
 
+/**
+ * 표준 서브카테고리 체계 (SSOT).
+ * 포스트 frontmatter는 도트 표기법("Backend.Spring")으로 서브카테고리를 지정하며,
+ * 새 포스트는 가급적 이 목록에서 선택한다. 목록에 없는 서브도 허용되지만
+ * (getSubCategories는 실제 포스트에서 동적으로 수집) 표준 목록이 우선이다.
+ * 콘텐츠 생성기(scripts/lib/post-generator.ts) 프롬프트와 동기화할 것.
+ */
+export const SUBCATEGORIES: Record<Category, string[]> = {
+  Backend: [
+    "Java",
+    "Spring",
+    "JPA",
+    "Database",
+    "Concurrency",
+    "OS",
+    "CS",
+    "Web",
+    "Node",
+  ],
+  Frontend: [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next",
+    "Browser",
+    "CSS",
+    "Performance",
+    "Tooling",
+    "Web",
+  ],
+  Infrastructure: ["Network", "Deployment", "Cloud"],
+  Architecture: ["Pattern"],
+  Security: ["Auth", "Web"],
+  "Design Pattern": [],
+  Testing: [],
+};
+
 const DEFAULT_COLOR = "#ffd700";      // G형 황색 (가장 보편적인 별)
 const DEFAULT_COLOR_LIGHT = "#b8960a";
 

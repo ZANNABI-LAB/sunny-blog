@@ -3,7 +3,7 @@ title: "stale-while-revalidate: 캐시 성능과 데이터 신선도의 균형�
 shortTitle: "stale-while-revalidate"
 date: "2026-04-02"
 tags: ["http-cache", "web-performance", "frontend-optimization", "cache-control"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "오래된 캐시 데이터를 먼저 보여주고 백그라운드에서 갱신하는 HTTP 캐싱 전략입니다"
 author: "신중선"
 source: "maeil-mail"

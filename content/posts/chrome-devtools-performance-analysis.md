@@ -3,7 +3,7 @@ title: "Chrome DevTools로 웹 성능 분석하기"
 shortTitle: "DevTools 성능분석"
 date: "2026-04-16"
 tags: ["chrome-devtools", "web-performance", "performance-analysis", "frontend-optimization"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "Chrome DevTools의 Performance, Lighthouse, Network 탭을 활용하여 웹 애플리케이션의 성능을 체계적으로 분석하는 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

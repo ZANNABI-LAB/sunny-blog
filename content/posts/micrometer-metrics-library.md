@@ -3,7 +3,7 @@ title: "Micrometer 메트릭 라이브러리"
 shortTitle: "Micrometer"
 date: "2026-03-15"
 tags: ["micrometer", "metrics", "monitoring", "spring-boot", "observability"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "벤더 중립적인 메트릭 계측 라이브러리인 Micrometer의 핵심 개념과 Spring Boot에서의 활용법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "React Error Boundary가 비동기 에러를 잡지 못하는 이유"
 shortTitle: "Error Boundary 한계"
 date: "2026-04-15"
 tags: ["react", "error-boundary", "async-error", "error-handling", "frontend"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "React Error Boundary가 비동기 에러를 감지하지 못하는 콜스택 기반의 동작 원리와 해결 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

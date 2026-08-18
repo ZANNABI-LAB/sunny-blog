@@ -3,7 +3,7 @@ title: "React useRef vs let 변수: 상태 관리 방식의 차이점"
 shortTitle: "useRef vs let"
 date: "2026-03-14"
 tags: ["react", "hooks", "state-management", "useref", "javascript"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "React에서 useRef와 let 변수의 리렌더링 동작과 상태 관리 방식 차이점을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

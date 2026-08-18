@@ -3,7 +3,7 @@ title: "SQL NOT IN 쿼리의 성능 문제와 최적화 방법"
 shortTitle: "NOT IN 최적화"
 date: "2026-04-09"
 tags: ["sql", "database-optimization", "query-performance", "not-in", "database"]
-category: "Backend"
+category: "Backend.Database"
 summary: "NOT IN 쿼리의 성능 문제점을 파악하고 NOT EXISTS, LEFT JOIN 등을 활용한 최적화 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "관계형 데이터베이스와 비관계형 데이터베이스"
 shortTitle: "RDB vs NoSQL"
 date: "2026-04-01"
 tags: ["database", "sql", "nosql", "data-modeling", "backend"]
-category: "Backend"
+category: "Backend.Database"
 summary: "관계형 데이터베이스와 비관계형 데이터베이스의 특징, 장단점, 적용 시나리오를 비교 분석합니다."
 author: "신중선"
 source: "maeil-mail"

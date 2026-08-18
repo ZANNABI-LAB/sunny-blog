@@ -3,7 +3,7 @@ title: "React 리렌더링 과정"
 shortTitle: "React 리렌더링"
 date: "2026-04-13"
 tags: ["react", "virtual-dom", "rendering", "frontend"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "React의 Trigger, Render, Commit 단계로 이루어진 리렌더링 과정과 최적화 방법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

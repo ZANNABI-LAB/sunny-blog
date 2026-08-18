@@ -3,7 +3,7 @@ title: "TLS 핸드셰이크: 안전한 웹 통신의 시작"
 shortTitle: "TLS 핸드셰이크"
 date: "2026-04-10"
 tags: ["tls", "https", "web-security", "cryptography", "browser"]
-category: "Security"
+category: "Security.Web"
 summary: "브라우저와 서버가 암호화된 HTTPS 통신을 시작하기 전 안전한 연결을 설정하는 TLS 핸드셰이크 과정을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

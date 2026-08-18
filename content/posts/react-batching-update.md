@@ -3,7 +3,7 @@ title: "React Batching Update란? 성능 최적화의 핵심 메커니즘"
 shortTitle: "React Batching"
 date: "2026-04-11"
 tags: ["react", "batching", "performance", "state-management", "optimization"]
-category: "Frontend"
+category: "Frontend.React"
 summary: "React의 Batching Update는 여러 상태 업데이트를 하나로 그룹화하여 불필요한 리렌더링을 방지하는 성능 최적화 기법입니다."
 author: "신중선"
 source: "maeil-mail"

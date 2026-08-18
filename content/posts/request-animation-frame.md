@@ -3,7 +3,7 @@ title: "requestAnimationFrame으로 부드러운 애니메이션 구현하기"
 shortTitle: "requestAnimationFrame"
 date: "2026-03-06"
 tags: ["animation", "performance", "browser-api"]
-category: "Frontend"
+category: "Frontend.Browser"
 summary: "브라우저의 화면 갱신 주기에 맞춰 최적화된 애니메이션을 구현하는 requestAnimationFrame API를 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

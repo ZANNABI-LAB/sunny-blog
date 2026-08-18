@@ -3,7 +3,7 @@ title: "헬스체크로 서버 상태 모니터링하기"
 shortTitle: "헬스체크"
 date: "2026-04-18"
 tags: ["health-check", "monitoring", "load-balancer", "spring-actuator", "server-management"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "서버의 상태를 실시간으로 확인하고 장애를 사전에 감지하는 헬스체크 구현 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

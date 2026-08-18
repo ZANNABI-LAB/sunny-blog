@@ -3,7 +3,7 @@ title: "JavaScript 이벤트 루프와 Promise 실행 순서"
 shortTitle: "이벤트 루프"
 date: "2026-03-16"
 tags: ["event-loop", "promise", "async", "microtask", "macrotask"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "JavaScript의 이벤트 루프 동작 원리와 Promise, setTimeout의 실행 순서를 설명합니다"
 author: "신중선"
 source: "maeil-mail"

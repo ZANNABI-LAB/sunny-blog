@@ -3,7 +3,7 @@ title: "브라우저 메모리 캐시와 디스크 캐시"
 shortTitle: "브라우저 캐시"
 date: "2026-03-15"
 tags: ["browser-cache", "memory-cache", "disk-cache", "web-performance", "frontend-optimization"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "브라우저가 리소스를 저장하는 두 가지 방식인 메모리 캐시와 디스크 캐시의 특징과 활용 방법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

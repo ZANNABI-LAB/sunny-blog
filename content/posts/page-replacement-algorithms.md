@@ -3,7 +3,7 @@ title: "페이지 교체 알고리즘"
 shortTitle: "페이지 교체"
 date: "2026-03-29"
 tags: ["operating-system", "virtual-memory", "page-replacement", "memory-management"]
-category: "Backend"
+category: "Backend.OS"
 summary: "가상 메모리에서 메모리 부족 시 어떤 페이지를 교체할지 결정하는 알고리즘들을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

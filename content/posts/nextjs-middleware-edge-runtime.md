@@ -3,7 +3,7 @@ title: "Next.js Middleware와 Edge Runtime"
 shortTitle: "Next.js Middleware"
 date: "2026-04-16"
 tags: ["nextjs", "middleware", "edge-runtime", "server-side", "authentication"]
-category: "Frontend"
+category: "Frontend.Next"
 summary: "Next.js Middleware의 동작 원리와 Edge Runtime에서의 실행 방식을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

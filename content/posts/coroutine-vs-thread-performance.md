@@ -3,7 +3,7 @@ title: "코루틴이 스레드보다 가벼운 이유"
 shortTitle: "코루틴 성능"
 date: "2026-04-17"
 tags: ["coroutine", "thread", "concurrency", "performance", "backend"]
-category: "Backend"
+category: "Backend.Concurrency"
 summary: "코루틴이 스레드 방식보다 메모리 효율적이고 가벼운 이유를 메모리 사용량, 컨텍스트 스위칭, 일시 중단 메커니즘 관점에서 설명합니다."
 author: "신중선"
 source: "maeil-mail"

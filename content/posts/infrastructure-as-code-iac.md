@@ -3,7 +3,7 @@ title: "Infrastructure as Code(IaC) - 코드로 관리하는 인프라"
 shortTitle: "Infrastructure as Code"
 date: "2026-03-17"
 tags: ["infrastructure-as-code", "iac", "devops", "automation", "terraform"]
-category: "Infrastructure"
+category: "Infrastructure.Cloud"
 summary: "코드를 통해 인프라를 프로비저닝하고 관리하는 IaC의 핵심 개념과 선언적/명령형 방식을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

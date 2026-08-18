@@ -3,7 +3,7 @@ title: "JCF 자료구조의 초기 용량 설정과 성능 최적화"
 shortTitle: "JCF 초기 용량"
 date: "2026-03-23"
 tags: ["java", "jcf", "performance", "memory-optimization"]
-category: "Backend"
+category: "Backend.Java"
 summary: "JCF 자료구조의 초기 용량을 설정하여 리사이징 비용을 줄이고 메모리를 효율적으로 사용하는 방법을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

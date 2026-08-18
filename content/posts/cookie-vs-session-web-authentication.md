@@ -3,7 +3,7 @@ title: "쿠키(Cookie)와 세션(Session)의 차이점과 활용 방법"
 shortTitle: "쿠키 vs 세션"
 date: "2026-04-17"
 tags: ["cookie", "session", "web-authentication", "http", "backend"]
-category: "Backend"
+category: "Backend.Web"
 summary: "HTTP의 무상태 특성을 보완하는 쿠키와 세션의 차이점과 활용 방법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "정적 타입 언어와 동적 타입 언어의 차이점"
 shortTitle: "타입 시스템"
 date: "2026-03-21"
 tags: ["type-system", "typescript", "javascript", "programming-language"]
-category: "Frontend"
+category: "Frontend.TypeScript"
 summary: "프로그래밍 언어의 타입 시스템을 이해하고 정적 타입과 동적 타입의 특징을 비교합니다"
 author: "신중선"
 source: "maeil-mail"

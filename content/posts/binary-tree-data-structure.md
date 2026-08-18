@@ -3,7 +3,7 @@ title: "이진 트리 자료구조 완전 가이드"
 shortTitle: "이진 트리"
 date: "2026-03-30"
 tags: ["binary-tree", "data-structure", "tree-traversal", "algorithm"]
-category: "Backend"
+category: "Backend.CS"
 summary: "이진 트리의 개념, 종류, 탐색 방법을 코드 예시와 함께 설명합니다"
 author: "신중선"
 source: "maeil-mail"

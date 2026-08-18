@@ -3,7 +3,7 @@ title: "참조 지역성의 원리와 성능 최적화"
 shortTitle: "참조 지역성"
 date: "2026-04-12"
 tags: ["locality-of-reference", "cpu-cache", "memory-optimization", "performance-tuning", "computer-architecture"]
-category: "Backend"
+category: "Backend.OS"
 summary: "CPU의 메모리 접근 패턴을 이해하고 캐시 효율성을 높이는 참조 지역성 원리를 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

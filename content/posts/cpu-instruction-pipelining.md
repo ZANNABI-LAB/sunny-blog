@@ -3,7 +3,7 @@ title: "CPU 명령어 파이프라이닝과 성능 최적화"
 shortTitle: "명령어 파이프라이닝"
 date: "2026-04-14"
 tags: ["cpu-architecture", "instruction-pipelining", "performance-optimization", "pipeline-hazards", "computer-science"]
-category: "Backend"
+category: "Backend.OS"
 summary: "CPU가 여러 명령어를 동시에 처리하여 성능을 향상시키는 파이프라이닝 기법과 발생할 수 있는 위험 요소들을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

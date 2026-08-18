@@ -3,7 +3,7 @@ title: "커링(Currying): 함수형 프로그래밍의 핵심 패턴"
 shortTitle: "커링 패턴"
 date: "2026-04-02"
 tags: ["currying", "functional-programming", "javascript", "typescript", "code-reusability"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "여러 인자를 받는 함수를 단일 인자 함수들의 체인으로 변환하는 커링 기법과 실전 활용법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

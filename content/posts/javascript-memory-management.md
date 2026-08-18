@@ -3,7 +3,7 @@ title: "자바스크립트 메모리 관리"
 shortTitle: "메모리 관리"
 date: "2026-03-28"
 tags: ["javascript", "memory-management", "garbage-collection", "performance", "frontend"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "자바스크립트의 자동 메모리 할당과 가비지 컬렉션 메커니즘을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

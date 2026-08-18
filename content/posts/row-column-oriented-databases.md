@@ -3,7 +3,7 @@ title: "행 기반 DB vs 열 기반 DB: 데이터 저장 방식의 차이점"
 shortTitle: "행열 기반 DB"
 date: "2026-03-29"
 tags: ["database", "data-storage", "oltp", "olap", "data-warehouse"]
-category: "Backend"
+category: "Backend.Database"
 summary: "행 기반 DB와 열 기반 DB의 데이터 저장 방식 차이점과 각각의 최적 사용 사례를 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

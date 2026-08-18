@@ -3,7 +3,7 @@ title: "Spring 트랜잭션 롤백과 예외 처리"
 shortTitle: "트랜잭션 롤백"
 date: "2026-04-03"
 tags: ["spring", "transaction", "exception", "rollback", "database"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "Spring에서 예외 종류에 따른 트랜잭션 롤백 동작과 커스터마이징 방법을 정리합니다"
 author: "신중선"
 source: "maeil-mail"

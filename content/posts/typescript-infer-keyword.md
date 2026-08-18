@@ -3,7 +3,7 @@ title: "TypeScript infer 키워드: 타입 추론의 핵심"
 shortTitle: "infer 키워드"
 date: "2026-03-09"
 tags: ["typescript", "type-inference", "conditional-types", "advanced-types", "frontend"]
-category: "Frontend"
+category: "Frontend.TypeScript"
 summary: "TypeScript의 infer 키워드를 활용한 조건부 타입에서의 타입 추론 기법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

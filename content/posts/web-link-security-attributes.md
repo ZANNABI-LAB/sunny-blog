@@ -3,7 +3,7 @@ title: "웹 링크 보안을 위한 rel 속성 완벽 가이드"
 shortTitle: "rel 속성"
 date: "2026-03-12"
 tags: ["web-security", "html-attributes", "frontend-security", "link-safety", "browser-security"]
-category: "Security"
+category: "Security.Web"
 summary: "외부 링크 연결 시 보안 위험을 방지하는 rel 속성 사용법을 알아봅니다"
 author: "신중선"
 source: "maeil-mail"

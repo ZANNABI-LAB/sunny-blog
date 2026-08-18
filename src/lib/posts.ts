@@ -2,12 +2,25 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { processMarkdown } from "@/lib/markdown";
-import type { PostMeta, Post } from "@/types/post";
+import type { PostMeta, Post, PostSeries } from "@/types/post";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
 const slugFromFilePath = (filePath: string): string => {
   return path.basename(filePath, ".md");
+};
+
+const parseSeries = (data: Record<string, unknown>): PostSeries | null => {
+  const series = data.series as Partial<PostSeries> | undefined;
+  if (
+    !series ||
+    typeof series.id !== "string" ||
+    typeof series.title !== "string" ||
+    typeof series.order !== "number"
+  ) {
+    return null;
+  }
+  return { id: series.id, title: series.title, order: series.order };
 };
 
 const readMarkdownFiles = (): string[] => {
@@ -37,10 +50,20 @@ export const getAllPosts = (): PostMeta[] => {
       ...(data.shortTitle ? { shortTitle: data.shortTitle as string } : {}),
       ...(data.source ? { source: data.source as string } : {}),
       ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
+      ...(parseSeries(data) ? { series: parseSeries(data)! } : {}),
     };
   });
 
   return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+};
+
+/**
+ * 특정 시리즈에 속한 포스트를 order 오름차순으로 반환한다.
+ */
+export const getSeriesPosts = (seriesId: string): PostMeta[] => {
+  return getAllPosts()
+    .filter((post) => post.series?.id === seriesId)
+    .sort((a, b) => (a.series!.order < b.series!.order ? -1 : 1));
 };
 
 export const getPostSlugs = (): string[] => {
@@ -79,6 +102,7 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
     ...(data.shortTitle ? { shortTitle: data.shortTitle as string } : {}),
     ...(data.source ? { source: data.source as string } : {}),
     ...(data.sourceUrl ? { sourceUrl: data.sourceUrl as string } : {}),
+    ...(parseSeries(data) ? { series: parseSeries(data)! } : {}),
     contentHtml,
   };
 };

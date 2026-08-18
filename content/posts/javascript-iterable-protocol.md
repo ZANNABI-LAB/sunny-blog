@@ -3,7 +3,7 @@ title: "JavaScript 이터러블 프로토콜"
 shortTitle: "이터러블 프로토콜"
 date: "2026-04-10"
 tags: ["iterable", "iterator", "protocol", "javascript", "data-structure"]
-category: "Frontend"
+category: "Frontend.JavaScript"
 summary: "다양한 자료구조를 통일된 방식으로 순회할 수 있게 하는 JavaScript의 이터러블 프로토콜을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

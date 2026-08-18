@@ -3,7 +3,7 @@ title: "웹뷰(WebView)란? 모바일 앱 안의 웹 브라우저"
 shortTitle: "웹뷰 개념"
 date: "2026-03-13"
 tags: ["webview", "hybrid-app", "mobile-development", "cross-platform"]
-category: "Frontend"
+category: "Frontend.Web"
 summary: "모바일 앱 내에 포함된 웹 브라우저로, 웹 페이지를 앱의 일부처럼 동작시킵니다."
 author: "신중선"
 source: "maeil-mail"

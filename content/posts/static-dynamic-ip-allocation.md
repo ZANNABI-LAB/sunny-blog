@@ -3,7 +3,7 @@ title: "정적 IP와 동적 IP 할당 방식의 차이점과 DHCP 동작 원리"
 shortTitle: "정적 동적 IP"
 date: "2026-03-06"
 tags: ["networking", "dhcp", "ip-address", "infrastructure"]
-category: "Infrastructure"
+category: "Infrastructure.Network"
 summary: "정적 IP와 동적 IP 할당 방식의 특징과 DHCP 프로토콜의 4단계 동작 과정을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

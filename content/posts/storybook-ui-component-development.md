@@ -3,7 +3,7 @@ title: "Storybook: UI 컴포넌트 개발과 문서화 도구"
 shortTitle: "Storybook 개발도구"
 date: "2026-03-25"
 tags: ["storybook", "ui-component", "frontend-tooling", "design-system", "component-testing"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "UI 컴포넌트를 독립적으로 개발하고 문서화할 수 있는 Storybook의 핵심 개념과 실무 활용법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

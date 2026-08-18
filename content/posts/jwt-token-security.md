@@ -3,7 +3,7 @@ title: "JWT 토큰의 특징과 보안 주의사항"
 shortTitle: "JWT 보안"
 date: "2026-03-06"
 tags: ["jwt", "authentication", "security", "token"]
-category: "Security"
+category: "Security.Auth"
 summary: "JWT의 핵심 특징과 실무에서 반드시 고려해야 할 보안 주의사항을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

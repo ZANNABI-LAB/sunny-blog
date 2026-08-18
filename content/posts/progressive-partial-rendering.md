@@ -3,7 +3,7 @@ title: "Progressive Partial Rendering(PPR): 점진적 페이지 렌더링 최적
 shortTitle: "Progressive Partial Rendering"
 date: "2026-04-07"
 tags: ["progressive-rendering", "web-performance", "ssr", "hydration", "frontend-optimization"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "페이지 콘텐츠를 중요도에 따라 단계적으로 렌더링하여 로딩 성능을 최적화하는 PPR 기법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

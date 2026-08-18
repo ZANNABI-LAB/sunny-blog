@@ -3,7 +3,7 @@ title: "HTTP/2 프로토콜의 주요 특징"
 shortTitle: "HTTP/2 특징"
 date: "2026-04-06"
 tags: ["http2", "web-performance", "network-protocol", "multiplexing", "server-push"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "HTTP/2의 멀티플렉싱, 헤더 압축, 서버 푸시 등 핵심 특징들을 살펴봅니다."
 author: "신중선"
 source: "maeil-mail"

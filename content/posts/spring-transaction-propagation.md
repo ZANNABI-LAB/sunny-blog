@@ -3,7 +3,7 @@ title: "스프링 트랜잭션 전파 속성"
 shortTitle: "트랜잭션 전파"
 date: "2026-03-13"
 tags: ["spring", "transaction", "propagation", "backend"]
-category: "Backend"
+category: "Backend.Spring"
 summary: "스프링에서 메서드 간 트랜잭션 호출 시 동작을 제어하는 7가지 전파 속성을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

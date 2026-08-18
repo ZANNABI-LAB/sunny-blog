@@ -3,7 +3,7 @@ title: "DNS(Domain Name System)란 무엇인가요?"
 shortTitle: "DNS 시스템"
 date: "2026-03-11"
 tags: ["dns", "domain-name", "network", "infrastructure"]
-category: "Infrastructure"
+category: "Infrastructure.Network"
 summary: "도메인 이름을 IP 주소로 변환하는 DNS 시스템의 동작 원리와 질의 과정을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

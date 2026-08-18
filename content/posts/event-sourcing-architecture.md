@@ -3,7 +3,7 @@ title: "이벤트 소싱: 상태가 아닌 변화를 저장하는 아키텍처 �
 shortTitle: "이벤트 소싱"
 date: "2026-04-12"
 tags: ["event-sourcing", "architecture-pattern", "data-storage", "cqrs", "domain-driven-design"]
-category: "Architecture"
+category: "Architecture.Pattern"
 summary: "데이터의 최종 상태 대신 상태 변경 이벤트들을 저장하여 시스템의 모든 변화를 추적할 수 있는 아키텍처 패턴입니다."
 author: "신중선"
 source: "maeil-mail"

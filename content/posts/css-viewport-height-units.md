@@ -3,7 +3,7 @@ title: "CSS 뷰포트 높이 단위 dvh, svh, lvh"
 shortTitle: "뷰포트 높이 단위"
 date: "2026-03-16"
 tags: ["css", "viewport", "mobile-web", "responsive-design", "frontend"]
-category: "Frontend"
+category: "Frontend.CSS"
 summary: "모바일 환경에서 동적으로 변하는 뷰포트 높이를 정확히 다루는 새로운 CSS 단위들을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "외부 라이브러리 버그 대응 전략"
 shortTitle: "라이브러리 버그 대응"
 date: "2026-04-14"
 tags: ["library-management", "bug-handling", "frontend-debugging", "dependency-management", "crisis-response"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "외부 라이브러리의 예상치 못한 버그에 체계적으로 대응하는 전략을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

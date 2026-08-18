@@ -3,7 +3,7 @@ title: "인증과 인가: 웹 보안의 핵심 개념과 구현"
 shortTitle: "인증과 인가"
 date: "2026-03-07"
 tags: ["authentication", "authorization", "web-security", "access-control", "rbac"]
-category: "Security"
+category: "Security.Auth"
 summary: "사용자 신원 확인부터 권한 관리까지, 웹 애플리케이션 보안의 기본이 되는 인증과 인가 개념을 살펴봅니다."
 author: "신중선"
 source: "maeil-mail"

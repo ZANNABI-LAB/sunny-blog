@@ -3,7 +3,7 @@ title: "Cache-Control 헤더로 웹 성능 최적화하기"
 shortTitle: "Cache-Control 헤더"
 date: "2026-03-13"
 tags: ["cache-control", "web-performance", "http-headers", "browser-cache"]
-category: "Frontend"
+category: "Frontend.Performance"
 summary: "Cache-Control 헤더의 동작 원리와 디렉티브를 통한 효과적인 캐싱 전략을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

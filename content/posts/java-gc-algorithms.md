@@ -3,7 +3,7 @@ title: "Java GC 알고리즘 종류와 특징"
 shortTitle: "GC 알고리즘"
 date: "2026-03-27"
 tags: ["java", "garbage-collection", "jvm", "memory-management", "performance"]
-category: "Backend"
+category: "Backend.Java"
 summary: "Java의 다양한 GC 알고리즘들의 특징과 적용 시나리오를 살펴봅니다"
 author: "신중선"
 source: "maeil-mail"

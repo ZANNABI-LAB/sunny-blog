@@ -3,7 +3,7 @@ title: "User-Agent: 브라우저와 클라이언트 식별 헤더"
 shortTitle: "User-Agent"
 date: "2026-04-11"
 tags: ["user-agent", "http-headers", "browser-detection", "client-identification"]
-category: "Frontend"
+category: "Frontend.Browser"
 summary: "HTTP 요청 헤더에서 클라이언트 정보를 식별하는 User-Agent의 구조와 활용법을 알아봅니다."
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "트리 쉐이킹: 불필요한 코드를 제거하는 최적화 기법"
 shortTitle: "트리 쉐이킹"
 date: "2026-03-20"
 tags: ["tree-shaking", "bundle-optimization", "es-modules", "webpack"]
-category: "Frontend"
+category: "Frontend.Tooling"
 summary: "사용되지 않는 코드를 제거하여 번들 크기를 최적화하는 트리 쉐이킹 기법을 설명합니다"
 author: "신중선"
 source: "maeil-mail"

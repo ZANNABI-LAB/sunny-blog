@@ -3,7 +3,7 @@ title: "네트워크 회선 교환과 패킷 교환 방식의 차이"
 shortTitle: "회선교환 패킷교환"
 date: "2026-03-17"
 tags: ["network", "circuit-switching", "packet-switching", "network-protocols"]
-category: "Infrastructure"
+category: "Infrastructure.Network"
 summary: "네트워크에서 데이터를 전송하는 두 가지 핵심 방식인 회선 교환과 패킷 교환의 동작 원리와 특징을 비교합니다"
 author: "신중선"
 source: "maeil-mail"

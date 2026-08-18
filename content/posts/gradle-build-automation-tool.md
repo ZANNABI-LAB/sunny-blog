@@ -3,7 +3,7 @@ title: "Gradle 빌드 자동화 도구"
 shortTitle: "Gradle"
 date: "2026-04-02"
 tags: ["gradle", "build-automation", "java", "kotlin", "dependency-management"]
-category: "Backend"
+category: "Backend.Java"
 summary: "JVM 기반 프로젝트를 위한 고성능 빌드 자동화 도구 Gradle의 핵심 개념과 Maven과의 차이점을 설명합니다."
 author: "신중선"
 source: "maeil-mail"

@@ -3,7 +3,7 @@ title: "최종적 일관성(Eventual Consistency)이란?"
 shortTitle: "최종적 일관성"
 date: "2026-04-09"
 tags: ["eventual-consistency", "distributed-systems", "database-replication", "consistency-models", "high-availability"]
-category: "Backend"
+category: "Backend.Database"
 summary: "분산 시스템에서 고가용성을 위해 사용하는 일관성 모델로, 일시적 데이터 불일치를 허용하되 결국 모든 노드가 동일한 데이터를 갖게 되는 방식입니다."
 author: "신중선"
 source: "maeil-mail"
