@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { ChatReferencePost } from "@/types/chat";
+import { usePrefersReducedMotionRef } from "@/hooks/use-prefers-reduced-motion";
 
 type Message = {
   id: string;
@@ -230,11 +231,7 @@ const ChatPanel = ({ messages, isLoading, onSend, onClose, isClosing, onSuggeste
   const [isSwiping, setIsSwiping] = useState(false);
   const [isSnappingBack, setIsSnappingBack] = useState(false);
   const touchStartYRef = useRef(0);
-  const prefersReducedMotion = useRef(false);
-
-  useEffect(() => {
-    prefersReducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
+  const prefersReducedMotion = usePrefersReducedMotionRef();
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartYRef.current = e.touches[0].clientY;

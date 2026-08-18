@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 const PrivacyPage = () => {
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12">
-      <article className="prose prose-invert prose-sm sm:prose-base max-w-none">
+    <main className="max-w-reading mx-auto px-4 py-12">
+      <article className="prose dark:prose-invert prose-blog prose-sm sm:prose-base max-w-none">
         <h1>개인정보처리방침</h1>
         <p className="text-text-muted">최종 수정일: 2026년 3월 17일</p>
 

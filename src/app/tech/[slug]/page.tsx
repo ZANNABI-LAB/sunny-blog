@@ -166,7 +166,7 @@ const PostDetailPage = async ({
 
       {/* PostBody */}
       <article
-        className="prose dark:prose-invert max-w-none prose-headings:text-text-primary prose-headings:font-bold prose-a:text-accent-secondary prose-a:no-underline hover:prose-a:opacity-80 prose-code:text-accent-secondary prose-code:bg-card-hover prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-bg-elevated prose-pre:border prose-pre:border-border prose-blockquote:border-accent-secondary/50 prose-hr:border-border prose-strong:text-text-primary"
+        className="prose dark:prose-invert prose-blog max-w-none"
         style={{ '--category-color': categoryColor } as React.CSSProperties}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />

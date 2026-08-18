@@ -4,6 +4,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import ChatbotButton from "@/components/chatbot-button";
 import ChatPanel from "@/components/chat-panel";
 import type { ChatReferencePost, ChatEvent } from "@/types/chat";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { usePrefersReducedMotionRef } from "@/hooks/use-prefers-reduced-motion";
 
 const KbdShortcut = () => {
   const [isMac, setIsMac] = useState(false);
@@ -45,28 +47,11 @@ const ChatbotWidget = ({ isMainPage }: ChatbotWidgetProps) => {
   const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerInput, setTriggerInput] = useState("");
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const triggerInputRef = useRef<HTMLInputElement>(null);
   const pendingSendRef = useRef<string | null>(null);
-  const prefersReducedMotionRef = useRef(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    prefersReducedMotionRef.current = mq.matches;
-    const handler = (e: MediaQueryListEvent) => {
-      prefersReducedMotionRef.current = e.matches;
-    };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const prefersReducedMotionRef = usePrefersReducedMotionRef();
 
   // Body scroll lock when chat panel is open (PRD-82)
   useEffect(() => {

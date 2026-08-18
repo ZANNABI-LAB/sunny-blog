@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactLinks } from "@/components/contact-links";
+import PageHeader from "@/components/page-header";
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -129,7 +130,7 @@ const profileJsonLd = {
 
 const ProfilePage = () => {
   return (
-    <div className="max-w-5xl mx-auto animate-page-fade-in space-y-16">
+    <div className="max-w-wide mx-auto animate-page-fade-in space-y-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
@@ -149,12 +150,7 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="text-center md:text-left">
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
-            SUNNY
-          </h1>
-          <p className="mt-1 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
-            신중선 · Backend Developer
-          </p>
+          <PageHeader title="SUNNY" subtitle="신중선 · Backend Developer" />
           <p className="mt-4 text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl">
             지속 가능한 시스템 설계를 지향하며,
             <br />
