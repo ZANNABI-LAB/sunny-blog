@@ -9,7 +9,7 @@ import type { ChatReferencePost } from "@/types/chat";
 const MAX_MESSAGE_LENGTH = 500;
 const MATCH_COUNT = 3;
 const CONTENT_TRUNCATE_LENGTH = 3000;
-const CLAUDE_MODEL = "claude-sonnet-4-20250514";
+const CLAUDE_MODEL = "claude-sonnet-5";
 const MAX_TOKENS = 1024;
 const MAX_HISTORY_TURNS = 6;
 
@@ -137,6 +137,8 @@ export const POST = async (request: NextRequest) => {
           const messageStream = client.messages.stream({
             model: CLAUDE_MODEL,
             max_tokens: MAX_TOKENS,
+            // Sonnet 5는 thinking 생략 시 adaptive가 기본 — 챗봇은 지연 최소화를 위해 비활성화
+            thinking: { type: "disabled" },
             system: SYSTEM_PROMPT,
             messages: claudeMessages,
           });
