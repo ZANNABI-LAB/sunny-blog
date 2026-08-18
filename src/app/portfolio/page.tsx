@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPublishedPortfolios } from "@/lib/portfolio";
 import type { PortfolioProject } from "@/types/portfolio";
+import PageHeader from "@/components/page-header";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -64,15 +65,8 @@ const PortfolioPage = () => {
   const projects = getPublishedPortfolios();
 
   return (
-    <div className="max-w-5xl mx-auto animate-page-fade-in space-y-12">
-      <header>
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
-          PORTFOLIO
-        </h1>
-        <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
-          Projects &amp; Experiments
-        </p>
-      </header>
+    <div className="max-w-wide mx-auto animate-page-fade-in space-y-12">
+      <PageHeader title="PORTFOLIO" subtitle="Projects & Experiments" />
 
       {projects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

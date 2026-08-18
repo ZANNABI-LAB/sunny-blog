@@ -4,7 +4,7 @@ import VisitorStats from "@/components/visitor-stats";
 const Footer = () => {
   return (
     <footer className="relative z-30 footer-gradient-border bg-[var(--bg-footer)] backdrop-blur-sm">
-      <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-between" style={{ paddingBottom: "calc(1.5rem + var(--safe-bottom))" }}>
+      <div className="max-w-wide mx-auto px-4 py-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-between" style={{ paddingBottom: "calc(1.5rem + var(--safe-bottom))" }}>
         <VisitorStats className="hidden sm:block" />
         <div className="flex items-center gap-3">
           <span className="font-display text-xs text-text-muted tracking-wider">&copy; 2026 Deep Thought</span>

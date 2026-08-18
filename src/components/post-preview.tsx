@@ -3,6 +3,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { getCategoryColor } from "@/lib/categories";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { usePrefersReducedMotionRef } from "@/hooks/use-prefers-reduced-motion";
 
 type PostPreviewProps = {
   node: { title: string; category: string; tags: string[]; summary: string; slug: string };
@@ -14,31 +16,13 @@ type PostPreviewProps = {
 const PostPreview = ({ node, position, containerRef, onClose }: PostPreviewProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [adjustedPos, setAdjustedPos] = useState(position);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
 
   // Swipe-to-dismiss state
   const [translateY, setTranslateY] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const touchStartY = useRef<number | null>(null);
-  const prefersReducedMotion = useRef(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    prefersReducedMotion.current = mq.matches;
-    const motionHandler = (e: MediaQueryListEvent) => {
-      prefersReducedMotion.current = e.matches;
-    };
-    mq.addEventListener("change", motionHandler);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-      mq.removeEventListener("change", motionHandler);
-    };
-  }, []);
+  const prefersReducedMotion = usePrefersReducedMotionRef();
 
   // Swipe-to-dismiss handlers
   const handleTouchStart = useCallback((e: React.TouchEvent) => {

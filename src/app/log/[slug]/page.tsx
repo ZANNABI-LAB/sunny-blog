@@ -63,7 +63,7 @@ const LogDetailPage = async ({ params }: Props) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto animate-page-fade-in">
+    <div className="max-w-reading mx-auto animate-page-fade-in">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -101,7 +101,7 @@ const LogDetailPage = async ({ params }: Props) => {
       </header>
 
       <article
-        className="prose dark:prose-invert max-w-none"
+        className="prose dark:prose-invert prose-blog max-w-none"
         dangerouslySetInnerHTML={{ __html: log.contentHtml }}
       />
       <CodeBlockEnhancer />

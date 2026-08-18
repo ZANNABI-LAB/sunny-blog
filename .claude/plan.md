@@ -131,6 +131,7 @@
 - PRD-80: 콘텐츠 파이프라인 아카이브 전환 — maeil-mail-contents 파서(scripts/lib/archive-parser.ts), archive-index.json(수입 132 / 미수입 170), generate-post.ts `--latest`/`--key`, Slack 소진 알림, claude-sonnet-5 업그레이드(챗봇 thinking disabled), 워크플로우 keepalive (PR #45)
 - PRD-81: 카테고리 세분화 + 시리즈 모델 — categories.ts SUBCATEGORIES SSOT, 포스트 114개 도트 표기법 재분류, series frontmatter + SeriesNav (PR #46)
 - PRD-82: API 견고화 — increment_view / count_unique_visitors RPC + 레거시 폴백 (PR #47)
+- PRD-84: 공용 컴포넌트/레이아웃 통일 — PageHeader 신설(복붙 4곳 대체), 컨테이너 폭 2종(`max-w-reading`/`max-w-wide`) 표준화, `.prose-blog` @utility로 tech/log/privacy 본문 통일, tab-nav 워드마크·활성 판정 중복 제거, `useIsMobile`/`usePrefersReducedMotionRef` 훅 추출
 - PRD-83: 디자인 토큰 리스킨 — Orbit(next/font/google) → `--font-display` 실체화, 색 팔레트 값 재정의(라이트=새벽 하늘 / 다크=심우주), 타이포 스케일 토큰(display/h1~h3/body/caption), 하드코딩 색 소탕(ring-amber/bg-amber/#f59e0b/인라인 textShadow), 배경 레이어 단일화(nebula-bg 일원화 + hero-vignette)
 
 ### 유지보수 (진행 중)

@@ -9,6 +9,7 @@ import {
   CATEGORIES,
 } from "@/lib/categories";
 import SidebarLayout from "@/components/sidebar-layout";
+import PageHeader from "@/components/page-header";
 import PostListWithViews from "@/components/post-list-with-views";
 
 export const metadata: Metadata = {
@@ -86,14 +87,11 @@ const TechPage = async ({ searchParams }: TechPageProps) => {
     <SidebarLayout adSlot="tech-list">
       <div>
         {/* Brutal Header */}
-        <div className="animate-brutal-slide">
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-text-primary tracking-tight text-glow-accent">
-            TECH
-          </h1>
-          <p className="mt-2 font-display text-xs text-text-muted tracking-[0.2em] uppercase">
-            {headerText}
-          </p>
-        </div>
+        <PageHeader
+          title="TECH"
+          subtitle={headerText}
+          className="animate-brutal-slide"
+        />
 
         <div className="mt-8">
           <Suspense fallback={null}>

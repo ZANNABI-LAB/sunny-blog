@@ -121,6 +121,11 @@
   --text-caption--line-height: 1.5;
   --text-caption--letter-spacing: 0.04em;
 
+  /* Container widths — 본문(reading) / 와이드(wide) 2종만 사용한다.
+   * max-w-2xl·max-w-sm 같은 값은 컨테이너가 아니라 문단 폭 제한 용도로만. */
+  --container-reading: 48rem;
+  --container-wide: 64rem;
+
   /* Tailwind color aliases from CSS variables */
   --color-bg-primary: var(--bg-primary);
   --color-bg-elevated: var(--bg-elevated);
@@ -403,6 +408,53 @@
 .post-card-glow:hover {
   border-color: var(--card-category-color, var(--border-subtle));
   box-shadow: 0 0 16px color-mix(in srgb, var(--card-category-color, transparent) 25%, transparent);
+}
+
+/* ── Blog Prose ──
+ * tech/log 상세 본문 공용. 이전엔 tech 상세에만 prose-* modifier 20개가
+ * 인라인 체인으로 붙어 있었고 log는 prose-amber만 써서 서로 달랐다.
+ * @utility로 정의해 `prose` 뒤에 오는 유틸로 취급되게 한다.
+ */
+@utility prose-blog {
+  h1, h2, h3, h4 {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+  a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+  }
+  a:hover {
+    opacity: 0.8;
+  }
+  code {
+    color: var(--accent-secondary);
+    background: var(--bg-card-hover);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+  }
+  code::before, code::after {
+    content: none;
+  }
+  pre {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-primary);
+  }
+  pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+  blockquote {
+    border-left-color: color-mix(in srgb, var(--accent-secondary) 50%, transparent);
+  }
+  hr {
+    border-color: var(--border-primary);
+  }
+  strong {
+    color: var(--text-primary);
+  }
 }
 
 /* ── Prose Category Accent ── */
