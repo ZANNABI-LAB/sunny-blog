@@ -1,3 +1,15 @@
+/**
+ * 아카이브 기반 포스트 자동 생성 메인 스크립트.
+ *
+ * 매일메일 서비스 종료 이후, 콘텐츠는 GitHub 아카이브
+ * (maeil-mail/maeil-mail-contents)에서 가져온다. 수입 상태는
+ * scripts/data/archive-index.json이 SSOT다 (build-archive-index.ts로 생성).
+ *
+ * 사용법:
+ *   npm run generate-post -- --latest              # pending 1개 생성
+ *   npm run generate-post -- --latest --count 3    # pending 최대 3개 생성
+ *   npm run generate-post -- --key be-12           # 특정 콘텐츠 생성
+ */
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
@@ -5,63 +17,27 @@ import path from "path";
 dotenv.config({ path: path.join(process.cwd(), ".env.local") });
 
 import matter from "gray-matter";
-import { parseMaeilMailQuestion } from "./lib/maeil-mail-parser";
+import { fetchArchiveQuestion } from "./lib/archive-parser";
+import {
+  loadArchiveIndex,
+  updateEntryStatus,
+  type ArchiveIndexEntry,
+} from "./lib/archive-index";
 import { generatePost } from "./lib/post-generator";
 import { upsertEmbedding } from "./lib/embedding-utils";
-
-// ─── 타입 ───────────────────────────────────────────────
-
-interface ProcessedIds {
-  processedIds: number[];
-  lastUpdated: string;
-}
-
-interface ProcessResult {
-  id: number;
-  status: "success" | "skipped" | "failed";
-  filename?: string;
-  error?: string;
-}
+import { notifySlack } from "./lib/notify";
 
 // ─── 상수 ───────────────────────────────────────────────
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
-const DATA_DIR = path.join(process.cwd(), "scripts", "data");
-const PROCESSED_IDS_PATH = path.join(DATA_DIR, "processed-ids.json");
-const LATEST_MAX_CONSECUTIVE_NULLS = 20;
-const LATEST_SCAN_UPPER_BOUND = 100; // maxId + 100까지만 스캔
+const REQUEST_DELAY_MS = 1000;
 
-// ─── 처리 이력 관리 ─────────────────────────────────────
-
-const loadProcessedIds = (): ProcessedIds => {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-
-  if (!fs.existsSync(PROCESSED_IDS_PATH)) {
-    const initial: ProcessedIds = {
-      processedIds: [],
-      lastUpdated: new Date().toISOString(),
-    };
-    fs.writeFileSync(PROCESSED_IDS_PATH, JSON.stringify(initial, null, 2));
-    return initial;
-  }
-
-  const raw = fs.readFileSync(PROCESSED_IDS_PATH, "utf-8");
-  return JSON.parse(raw) as ProcessedIds;
-};
-
-const saveProcessedId = (id: number): void => {
-  const data = loadProcessedIds();
-
-  if (!data.processedIds.includes(id)) {
-    data.processedIds.push(id);
-    data.processedIds.sort((a, b) => a - b);
-  }
-
-  data.lastUpdated = new Date().toISOString();
-  fs.writeFileSync(PROCESSED_IDS_PATH, JSON.stringify(data, null, 2));
-};
+interface ProcessResult {
+  key: string;
+  status: "success" | "skipped" | "failed";
+  filename?: string;
+  error?: string;
+}
 
 // ─── 기존 slug 수집 ─────────────────────────────────────
 
@@ -69,76 +45,49 @@ const getExistingSlugs = (): string[] => {
   if (!fs.existsSync(POSTS_DIR)) {
     return [];
   }
-
   return fs
     .readdirSync(POSTS_DIR)
     .filter((f) => f.endsWith(".md"))
     .map((f) => path.basename(f, ".md"));
 };
 
-// ─── 기존 포스트의 sourceUrl에서 매일메일 ID 추출 ────────
+// ─── 단일 콘텐츠 처리 ───────────────────────────────────
 
-const getExistingSourceIds = (): Set<number> => {
-  const ids = new Set<number>();
-  if (!fs.existsSync(POSTS_DIR)) return ids;
-
-  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
-  for (const file of files) {
-    const content = fs.readFileSync(path.join(POSTS_DIR, file), "utf-8");
-    const { data } = matter(content);
-    if (data.sourceUrl && typeof data.sourceUrl === "string") {
-      const match = data.sourceUrl.match(/\/question\/(\d+)/);
-      if (match) {
-        ids.add(parseInt(match[1], 10));
-      }
-    }
-  }
-  return ids;
-};
-
-// ─── 단일 질문 처리 ─────────────────────────────────────
-
-const processQuestion = async (
-  id: number,
-  existingSlugs: string[],
-  existingSourceIds: Set<number>
+const processEntry = async (
+  entry: ArchiveIndexEntry,
+  existingSlugs: string[]
 ): Promise<ProcessResult> => {
-  // 1. 처리 이력 확인
-  const { processedIds } = loadProcessedIds();
-  if (processedIds.includes(id)) {
-    console.log(`[건너뜀] ID ${id}: 이미 처리된 질문`);
-    return { id, status: "skipped" };
-  }
+  const { key } = entry;
 
-  // 1-1. 기존 포스트의 sourceUrl 기반 중복 확인
-  if (existingSourceIds.has(id)) {
-    console.log(`[건너뜀] ID ${id}: 동일 sourceUrl의 포스트가 이미 존재`);
-    saveProcessedId(id);
-    return { id, status: "skipped" };
-  }
-
-  // 2. 매일메일 질문 파싱
-  console.log(`[파싱] ID ${id} 스크래핑 중...`);
-  const question = await parseMaeilMailQuestion(id);
+  // 1. 아카이브에서 콘텐츠 가져오기
+  console.log(`[아카이브] ${key} 가져오는 중... (${entry.title.slice(0, 40)})`);
+  const question = await fetchArchiveQuestion(entry);
   if (!question) {
-    return { id, status: "failed", error: "매일메일 파싱 실패 (null 반환)" };
+    updateEntryStatus(key, "failed", { error: "아카이브 콘텐츠 파싱 실패" });
+    return { key, status: "failed", error: "아카이브 콘텐츠 파싱 실패" };
   }
-  console.log(`  질문: ${question.question.slice(0, 50)}...`);
 
-  // 3. Claude로 포스트 생성
+  // 2. Claude로 포스트 생성
   console.log(`[생성] Claude API 호출 중...`);
-  const post = await generatePost(question, { existingSlugs });
+  const post = await generatePost(
+    {
+      sourceId: question.key,
+      question: question.title,
+      category: question.category || question.track,
+      answer: question.answer,
+      sourceUrl: question.sourceUrl,
+    },
+    { existingSlugs }
+  );
   console.log(`  slug: ${post.slug}`);
 
-  // 4. 파일 저장
+  // 3. 파일 저장
   const filePath = path.join(POSTS_DIR, post.filename);
   fs.writeFileSync(filePath, post.content, "utf-8");
   console.log(`  [저장] ${filePath}`);
-
-  // 5. existingSlugs에 추가 (후속 처리에서 중복 방지)
   existingSlugs.push(post.slug);
 
-  // 6. 임베딩 생성 (실패해도 포스트 파일은 유지)
+  // 4. 임베딩 생성 (실패해도 포스트 파일은 유지)
   try {
     console.log(`[임베딩] 임베딩 생성 중...`);
     const { content: mdContent } = matter(post.content);
@@ -154,19 +103,17 @@ const processQuestion = async (
     console.warn(`  [경고] 임베딩 생성 실패 (포스트 파일은 저장됨): ${message}`);
   }
 
-  // 7. 처리 이력 기록
-  saveProcessedId(id);
+  // 5. 인덱스 상태 갱신
+  updateEntryStatus(key, "done", { slug: post.slug });
 
-  return { id, status: "success", filename: post.filename };
+  return { key, status: "success", filename: post.filename };
 };
 
 // ─── CLI 인자 파싱 ──────────────────────────────────────
 
 interface CliArgs {
-  mode: "single" | "range" | "latest";
-  id?: number;
-  from?: number;
-  to?: number;
+  mode: "latest" | "key";
+  key?: string;
   count?: number;
 }
 
@@ -181,45 +128,27 @@ const parseArgs = (): CliArgs => {
 
   if (args.includes("--latest")) {
     const countStr = getArgValue("--count");
-    const count = countStr ? parseInt(countStr, 10) : undefined;
-    if (countStr && (isNaN(count!) || count! <= 0)) {
+    const count = countStr ? parseInt(countStr, 10) : 1;
+    if (isNaN(count) || count <= 0) {
       console.error("오류: --count 값이 유효한 양의 정수가 아닙니다.");
       process.exit(1);
     }
     return { mode: "latest", count };
   }
 
-  const idStr = getArgValue("--id");
-  if (idStr) {
-    const id = parseInt(idStr, 10);
-    if (isNaN(id)) {
-      console.error("오류: --id 값이 유효한 숫자가 아닙니다.");
+  const key = getArgValue("--key");
+  if (key) {
+    if (!/^(be|fe)-\d+$/.test(key)) {
+      console.error(`오류: --key 형식이 잘못되었습니다 (예: be-12, fe-3): ${key}`);
       process.exit(1);
     }
-    return { mode: "single", id };
-  }
-
-  const fromStr = getArgValue("--from");
-  const toStr = getArgValue("--to");
-  if (fromStr && toStr) {
-    const from = parseInt(fromStr, 10);
-    const to = parseInt(toStr, 10);
-    if (isNaN(from) || isNaN(to)) {
-      console.error("오류: --from / --to 값이 유효한 숫자가 아닙니다.");
-      process.exit(1);
-    }
-    if (from > to) {
-      console.error("오류: --from 값이 --to 값보다 클 수 없습니다.");
-      process.exit(1);
-    }
-    return { mode: "range", from, to };
+    return { mode: "key", key };
   }
 
   console.error(`사용법:
-  npm run generate-post -- --id <number>           # 단일 질문
-  npm run generate-post -- --from <n> --to <n>     # 범위 처리
-  npm run generate-post -- --latest                # 미처리 최신 질문
-  npm run generate-post -- --latest --count <n>    # 미처리 최신 질문 (최대 N개)`);
+  npm run generate-post -- --latest              # pending 1개 생성
+  npm run generate-post -- --latest --count <n>  # pending 최대 N개 생성
+  npm run generate-post -- --key <be-N|fe-N>     # 특정 콘텐츠 생성`);
   process.exit(1);
 };
 
@@ -233,12 +162,12 @@ const printReport = (results: ProcessResult[]): void => {
   console.log("\n=== 포스트 생성 완료 ===");
   console.log(`처리 대상: ${results.length}개`);
   console.log(`성공: ${success.length}개`);
-  console.log(`건너뜀 (이미 처리): ${skipped.length}개`);
+  console.log(`건너뜀: ${skipped.length}개`);
   console.log(`실패: ${failed.length}개`);
 
   if (failed.length > 0) {
     for (const f of failed) {
-      console.log(`  - ID ${f.id}: ${f.error}`);
+      console.log(`  - ${f.key}: ${f.error}`);
     }
   }
 
@@ -254,96 +183,93 @@ const printReport = (results: ProcessResult[]): void => {
 
 const main = async (): Promise<void> => {
   const cliArgs = parseArgs();
-  const existingSlugs = getExistingSlugs();
-  const existingSourceIds = getExistingSourceIds();
-  const results: ProcessResult[] = [];
+  const index = loadArchiveIndex();
 
-  // 처리할 ID 목록 결정
-  let ids: number[] = [];
+  if (index.entries.length === 0) {
+    console.error(
+      "오류: archive-index.json이 비어 있습니다.\n" +
+        "먼저 인덱스를 생성하세요: npx tsx scripts/build-archive-index.ts"
+    );
+    process.exit(1);
+  }
 
-  switch (cliArgs.mode) {
-    case "single":
-      ids = [cliArgs.id!];
-      break;
+  // 처리할 엔트리 결정
+  let targets: ArchiveIndexEntry[] = [];
 
-    case "range":
-      for (let i = cliArgs.from!; i <= cliArgs.to!; i++) {
-        ids.push(i);
-      }
-      break;
-
-    case "latest": {
-      const { processedIds } = loadProcessedIds();
-      if (processedIds.length === 0) {
-        console.error(
-          "오류: processed-ids.json에 처리 이력이 없습니다.\n" +
-            "첫 실행 시에는 --id 또는 --from/--to를 사용하세요.\n" +
-            "예: npm run generate-post -- --id 1"
-        );
-        process.exit(1);
-      }
-
-      const maxId = Math.max(...processedIds);
-      const scanLimit = maxId + LATEST_SCAN_UPPER_BOUND;
-      let consecutiveNulls = 0;
-      let currentId = maxId + 1;
-
-      console.log(
-        `[최신] 마지막 처리 ID: ${maxId}, ID ${currentId}부터 탐색 시작... (상한: ${scanLimit})`
-      );
-
-      while (
-        consecutiveNulls < LATEST_MAX_CONSECUTIVE_NULLS &&
-        currentId <= scanLimit &&
-        (!cliArgs.count || ids.length < cliArgs.count)
-      ) {
-        const question = await parseMaeilMailQuestion(currentId);
-        if (question) {
-          ids.push(currentId);
-          consecutiveNulls = 0;
-        } else {
-          consecutiveNulls++;
-          console.log(
-            `  [탐색] ID ${currentId}: 없음 (연속 ${consecutiveNulls}/${LATEST_MAX_CONSECUTIVE_NULLS})`
-          );
-        }
-        currentId++;
-      }
-
-      if (ids.length === 0) {
-        console.log("새로운 질문을 찾지 못했습니다.");
-        return;
-      }
-
-      console.log(`[최신] 발견된 새 질문: ${ids.length}개\n`);
-      break;
+  if (cliArgs.mode === "key") {
+    const entry = index.entries.find((e) => e.key === cliArgs.key);
+    if (!entry) {
+      console.error(`오류: 인덱스에 없는 key입니다: ${cliArgs.key}`);
+      process.exit(1);
     }
+    if (entry.status === "done" || entry.status === "imported") {
+      console.log(
+        `[건너뜀] ${entry.key}: 이미 처리된 콘텐츠 (status: ${entry.status})`
+      );
+      return;
+    }
+    targets = [entry];
+  } else {
+    // --latest: backend/frontend를 번갈아 뽑아 주제 다양성 유지
+    const pendingBe = index.entries.filter(
+      (e) => e.status === "pending" && e.track === "backend"
+    );
+    const pendingFe = index.entries.filter(
+      (e) => e.status === "pending" && e.track === "frontend"
+    );
+
+    const totalPending = pendingBe.length + pendingFe.length;
+    if (totalPending === 0) {
+      console.log("모든 아카이브 콘텐츠가 처리되었습니다. 새로 생성할 포스트가 없습니다.");
+      await notifySlack(
+        "📮 sunny-blog: 아카이브 콘텐츠가 모두 소진되었습니다. 자동 생성이 더 이상 새 포스트를 만들지 않습니다 — 새 콘텐츠 소스를 검토하세요."
+      );
+      return;
+    }
+
+    const count = Math.min(cliArgs.count ?? 1, totalPending);
+    for (let i = 0; targets.length < count; i++) {
+      const pick = i % 2 === 0 ? pendingBe.shift() ?? pendingFe.shift() : pendingFe.shift() ?? pendingBe.shift();
+      if (!pick) break;
+      targets.push(pick);
+    }
+    console.log(
+      `[대상] pending ${totalPending}개 중 ${targets.length}개 처리: ${targets.map((t) => t.key).join(", ")}`
+    );
   }
 
   // 순차 처리
-  for (const id of ids) {
+  const existingSlugs = getExistingSlugs();
+  const results: ProcessResult[] = [];
+
+  for (const entry of targets) {
     try {
-      const result = await processQuestion(id, existingSlugs, existingSourceIds);
+      const result = await processEntry(entry, existingSlugs);
       results.push(result);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      console.error(`[실패] ID ${id}: ${message}`);
-      results.push({ id, status: "failed", error: message });
+      console.error(`[실패] ${entry.key}: ${message}`);
+      updateEntryStatus(entry.key, "failed", { error: message });
+      results.push({ key: entry.key, status: "failed", error: message });
     }
 
-    // 연속 요청 간 딜레이 (마지막이 아닌 경우)
-    if (id !== ids[ids.length - 1]) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (entry !== targets[targets.length - 1]) {
+      await new Promise((resolve) => setTimeout(resolve, REQUEST_DELAY_MS));
     }
   }
 
-  // 리포트 출력
   printReport(results);
 
-  // 실패가 있으면 exit(1)
-  const hasFailures = results.some((r) => r.status === "failed");
-  if (hasFailures) {
-    process.exit(1);
+  const failedCount = results.filter((r) => r.status === "failed").length;
+  const successCount = results.filter((r) => r.status === "success").length;
+  if (failedCount > 0) {
+    await notifySlack(
+      `⚠️ sunny-blog: 포스트 자동 생성 중 ${failedCount}건 실패 (성공 ${successCount}건). Actions 로그를 확인하세요.`
+    );
+    // 전부 실패했을 때만 에러 종료 — 부분 성공은 커밋되도록 정상 종료
+    if (successCount === 0) {
+      process.exit(1);
+    }
   }
 };
 

@@ -1,7 +1,14 @@
 import Anthropic from "@anthropic-ai/sdk";
 import matter from "gray-matter";
 
-import type { MaeilMailQuestion } from "./maeil-mail-parser";
+/** 포스트 생성 입력 소스 (아카이브/레거시 공용) */
+export interface GenerationSource {
+  sourceId: string; // 아카이브 key ("be-1") 또는 레거시 질문 ID ("168")
+  question: string; // 질문 제목
+  category: string; // 카테고리 힌트 (아카이브 세부 카테고리 또는 트랙명)
+  answer: string; // 답변 마크다운 원문
+  sourceUrl: string; // 원본 URL
+}
 
 export interface GeneratedPost {
   slug: string;
@@ -21,8 +28,8 @@ export interface GeneratedPost {
   content: string;
 }
 
-const CLAUDE_MODEL = "claude-sonnet-4-20250514";
-const MAX_TOKENS = 4096;
+const CLAUDE_MODEL = "claude-sonnet-5";
+const MAX_TOKENS = 16000; // adaptive thinking 토큰과 본문이 max_tokens를 공유하므로 여유 필요
 const MAX_RETRIES = 2;
 
 const VALID_CATEGORIES = [
@@ -40,6 +47,8 @@ const CATEGORY_MAP: Record<string, string> = {
   "프론트엔드": "Frontend",
   "인프라": "Infrastructure",
   CS: "Architecture",
+  backend: "Backend",
+  frontend: "Frontend",
 };
 
 const mapCategory = (korean: string): string => {
@@ -96,7 +105,7 @@ category: "Backend"
 summary: "한 줄 요약 (~합니다 체)"
 author: "신중선"
 source: "maeil-mail"
-sourceUrl: "https://www.maeil-mail.kr/question/{id}"
+sourceUrl: "(지시사항에서 제공되는 원본 URL 그대로)"
 references: ["https://official-docs-url...", "https://another-reference..."]
 ---
 \`\`\`
@@ -120,7 +129,7 @@ category: "Backend"
 summary: "요약"
 author: "신중선"
 source: "maeil-mail"
-sourceUrl: "https://www.maeil-mail.kr/question/168"
+sourceUrl: "https://github.com/maeil-mail/maeil-mail-contents/blob/main/backend/contents/be-1.md"
 ---
 
 ## 주제란?
@@ -131,7 +140,7 @@ sourceUrl: "https://www.maeil-mail.kr/question/168"
 slug 줄과 구분선(\`---CONTENT---\`) 이후에 frontmatter를 포함한 전체 마크다운을 출력하세요.`;
 
 const buildUserPrompt = (
-  question: MaeilMailQuestion,
+  source: GenerationSource,
   existingSlugs: string[]
 ): string => {
   const slugWarning =
@@ -142,19 +151,19 @@ const buildUserPrompt = (
   return `다음 매일메일 질문과 답변을 참고하여 블로그 포스트를 작성해주세요.
 
 ## 매일메일 질문
-- ID: ${question.id}
-- 카테고리: ${question.category}
-- 질문: ${question.question}
-- 원본 URL: ${question.sourceUrl}
+- ID: ${source.sourceId}
+- 카테고리 힌트: ${source.category}
+- 질문: ${source.question}
+- 원본 URL: ${source.sourceUrl}
 
 ## 매일메일 답변
-${question.answer}
+${source.answer}
 
 ## 지시사항
 - 매일메일 답변을 참고하되, 단순 복사가 아닌 재구성 및 확장을 해주세요.
-- category는 "${mapCategory(question.category)}"로 설정하세요.
+- category는 카테고리 힌트를 참고해 7개 루트 중 가장 알맞은 것을 고르고, 주제가 구체적이면 도트 표기법 하위 카테고리(예: "Backend.Spring", "Frontend.React")까지 지정하세요.
 - date는 "${new Date().toISOString().split("T")[0]}"로 설정하세요.
-- sourceUrl은 "${question.sourceUrl}"로 설정하세요.
+- sourceUrl은 "${source.sourceUrl}"로 설정하세요.
 - author는 "신중선"으로 설정하세요.
 - source는 "maeil-mail"로 설정하세요.${slugWarning}`;
 };
@@ -233,8 +242,10 @@ const validateFrontmatter = (
       console.warn("[생성기] references에 유효하지 않은 URL이 포함되어 있습니다.");
       return null;
     }
-    // maeil-mail.kr URL 자동 필터링
-    const references = rawReferences.filter((r) => !r.includes("maeil-mail.kr"));
+    // 매일메일 관련 URL(구 사이트 + 아카이브) 자동 필터링
+    const references = rawReferences.filter(
+      (r) => !r.includes("maeil-mail.kr") && !r.includes("maeil-mail-contents")
+    );
 
     return {
       title: data.title as string,
@@ -259,7 +270,7 @@ const validateFrontmatter = (
  * 매일메일 질문을 기반으로 블로그 포스트를 생성한다.
  */
 export const generatePost = async (
-  question: MaeilMailQuestion,
+  question: GenerationSource,
   options?: { existingSlugs?: string[] }
 ): Promise<GeneratedPost> => {
   const existingSlugs = options?.existingSlugs ?? [];

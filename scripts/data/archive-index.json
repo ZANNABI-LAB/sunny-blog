@@ -1,0 +1,2119 @@
+{
+  "entries": [
+    {
+      "key": "be-1",
+      "track": "backend",
+      "title": "OSIV(Open Session In View) 옵션에 대해서 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-2",
+      "track": "backend",
+      "title": "RAID 기술에 대해서 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-3",
+      "track": "backend",
+      "title": "@Value 어노테이션 사용 시 주의할 점을 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-4",
+      "track": "backend",
+      "title": "@ExceptionHandler 어노테이션은 무엇인가요?",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-5",
+      "track": "backend",
+      "title": "@ResponseBody(or ResponseEntity<T>)가 있을 때와 없을 때의 동작 방식의 차이점을 말해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-6",
+      "track": "backend",
+      "title": "Filter와 Interceptor의 차이점을 말해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-7",
+      "track": "backend",
+      "title": "Spring MVC의 실행 흐름에 대해 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-8",
+      "track": "backend",
+      "title": "@Controller 와 @RestController 의 차이점을 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-9",
+      "track": "backend",
+      "title": "ControllerAdvice에 대해 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-10",
+      "track": "backend",
+      "title": "RequestBody VS ModelAttribute의 차이점을 말해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-11",
+      "track": "backend",
+      "title": "톰캣에 대해서 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-12",
+      "track": "backend",
+      "title": "AutoConfiguration 동작 원리를 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-13",
+      "track": "backend",
+      "title": "Spring과 Spring Boot의 차이를 말해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-14",
+      "track": "backend",
+      "title": "JPA를 사용하는 이유를 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-15",
+      "track": "backend",
+      "title": "JPA, Hibernate, Spring Data JPA 의 차이가 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-16",
+      "track": "backend",
+      "title": "Spring Data JPA에서 새로운 Entity인지 판단하는 방법은 무엇일까요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-17",
+      "track": "backend",
+      "title": "JPA의 ddl-auto 옵션은 각각 어떤 동작을 하고 어떤 상황에서 사용해야 할까요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-18",
+      "track": "backend",
+      "title": "엔티티 매니저에 대해 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-19",
+      "track": "backend",
+      "title": "JPA의 N + 1 문제에 대해서 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-20",
+      "track": "backend",
+      "title": "자바에서 Checked Exception과 Unchecked Exception에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-21",
+      "track": "backend",
+      "title": "일급 컬렉션이 무엇인가요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-22",
+      "track": "backend",
+      "title": "데이터베이스 인덱스에 대해서 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-23",
+      "track": "backend",
+      "title": "트랜잭션 격리수준은 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-24",
+      "track": "backend",
+      "title": "얕은 복사와 깊은 복사에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-25",
+      "track": "backend",
+      "title": "로그와 메트릭을 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "pending"
+    },
+    {
+      "key": "be-26",
+      "track": "backend",
+      "title": "JPA에서 ID 생성 전략에 대해 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-27",
+      "track": "backend",
+      "title": "equals와 hashCode는 왜 함께 재정의해야 할까요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-28",
+      "track": "backend",
+      "title": "동일성과 동등성에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-29",
+      "track": "backend",
+      "title": "@Component, @Controller, @Service, @Repository의 차이점에 대해서 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-30",
+      "track": "backend",
+      "title": "동기 방식으로 외부 서비스를 호출할 때 외부 서비스 장애가 나면 어떻게 조치할 수 있나요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-31",
+      "track": "backend",
+      "title": "TCP 3-way handshake에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-32",
+      "track": "backend",
+      "title": "동기와 비동기의 차이점은 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-33",
+      "track": "backend",
+      "title": "공유 락과 배타 락에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-34",
+      "track": "backend",
+      "title": "단위 테스트와 통합 테스트의 차이점은 무엇인가요?",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "pending"
+    },
+    {
+      "key": "be-35",
+      "track": "backend",
+      "title": "스레드, 프로세스, 코어의 수는 많을수록 좋을까요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-36",
+      "track": "backend",
+      "title": "데이터베이스 커넥션 풀(Connection Pool)을 사용하지 않으면 어떤 문제가 발생할 수 있나요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-37",
+      "track": "backend",
+      "title": "사용자가 웹사이트에 처음 접근했을 때 발생하는 일련의 과정에 대해 설명해 주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-38",
+      "track": "backend",
+      "title": "HTTP 메서드에서 멱등성이란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-39",
+      "track": "backend",
+      "title": "데이터베이스 시스템에서 동시성을 제어하는 방법에 대해 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-40",
+      "track": "backend",
+      "title": "MySQL InnoDB에서 갭락과 넥스트키 락이란 무엇이며, 어떻게  팬텀 리드를 방지하나요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-41",
+      "track": "backend",
+      "title": "CORS란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-42",
+      "track": "backend",
+      "title": "리버스 프록시와 포워드 프록시의 차이점에 대해 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-43",
+      "track": "backend",
+      "title": "private 메서드에 @Transactional 선언하면 트랜잭션이 동작할까요?",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "pending"
+    },
+    {
+      "key": "be-44",
+      "track": "backend",
+      "title": "Connection Timeout, Socket Timeout, Read Timeout의 차이점은 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-45",
+      "track": "backend",
+      "title": "서버 사이드 렌더링과 클라이언트 사이드 렌더링의 차이점은 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-46",
+      "track": "backend",
+      "title": "자료구조 스택에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-47",
+      "track": "backend",
+      "title": "WAS와 웹 서버의 차이점은 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-48",
+      "track": "backend",
+      "title": "HTTPS에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-49",
+      "track": "backend",
+      "title": "Record를 DTO로 사용하는 이유가 뭔가요?",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "pending"
+    },
+    {
+      "key": "be-50",
+      "track": "backend",
+      "title": "DB Replication에 대해서 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-51",
+      "track": "backend",
+      "title": "SOLID 원칙에 대해서 설명해 주세요.",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "pending"
+    },
+    {
+      "key": "be-52",
+      "track": "backend",
+      "title": "다중 서버 환경에서 세션 기반 인증 방식을 사용하는 경우 발생할 수 있는 문제점은 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-53",
+      "track": "backend",
+      "title": "로드 밸런싱에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-54",
+      "track": "backend",
+      "title": "동시성과 병렬성에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-55",
+      "track": "backend",
+      "title": "캐싱 전략에 대해서 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-56",
+      "track": "backend",
+      "title": "REST란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-57",
+      "track": "backend",
+      "title": "ACID에 대해서 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-58",
+      "track": "backend",
+      "title": "스케일 아웃과 스케일 업의 차이점을 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-59",
+      "track": "backend",
+      "title": "프로세스보다 스레드의 컨텍스트 스위칭이 더 빠른 이유는 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-60",
+      "track": "backend",
+      "title": "HTTP/1.1과  HTTP/2.0에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-61",
+      "track": "backend",
+      "title": "관계형 데이터베이스와 비 관계형 데이터베이스의 차이점은 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "pending"
+    },
+    {
+      "key": "be-62",
+      "track": "backend",
+      "title": "캐시 스탬피드 현상에 대하여 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-63",
+      "track": "backend",
+      "title": "시스템 간 비동기 연동 방식에는 무엇이 있나요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-64",
+      "track": "backend",
+      "title": "CAP 정리에 대해서 알고 계신가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-65",
+      "track": "backend",
+      "title": "응집도와 결합도에 대해서 설명해주세요.",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "pending"
+    },
+    {
+      "key": "be-66",
+      "track": "backend",
+      "title": "Redis가 싱글 스레드로 만들어진 이유를 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-67",
+      "track": "backend",
+      "title": "교착 상태에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-68",
+      "track": "backend",
+      "title": "Call By Value와 Call By Reference에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-69",
+      "track": "backend",
+      "title": "방어적 복사에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-70",
+      "track": "backend",
+      "title": "해시 충돌에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-71",
+      "track": "backend",
+      "title": "디스크 접근 시간에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-72",
+      "track": "backend",
+      "title": "URI, URL, URN의 차이점은 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-73",
+      "track": "backend",
+      "title": "CPU 스케줄링에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-74",
+      "track": "backend",
+      "title": "시스템 콜이란 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-75",
+      "track": "backend",
+      "title": "JVM에서 GC 대상 객체를 판단하는 기준은 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "be-76",
+      "track": "backend",
+      "title": "테스트 주도 개발이 무엇인가요?",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "pending"
+    },
+    {
+      "key": "be-77",
+      "track": "backend",
+      "title": "대칭키 및 비대칭키 암호화 방식에 대해서 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "pending"
+    },
+    {
+      "key": "be-78",
+      "track": "backend",
+      "title": "클래스풀 IP 주소 체계에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-79",
+      "track": "backend",
+      "title": "함수형 프로그래밍에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-80",
+      "track": "backend",
+      "title": "연결 리스트에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "pending"
+    },
+    {
+      "key": "be-81",
+      "track": "backend",
+      "title": "NAT 기능을 사용하는 이유를 알고 계신가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "pending"
+    },
+    {
+      "key": "be-82",
+      "track": "backend",
+      "title": "CSRF 공격에 대해서 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-83",
+      "track": "backend",
+      "title": "트랜잭셔널 아웃박스 패턴에 대해서 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-84",
+      "track": "backend",
+      "title": "JWT 특징과 주의 사항을 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-85",
+      "track": "backend",
+      "title": "단일 장애 지점(SPOF)이란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-86",
+      "track": "backend",
+      "title": "정적 IP 주소 할당 방식과 동적 IP 주소 할당 방식의 차이점을 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-87",
+      "track": "backend",
+      "title": "전략 패턴에 대해서 설명해주세요.",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-88",
+      "track": "backend",
+      "title": "스프링 트랜잭션 AOP 동작 흐름에 대해서 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-89",
+      "track": "backend",
+      "title": "의존성 주입이란 무엇인가요?",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-90",
+      "track": "backend",
+      "title": "코드 커버리지에 대해서 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-91",
+      "track": "backend",
+      "title": "CI/CD 파이프라인에 대해서 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-92",
+      "track": "backend",
+      "title": "CQRS 패턴이란 무엇인가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-93",
+      "track": "backend",
+      "title": "Graceful Shutdown의 필요성에 대해서 설명해주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-94",
+      "track": "backend",
+      "title": "데이터베이스 정규화에 대해서 설명해주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-95",
+      "track": "backend",
+      "title": "분산 환경에서 Redis를 활용한 잠금은 어떻게 구현할 수 있나요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-96",
+      "track": "backend",
+      "title": "무중단 배포가 무엇인가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-97",
+      "track": "backend",
+      "title": "테스트 더블에 대해서 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-98",
+      "track": "backend",
+      "title": "자바에서 클래스 정보는 어떻게 알아낼 수 있나요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-99",
+      "track": "backend",
+      "title": "연속 메모리 할당 기법에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-100",
+      "track": "backend",
+      "title": "DNS란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-101",
+      "track": "backend",
+      "title": "동시성 문제 중 경쟁 상태를 해결하려면 무엇이 보장되어야 하나요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-102",
+      "track": "backend",
+      "title": "스프링 트랜잭션 전파 속성에 대해서 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-103",
+      "track": "backend",
+      "title": "CDN이란 무엇인가요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-104",
+      "track": "backend",
+      "title": "시간 복잡도와 공간 복잡도의 차이점은 무엇인가요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-105",
+      "track": "backend",
+      "title": "Micrometer가 무엇인지 설명해주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-106",
+      "track": "backend",
+      "title": "try-with-resources에 대해 설명해 주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-107",
+      "track": "backend",
+      "title": "네트워크에서 회선 교환 방식과 패킷 교환 방식은 어떤 차이점 있나요?",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-108",
+      "track": "backend",
+      "title": "String 객체는 가변일까요, 불변일까요? 그렇게 생각하신 이유도 함께 설명해 주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-109",
+      "track": "backend",
+      "title": "Infrastructure as Code(IaC)에 대해 설명해 주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-110",
+      "track": "backend",
+      "title": "@OneToOne 연관관계에서 Lazy Loading을 설정할 때 주의할 점은 무엇일까요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-111",
+      "track": "backend",
+      "title": "자바에서 Object 타입인 value를 String으로 타입 캐스팅하는 것과 String.valueOf()를 사용하는 것의 차이점은 무엇인가요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-112",
+      "track": "backend",
+      "title": "자료구조 트라이에 대해서 설명해주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-113",
+      "track": "backend",
+      "title": "자바에서 제네릭의 공변, 반공변, 무공변에 대해 설명해 주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-114",
+      "track": "backend",
+      "title": "Keep Alive에 대해 설명해 주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-115",
+      "track": "backend",
+      "title": "단일 프로세스 시스템에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-116",
+      "track": "backend",
+      "title": "멀티 태스킹 시스템의 한계에 대해서 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-117",
+      "track": "backend",
+      "title": "JCF 자료구조의 초기 용량을 지정하면 좋은 점이 무엇인가요?",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-118",
+      "track": "backend",
+      "title": "가상화에 대해 설명해 주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-119",
+      "track": "backend",
+      "title": "자바 프로그램이 실행되는 흐름을 설명해 주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-120",
+      "track": "backend",
+      "title": "낙관적 락과 비관적 락에 대해 설명해 주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-121",
+      "track": "backend",
+      "title": "RDB에서 페이징 쿼리의 필요성을 설명해 주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-122",
+      "track": "backend",
+      "title": "멀티 쓰레딩에 대해서 설명해 주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-123",
+      "track": "backend",
+      "title": "PRG 패턴에 대해서 설명해 주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-124",
+      "track": "backend",
+      "title": "GC 알고리즘은 어떤 것이 있나요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-125",
+      "track": "backend",
+      "title": "페이지 교체 알고리즘에 대해서 설명해 주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-126",
+      "track": "backend",
+      "title": "열 기반 DB와 행 기반 DB의 차이점은 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-127",
+      "track": "backend",
+      "title": "이진 트리에 대해서 설명해 주세요.",
+      "category": "자바 언어, 컬렉션과 자료구조",
+      "status": "imported"
+    },
+    {
+      "key": "be-128",
+      "track": "backend",
+      "title": "객체 지향 프로그래밍이란 무엇이고, 어떤 특징이 있나요?",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-129",
+      "track": "backend",
+      "title": "널 오브젝트 패턴이란 무엇인가요?",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-130",
+      "track": "backend",
+      "title": "서버리스란 무엇인가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-131",
+      "track": "backend",
+      "title": "JPA Fetch Join과 페이징을 함께 사용할 때 주의점을 설명해 주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-132",
+      "track": "backend",
+      "title": "Gradle에 대해 설명해 주세요.",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-133",
+      "track": "backend",
+      "title": "ThreadLocal에 대해 설명해 주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-134",
+      "track": "backend",
+      "title": "스레드 풀 포화 정책이란 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-135",
+      "track": "backend",
+      "title": "어떤 예외가 발생하면 트랜잭션을 롤백하나요?",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-136",
+      "track": "backend",
+      "title": "논리 삭제와 물리 삭제의 차이점은 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-137",
+      "track": "backend",
+      "title": "템플릿 메서드 패턴이란 무엇인가요?",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-138",
+      "track": "backend",
+      "title": "NoSQL 데이터베이스의 유형에는 어떤 것들이 있나요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-139",
+      "track": "backend",
+      "title": "테스트 격리란 무엇인가요?",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-140",
+      "track": "backend",
+      "title": "SQL 인젝션에 대해 설명해 주세요.",
+      "category": "테스트, 보안과 관측 가능성",
+      "status": "imported"
+    },
+    {
+      "key": "be-141",
+      "track": "backend",
+      "title": "최종적 일관성이란 무엇인가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-142",
+      "track": "backend",
+      "title": "NOT IN 쿼리를 사용할 때 발생할 수 있는 문제와 최적화 방법에 대해 설명해 주세요.",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-143",
+      "track": "backend",
+      "title": "Statement와 PreparedStatement의 차이점은 무엇인가요?",
+      "category": "Persistence와 데이터베이스",
+      "status": "imported"
+    },
+    {
+      "key": "be-144",
+      "track": "backend",
+      "title": "이벤트 소싱이란 무엇인가요?",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-145",
+      "track": "backend",
+      "title": "참조 지역성의 원리란 무엇인가요?",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-146",
+      "track": "backend",
+      "title": "Spring에서 객체를 Bean으로 관리하는 이유를 설명해주세요.",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-147",
+      "track": "backend",
+      "title": "명령어 파이프라이닝에 대해서 설명해 주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-148",
+      "track": "backend",
+      "title": "쿠키와 세션의 차이에 대해서 설명해주세요.",
+      "category": "네트워크, HTTP와 웹 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "be-149",
+      "track": "backend",
+      "title": "어떤 이유로  코루틴을 사용한 작업 처리가 기존 스레드 방식보다 가벼운지 설명해주세요.",
+      "category": "운영체제, 동시성과 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "be-150",
+      "track": "backend",
+      "title": "싱글턴 패턴이란 무엇인가요?",
+      "category": "아키텍처, 객체지향과 설계 패턴",
+      "status": "imported"
+    },
+    {
+      "key": "be-151",
+      "track": "backend",
+      "title": "레이어드 아키텍처란 무엇인가요?",
+      "category": "Spring과 애플리케이션 계층",
+      "status": "imported"
+    },
+    {
+      "key": "be-152",
+      "track": "backend",
+      "title": "헬스체크에 대해서 설명해 주세요.",
+      "category": "분산 시스템, 캐시와 운영 인프라",
+      "status": "imported"
+    },
+    {
+      "key": "fe-1",
+      "track": "frontend",
+      "title": "클로저에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-2",
+      "track": "frontend",
+      "title": "reflow와 repaint의 차이점에 대해서 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-3",
+      "track": "frontend",
+      "title": "실행 컨텍스트에 대해서 설명해주세요",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-4",
+      "track": "frontend",
+      "title": "tanstack-query에서 stale time과 gc time의 차이점에 대해서 설명해주세요",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-5",
+      "track": "frontend",
+      "title": "이벤트 루프에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-6",
+      "track": "frontend",
+      "title": "리액트의 props와 state에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-7",
+      "track": "frontend",
+      "title": "리액트의 Controlled Component와 Uncontrolled Component의 차이점에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-8",
+      "track": "frontend",
+      "title": "리액트에서 성능 최적화를 위해 적용할 수 있는 방법들을 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-9",
+      "track": "frontend",
+      "title": "브라우저 렌더링 파이프라인에 대해서 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-10",
+      "track": "frontend",
+      "title": "인터넷 창에 www.google.com를 입력하면 무슨 일이 일어나는지 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-11",
+      "track": "frontend",
+      "title": "리액트의 Strict Mode에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-12",
+      "track": "frontend",
+      "title": "리액트의 render phase와 commit phase에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-13",
+      "track": "frontend",
+      "title": "자바스크립트 호이스팅에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-14",
+      "track": "frontend",
+      "title": "자바스크립트 배열에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-15",
+      "track": "frontend",
+      "title": "자바스크립트 함수에 대해서 아는대로 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-16",
+      "track": "frontend",
+      "title": "script 태그에서 async와 defer의 차이점에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-17",
+      "track": "frontend",
+      "title": "CommonJS와 ES Module의 차이점에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-18",
+      "track": "frontend",
+      "title": "이벤트 전파(event propagation)에 대해서 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-19",
+      "track": "frontend",
+      "title": "웹 애플리케이션의 성능을 최적화할 수 있는 방법들에 대해서 아는대로 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-20",
+      "track": "frontend",
+      "title": "디바운스와 쓰로틀에 대해서 각각 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-21",
+      "track": "frontend",
+      "title": "리액트에서 index를 key값으로 사용하면 안되는 이유에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-22",
+      "track": "frontend",
+      "title": "자바스크립트에서 어떻게 호이스팅이 가능한지에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-23",
+      "track": "frontend",
+      "title": "useEffect와 useLayoutEffect의 차이점에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-24",
+      "track": "frontend",
+      "title": "웹 접근성의 개념과 개선 방법에 대해 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-25",
+      "track": "frontend",
+      "title": "SSR(Server Side Rendering)에 대해 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-26",
+      "track": "frontend",
+      "title": "CSS Flexbox와 Grid의 차이점에 대해서 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-27",
+      "track": "frontend",
+      "title": "프론트엔드 E2E 테스트에 대해서 설명해주세요.",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "pending"
+    },
+    {
+      "key": "fe-28",
+      "track": "frontend",
+      "title": "이미지 크기가 클 경우 렌더링 속도가 느려질 텐데, 이를 개선하기 위한 방법들을 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-29",
+      "track": "frontend",
+      "title": "낙관적 업데이트에 관하여 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-30",
+      "track": "frontend",
+      "title": "자바스크립트는 싱글 스레드 언어인데, 어떻게 동시에 여러 작업들을 수행하나요?",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-31",
+      "track": "frontend",
+      "title": "타입스크립트의 타입과 인터페이스의 차이점을 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-32",
+      "track": "frontend",
+      "title": "시맨틱 마크업이란 무엇이며, 왜 중요한가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-33",
+      "track": "frontend",
+      "title": "undefined와 null의 차이점에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-34",
+      "track": "frontend",
+      "title": "useEffect가 호출되는 시점에 대해 설명해 주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-35",
+      "track": "frontend",
+      "title": "자바스크립트 Promise에 대해서 아는 대로 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-36",
+      "track": "frontend",
+      "title": "ES6에 대해서 아는 대로 설명해 주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-37",
+      "track": "frontend",
+      "title": "함수 선언식과 함수 표현식의 차이점에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-38",
+      "track": "frontend",
+      "title": "Promise의 resolve()와 fulfilled에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-39",
+      "track": "frontend",
+      "title": "Error Boundary가 무엇이며, 이를 사용하는 이유는 무엇인가요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-40",
+      "track": "frontend",
+      "title": "CORS(Cross-Origin Resource Sharing)는 무엇이며 왜 필요한가요?",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-41",
+      "track": "frontend",
+      "title": "리액트에서 컴포넌트가 불필요하게 리렌더링되는 상황을 방지하기 위한 방법을 설명해 주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-42",
+      "track": "frontend",
+      "title": "리액트 동시성 모드(Concurrent Mode)에 관해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-43",
+      "track": "frontend",
+      "title": "useEffect를 이용하여 로딩 상태 관리하는 방법과 Suspense를 활용하는 방법에 대한 차이점을 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-44",
+      "track": "frontend",
+      "title": "localStorage와 sessionStorage의 차이점에 대해서 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-45",
+      "track": "frontend",
+      "title": "Tanstack Query를 사용하는 이유를 설명해 주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-46",
+      "track": "frontend",
+      "title": "webpack, rollup과 같은 번들러는 왜 필요한지 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-47",
+      "track": "frontend",
+      "title": "이벤트 버블링과 캡처링에 대해 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-48",
+      "track": "frontend",
+      "title": "리액트에서 컴포넌트란 무엇인가요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-49",
+      "track": "frontend",
+      "title": "타입스크립트를 사용하는 이유를 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-50",
+      "track": "frontend",
+      "title": "서버 컴포넌트에 대해서 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-51",
+      "track": "frontend",
+      "title": "Streaming SSR에 관하여 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-52",
+      "track": "frontend",
+      "title": "HTTP란 무엇인지 설명해 주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-53",
+      "track": "frontend",
+      "title": "네트워크 통신에서 Body(Payload)와 Header의 차이는 무엇인가요?",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-54",
+      "track": "frontend",
+      "title": "제로 런타임 css란 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-55",
+      "track": "frontend",
+      "title": "자바스크립트 클래스의 접근제어자에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-56",
+      "track": "frontend",
+      "title": "길이 단위 px, em, rem에 대해 각각 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-57",
+      "track": "frontend",
+      "title": "HTML 데이터 속성(data-)은 무엇인가요?",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-58",
+      "track": "frontend",
+      "title": "event.target과 event.currentTarget의 차이점은 무엇인가요?",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-59",
+      "track": "frontend",
+      "title": "CDN이 무엇인지 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-60",
+      "track": "frontend",
+      "title": "HTML Doctype이 무엇인지 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-61",
+      "track": "frontend",
+      "title": "전역 상태 관리 라이브러리는 왜 사용하나요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-62",
+      "track": "frontend",
+      "title": "Node와 Element의 차이에 대해 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-63",
+      "track": "frontend",
+      "title": "useRef는 언제 사용하나요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-64",
+      "track": "frontend",
+      "title": "TDD란 무엇인지 설명해주세요.",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "pending"
+    },
+    {
+      "key": "fe-65",
+      "track": "frontend",
+      "title": "프로토타입 상속의 동작 방식에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-66",
+      "track": "frontend",
+      "title": "알고 있는 이미지 포맷과 각 포맷별 특징을 알려주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-67",
+      "track": "frontend",
+      "title": "css box-sizing 속성에 대해 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-68",
+      "track": "frontend",
+      "title": "CORS 설정 없이 SOP를 우회하여 외부 서버와 통신할 수 있는 방법이 있을까요?",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-69",
+      "track": "frontend",
+      "title": "Virtual DOM에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-70",
+      "track": "frontend",
+      "title": "CI/CD란 무엇인지 설명해주세요",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-71",
+      "track": "frontend",
+      "title": "위치를 동적으로 변경할 때 css 속성 중 transform과 position 중 어떤 것을 선호하시나요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-72",
+      "track": "frontend",
+      "title": "Next.js를 사용하는 이유가 무엇인가요?",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-73",
+      "track": "frontend",
+      "title": "다음 JS 코드의 실행 결과를 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-74",
+      "track": "frontend",
+      "title": "Server Action이란 무엇인가요?",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "pending"
+    },
+    {
+      "key": "fe-75",
+      "track": "frontend",
+      "title": "쌓임 맥락에 대해 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-76",
+      "track": "frontend",
+      "title": "HTML link 요소의 rel 속성 값 preconnect, preload, prefetch에 대해 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-77",
+      "track": "frontend",
+      "title": "상황에 따라 this 바인딩이 어떻게 이뤄지는지 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-78",
+      "track": "frontend",
+      "title": "타입 단언이란 무엇이며 언제 사용하나요?",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-79",
+      "track": "frontend",
+      "title": "Reset CSS와 Normalize CSS가 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-80",
+      "track": "frontend",
+      "title": "image 요소의 alt 속성은 어떤 목적으로 사용하나요?",
+      "category": "브라우저, DOM과 Web API",
+      "status": "pending"
+    },
+    {
+      "key": "fe-81",
+      "track": "frontend",
+      "title": "모노레포란 무엇인가요?",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-82",
+      "track": "frontend",
+      "title": "알고 계신 git 브랜치 전략들에 대해 소개해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-83",
+      "track": "frontend",
+      "title": "CSS 전처리기(CSS preprocessor)란 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-84",
+      "track": "frontend",
+      "title": "효과적으로 디버깅하기 위한 방법에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "pending"
+    },
+    {
+      "key": "fe-85",
+      "track": "frontend",
+      "title": "왜 useState를 조건문 안에서 사용하면 안 되나요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "pending"
+    },
+    {
+      "key": "fe-86",
+      "track": "frontend",
+      "title": "CSS 의사 요소(Pseudo-elements)란 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "pending"
+    },
+    {
+      "key": "fe-87",
+      "track": "frontend",
+      "title": "JWT(Json Web Token)의 장점은 무엇인가요?",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-88",
+      "track": "frontend",
+      "title": "Content-Type 헤더에 대해서 설명해주세요",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "pending"
+    },
+    {
+      "key": "fe-89",
+      "track": "frontend",
+      "title": "불변성(Immutability)이란 무엇인가요?",
+      "category": "JavaScript 기초와 런타임",
+      "status": "pending"
+    },
+    {
+      "key": "fe-90",
+      "track": "frontend",
+      "title": "requestAnimationFrame에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-91",
+      "track": "frontend",
+      "title": "패키지 매니저 pnpm과 yarn berry에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-92",
+      "track": "frontend",
+      "title": "인증과 인가에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-93",
+      "track": "frontend",
+      "title": "npm install과 npm ci의 차이점에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-94",
+      "track": "frontend",
+      "title": "BFF(Backend For Frontend)란 무엇인가요?",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-95",
+      "track": "frontend",
+      "title": "타입스크립트의 infer 키워드에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-96",
+      "track": "frontend",
+      "title": "\\<a> 태그를 이용해 외부 페이지를 열 때 보안상 고려해야 할 점은 무엇인가요?",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-97",
+      "track": "frontend",
+      "title": "테스트하기 쉬운 코드의 조건들에 대해 설명해주세요.",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "imported"
+    },
+    {
+      "key": "fe-98",
+      "track": "frontend",
+      "title": "Cache-Control 헤더에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-99",
+      "track": "frontend",
+      "title": "웹뷰(WebView)란 무엇인가요?",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-100",
+      "track": "frontend",
+      "title": "리액트에서 변수 관리 시 useRef를 사용하는 것은 let을 사용하는 것과 어떤 차이가 있나요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "imported"
+    },
+    {
+      "key": "fe-101",
+      "track": "frontend",
+      "title": "브라우저 메모리 캐시와 디스크 캐시가 무엇인지 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-102",
+      "track": "frontend",
+      "title": "다음 Promise 코드의 실행 결과를 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-103",
+      "track": "frontend",
+      "title": "왜 기본 img 태그 대신 next/Image를 사용하셨나요?",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-104",
+      "track": "frontend",
+      "title": "css 속성 dvh, svh, lvh 란 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "imported"
+    },
+    {
+      "key": "fe-105",
+      "track": "frontend",
+      "title": "never와 unknown 타입에 대해서 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-106",
+      "track": "frontend",
+      "title": "브라우저가 폰트를 적용하는 과정을 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-107",
+      "track": "frontend",
+      "title": "함수형 프로그래밍에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-108",
+      "track": "frontend",
+      "title": "자바스크립트에서 \"0.1 + 0.2 === 0.3\"의 실행 결과에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-109",
+      "track": "frontend",
+      "title": "Core Web Vitals란 무엇인가요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "imported"
+    },
+    {
+      "key": "fe-110",
+      "track": "frontend",
+      "title": "트리 쉐이킹에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-111",
+      "track": "frontend",
+      "title": "동적 타입 언어와 정적 타입 언어에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-112",
+      "track": "frontend",
+      "title": "타입스크립트 satisfies 키워드에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-113",
+      "track": "frontend",
+      "title": "jsx란 무엇이며, 이는 자바스크립트에서 어떻게 변환되나요?",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-114",
+      "track": "frontend",
+      "title": "CSS 명시도(Specificity)에 대해서 설명해주세요.",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "imported"
+    },
+    {
+      "key": "fe-115",
+      "track": "frontend",
+      "title": "자바스크립트에서 메모리 누수가 발생하는 상황들을 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-116",
+      "track": "frontend",
+      "title": "dependency, devDependency, peerDependency에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-117",
+      "track": "frontend",
+      "title": "Storybook을 알고 계신가요? Storybook이란 무엇인지 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-118",
+      "track": "frontend",
+      "title": "최신 버전의 Next.js가 제공하는 캐싱 기능들에 대해 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-119",
+      "track": "frontend",
+      "title": "TCP 3-way handshake 과정에 대해서 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-120",
+      "track": "frontend",
+      "title": "결합도와 응집도에 대해 설명해주세요.",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "imported"
+    },
+    {
+      "key": "fe-121",
+      "track": "frontend",
+      "title": "자바스크립트에서 생성자 함수가 무엇인지, class 문법은 왜 도입되었는지 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-122",
+      "track": "frontend",
+      "title": "자바스크립트의 메모리 관리에 대해서 아는대로 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-123",
+      "track": "frontend",
+      "title": "OSI 7계층에 대해서 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-124",
+      "track": "frontend",
+      "title": "HTTP의 ETag에 대해서 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-125",
+      "track": "frontend",
+      "title": "JSON Schema에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-126",
+      "track": "frontend",
+      "title": "클라이언트 사이드 라우팅이 동작하는 과정에 대해 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-127",
+      "track": "frontend",
+      "title": "관계형 데이터베이스와 비관계형 데이터베이스에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-128",
+      "track": "frontend",
+      "title": "stale-while-revalidate에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-129",
+      "track": "frontend",
+      "title": "커링(currying)이란 무엇인지 설명하고, 활용 예시를 들어줄 수 있나요?",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-130",
+      "track": "frontend",
+      "title": "HTTP/2의 특징에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-131",
+      "track": "frontend",
+      "title": "멀티 프로세스와 멀티 스레드에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-132",
+      "track": "frontend",
+      "title": "Node.js의 주요 특징에 대해 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-133",
+      "track": "frontend",
+      "title": "Progressive Partial Rendering(PPR)에 대해서 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-134",
+      "track": "frontend",
+      "title": "XSS 공격이란 무엇이며, 프론트엔드에서 이를 방어하기 위한 방법을 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-135",
+      "track": "frontend",
+      "title": "이터러블 프로토콜에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-136",
+      "track": "frontend",
+      "title": "제네레이터에 대해 설명해주세요.",
+      "category": "JavaScript 기초와 런타임",
+      "status": "imported"
+    },
+    {
+      "key": "fe-137",
+      "track": "frontend",
+      "title": "TLS 핸드셰이크 과정에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-138",
+      "track": "frontend",
+      "title": "User-Agent에 대해서 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-139",
+      "track": "frontend",
+      "title": "리액트의 Batching Update에 대해서 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "imported"
+    },
+    {
+      "key": "fe-140",
+      "track": "frontend",
+      "title": "웹표준이 무엇인가요?",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-141",
+      "track": "frontend",
+      "title": "React의 리렌더링 과정에 대해 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "imported"
+    },
+    {
+      "key": "fe-142",
+      "track": "frontend",
+      "title": "백엔드 API의 응답이 느려 사용성에 악영향이 발생하는 상황에서 어떻게 대응하실 건가요?",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "imported"
+    },
+    {
+      "key": "fe-143",
+      "track": "frontend",
+      "title": "예상치 못하게 외부 라이브러리의 버그로 인해 기능에 문제가 생겼다면, 어떤 절차로 해결하실 건가요?",
+      "category": "테스트, 품질과 협업 판단",
+      "status": "imported"
+    },
+    {
+      "key": "fe-144",
+      "track": "frontend",
+      "title": "다음 리액트 코드의 실행 순서에 대해 설명해주세요.",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "imported"
+    },
+    {
+      "key": "fe-145",
+      "track": "frontend",
+      "title": "쿠키와 세션에 대해 설명해주세요.",
+      "category": "네트워크, 보안과 캐싱 전략",
+      "status": "imported"
+    },
+    {
+      "key": "fe-146",
+      "track": "frontend",
+      "title": "스택을 활용하여 브라우저의 뒤로가기/앞으로가기 기능을 구현하는 방법을 설명해주세요.",
+      "category": "브라우저, DOM과 Web API",
+      "status": "imported"
+    },
+    {
+      "key": "fe-147",
+      "track": "frontend",
+      "title": "React의 Error Boundary는 왜 비동기 에러를 잡지 못하나요?",
+      "category": "React 핵심 개념과 렌더링",
+      "status": "imported"
+    },
+    {
+      "key": "fe-148",
+      "track": "frontend",
+      "title": "Yarn과 Yarn Berry의 차이점에 대해서 설명해주세요.",
+      "category": "TypeScript, 번들링과 생태계 도구",
+      "status": "imported"
+    },
+    {
+      "key": "fe-149",
+      "track": "frontend",
+      "title": "Next.js Middleware에 대해서 설명해주세요.",
+      "category": "Next.js와 현대적인 React 아키텍처",
+      "status": "imported"
+    },
+    {
+      "key": "fe-150",
+      "track": "frontend",
+      "title": "퍼포먼스를 분석할 때 Chrome DevTools에서 어떤 지표를 체크해야 하나요?",
+      "category": "CSS, UI와 사용자 경험",
+      "status": "imported"
+    }
+  ],
+  "lastUpdated": "2026-08-18T02:46:29.909Z"
+}
