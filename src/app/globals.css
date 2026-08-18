@@ -270,6 +270,15 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* 계기판 상태 LED — 깜빡임은 켜져 있음을 알리는 최소한의 움직임이다 */
+@keyframes led-blink {
+  0%, 62% { opacity: 1; }
+  62.1%, 100% { opacity: 0.25; }
+}
+.animate-led-blink {
+  animation: led-blink 1.6s steps(1) infinite;
+}
+
 /* ── Motion Classes ── */
 .animate-page-fade-in {
   animation: page-fade-in 300ms ease-out;
